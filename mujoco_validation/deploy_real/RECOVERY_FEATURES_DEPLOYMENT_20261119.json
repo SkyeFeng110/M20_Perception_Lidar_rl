@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "status": "recovery95_installed_validated_custom_aos_stopped",
+  "release": "/home/user/m20_native_releases/model45200_recovery95_20261119",
+  "current_alias": "/home/user/m20_native_releases/model45200_20261119_jointguard_aos",
+  "previous_alias_target": "model42900_20261118_jointguard_aos",
+  "current_alias_target": "model45200_recovery95_20261119",
+  "model_iteration": 45200,
+  "model_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+  "checkpoint_sha256": "129abc1f8d8f8335fa6e99830957a52cd2a2b97fd28b6b1dde49fba9dfc12341",
+  "controller_elf_sha256": "9b2afde9bcfd6cbf9de9a668440639f3c95680d6ede0a8e33ea2b01205096f2d",
+  "joint_ledger_sha256": "41546ac515dd7b257759c60c6231cdb260c8f4154b0e120e379561d59a98e434",
+  "target_ledger_sha256": "0b44290faab286fa4f2a6d4117cfbb741220a3b40ed63cc22dac90e313090138",
+  "yaw_ledger_sha256": "26368e7a56b4d78066bf7a7e577b480a8fb2c807c12986d69fba2653598e1310",
+  "hipx_tracking_error_rad": 0.65,
+  "hipy_tracking_proxy_nm": 95.0,
+  "hipy_sdk_indices": [
+    1,
+    5,
+    9,
+    13
+  ],
+  "target_rate_rad_s": [
+    50,
+    50,
+    50
+  ],
+  "policy_projection_per_5ms_rad": 0.25,
+  "yaw_acceleration_rad_s2": 100.0,
+  "unload_command": {
+    "kp": 0,
+    "kd": 0,
+    "position": 0,
+    "velocity": 0,
+    "feedforward_torque": 0
+  },
+  "perception_grace_seconds": 2.0,
+  "preserved_sha256": {
+    "policy/model.onnx": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+    "perception_grace_limits.json": "f51cd9a3d3325244f3733bf39fb008dc3677ebd733d1e9382d034a999cc2dfc2",
+    "src/M20_sdk_deploy/run_policy/perception_grace_limits.hpp": "8f0913a636ced195d1134ae274908655b794ff294ed413009ef83669782a0691",
+    "src/M20_sdk_deploy/run_policy/v11_observation_store.hpp": "54df15aeff0c279b035ba96b9777ac334d245bf7e4af262f289bddc30b73e403",
+    "src/M20_sdk_deploy/run_policy/m20_policy_runner.hpp": "50ab5637e0400230fc8b2dbebdcf1e543bc161b105c3a0b298590c325cb199a9",
+    "src/M20_sdk_deploy/state_machine/quadruped_wheel/rl_control_state.hpp": "333bab723f6515b974be4517e9bc894239371b164116b7606969f898b7c68529",
+    "src/M20_sdk_deploy/state_machine/quadruped_wheel/standup_state.hpp": "4cab05f10aaffc460fc719e11712c2e16818dc78ae96d31b01a2750144371639"
+  },
+  "build_exit": 0,
+  "full_native_offline_suite_pass": true,
+  "native_tests": {
+    "joint_guard_checks": 404,
+    "target_limiter_checks": 120027,
+    "yaw_checks": 258,
+    "dds_checks": 64,
+    "dds_guard_trace_pass": true,
+    "dds_joint_boundary_cases": 12,
+    "fsm": {
+      "rl_explicit_recovery": {
+        "pass": true,
+        "recovery_count": 2,
+        "high_before_rearm": 0,
+        "motor_publishers_created": 0,
+        "no_writes_after_state_exit": true
+      },
+      "joint_explicit_recovery": {
+        "pass": true,
+        "recovery_count": 2,
+        "high_before_rearm": 0,
+        "motor_publishers_created": 0,
+        "no_writes_after_state_exit": true
+      }
+    },
+    "frozen_incidents_archived": 2,
+    "actor_full_stick_yaw": -0.6,
+    "actor_full_stick_translation_checked": true,
+    "perception_cases": [
+      "ascent",
+      "descent",
+      "flat",
+      "recovery",
+      "hard_fault"
+    ]
+  },
+  "local_tests": {
+    "ledger_unittests": 7,
+    "recorder_modes": [
+      "normal",
+      "freeze",
+      "startup",
+      "io_failure"
+    ],
+    "guard_checks": 404,
+    "target_limiter_checks": 120027,
+    "yaw_checks": 258,
+    "source_patch_dry_run_pass": true
+  },
+  "live_preflight": {
+    "pass": true,
+    "received": 999,
+    "accepted": 999,
+    "health_checks": 9155,
+    "joint_frames": 1600,
+    "imu_frames": 1600,
+    "command_frames_sent": 0
+  },
+  "active_rl_deploy": [],
+  "custom_controller_running": false,
+  "custom_controller_started": false,
+  "agent_sent_motion_keys": false,
+  "physical_validation": "not_performed",
+  "evidence": "mujoco_validation/deploy_real/artifacts/20261119/recovery_features_20261119",
+  "source_patch": "recovery_features_20261119.patch",
+  "source_patch_sha256": "c432b0d9743c4bb854226b694614ed3f7c8c575b82625060de708cf9e53ec506",
+  "remote_build_log": "artifacts/recovery95_build_v2.log",
+  "remote_preflight_log": "artifacts/recovery95_live_preflight.log",
+  "notes": [
+    "HipY 95 Nm is a user-requested software position-error proxy threshold, not a verified manufacturer motor rating.",
+    "Recorder restart preserves old rings and first fault in incident_<session> directories; real I/O failures remain blocking.",
+    "R2 fully unloads; manual reset followed by a fresh R2, L1, L2 permits guarded recovery.",
+    "Full-stick responsiveness is software-validated with ideal feedback; physical gait/turn/stair acceptance remains pending."
+  ]
+}

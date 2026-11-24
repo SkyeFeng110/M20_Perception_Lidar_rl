@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "recorded_date": "2026-11-19",
+  "robot": "1515",
+  "model_iteration": 45200,
+  "policy_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+  "controller_elf_sha256": "5fbe221a9a5790a76cc91fcad9366cc032f2923fdf85df9e33433540b7e63c2b",
+  "ledger_sha256": "f10afeaee142767838ba86f4b3437653718042a6ee87040c2fc758fab3b5fca9",
+  "fixes": {
+    "recorder_startup": "Startup safety wait is recorded without freezing; SDK safety stops after readiness and all joint faults still freeze.",
+    "knee_bounds": "Only knee bound source changed to the operator supplied ranges; hip intersection, command rate, feedback error, torque, source freshness and recorder gates retained."
+  },
+  "validation": {
+    "arm_build": "joint_guard_build_startup08",
+    "exit": 0,
+    "guard_checks": 344,
+    "dds_checks": 15,
+    "leg_joint_bound_cases": 12,
+    "native_policy_samples": 128,
+    "max_target_error": 0.00120544,
+    "python_ledger_tests": 4,
+    "static_folded_pose_before": [
+      "target_angle_limit",
+      "feedback_angle_limit"
+    ],
+    "static_folded_pose_after": [
+      "ok",
+      "ok"
+    ],
+    "operator_physical_stand": "User confirmed normal rise; later perception failure caused damping.",
+    "walking": "not tested",
+    "stairs": "not tested",
+    "driver_internal_limits": "not verified"
+  },
+  "second_stop": {
+    "controller_pid_before_stop": 68660,
+    "controller_current_status": "stopped by agent after preserving first trigger",
+    "console_first_trigger": "V11 6D invalid in high-gain state: source_timeout; source_deadline=0; source_valid=false; processing_ok=false; valid=false",
+    "joint_command_fault": "none observed",
+    "operator_report": "Colleague briefly covered front lidar before robot entered damping.",
+    "causal_boundary": "Occlusion is consistent with loss of usable perception, but no synchronized raw recording identifies exactly which stage first lost a valid input.",
+    "behavior": "Perception is required in standup high gain; timeout latches damping until explicit R2 reset. Damping provides no standing position support.",
+    "protection_changes": "none",
+    "sensor_restart": "none during post-stop diagnosis",
+    "recorder_gap": "Perception latches are not first-fault freeze triggers in this recorder revision. Console preserved; ring manually archived. Some older ring history was overwritten. Do not claim complete accident reconstruction.",
+    "evidence_on_aos": "/var/opt/robot/data/m20_joint_guard_evidence_20261119_second_stop",
+    "ring_final_summary": {
+      "retained_records": 35313,
+      "sequence_gaps": 0,
+      "parse_errors": 0,
+      "session_end_seen": true,
+      "dropped": 0,
+      "saved_first_fault": null
+    }
+  },
+  "post_stop_passive_probe": {
+    "duration_s": 20,
+    "motor_commands": 0,
+    "publishers_created": 0,
+    "points_received": 201,
+    "lio_cloud_received": 200,
+    "registered_cloud_received": 201,
+    "perception_messages": 1000,
+    "perception_reasons": {
+      "no_stairs_detected": 1000
+    },
+    "source_status": {
+      "active": true,
+      "blocked_reason": null,
+      "forwarded": 31670,
+      "frame": "gos_odom",
+      "registration_stalled": false,
+      "rejected": {
+        "empty_roi": 3,
+        "prefilter_empty": 2
+      },
+      "source": "gos_local_lio",
+      "source_identity_failed": false
+    },
+    "interpretation": "GOS input, LIO, registration and perception output currently active. Cumulative empty_roi/prefilter_empty counts lack event timestamps and cannot uniquely identify the reported occlusion."
+  },
+  "post_stop_aos_preflight": {
+    "scope": "read_only_no_joint_commands",
+    "sdk_joint_frames": 1600,
+    "sdk_imu_frames": 1600,
+    "sdk_command_frames": 0,
+    "staircase_received": 997,
+    "staircase_accepted": 997,
+    "publishers": 1,
+    "continuous_health": "PASS",
+    "health_checks": 9285,
+    "first_failure": "none"
+  },
+  "local_evidence": "artifacts/20261119/startup_fix (ignored local archive; not part of source publication)",
+  "git_delivery": {
+    "branch": "agent/codex/fix-startup-recorder",
+    "push": "skipped: no hub remote configured; origin is read-only mirror"
+  },
+  "remaining": [
+    "Record perception safety latches as first-trigger incident events with bounded freeze retention.",
+    "Validate guarded walking and stair behavior under supervision.",
+    "Design and validate any alternative to immediate damping before changing fallback motor behavior."
+  ]
+}

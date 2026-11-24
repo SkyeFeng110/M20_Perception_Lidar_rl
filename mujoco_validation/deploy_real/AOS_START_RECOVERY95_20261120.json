@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "status": "aos_running_idle_recovery95",
+  "date": "2026-11-20",
+  "release": "/home/user/m20_native_releases/model45200_recovery95_20261119",
+  "controller_pid": 20961,
+  "tmux": "local45200_aos_recovery95",
+  "board_wall_s": 1795144934.579915,
+  "incident_session": "20961_1795144897874643930",
+  "checkpoint_iteration": 45200,
+  "model_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+  "elf_sha256": "9b2afde9bcfd6cbf9de9a668440639f3c95680d6ede0a8e33ea2b01205096f2d",
+  "joint_ledger_sha256": "41546ac515dd7b257759c60c6231cdb260c8f4154b0e120e379561d59a98e434",
+  "last_controller_state": {
+    "accepted": false,
+    "damping_reset_seq": 0,
+    "event": "controller_state",
+    "fault_trigger": false,
+    "imu_rpy_omega_acc": [
+      -0.001965146977454424,
+      -0.0020156458485871553,
+      -0.003319389186799526,
+      0.0008204792975448072,
+      -0.0012561832554638386,
+      -0.0006911329692229629,
+      0.012609999626874924,
+      -0.010274999774992466,
+      9.789519309997559
+    ],
+    "inference_id": 0,
+    "joint_fault_latched": false,
+    "joystick": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mono_s": 1002.182696658,
+    "reason": "",
+    "record_seq": 27707,
+    "remote_command_stamp_s": 1001.985531209,
+    "safe_mode": 0,
+    "session": "20961_1795144897874643930",
+    "state": 0,
+    "target_mode": 2,
+    "wall_s": 1795144934.172416
+  },
+  "formal_preflight": {
+    "pass": true,
+    "received": 999,
+    "accepted": 999,
+    "health_checks": 9579
+  },
+  "perception_loss_timeout_s": 2.0,
+  "hipx_tracking_error_rad": 0.65,
+  "hipy_proxy_nm": 95,
+  "target_rate_rad_s": [
+    50,
+    50,
+    50
+  ],
+  "agent_sent_motion_keys": false,
+  "physical_validation": "not_performed",
+  "active_rl_deploy": [
+    {
+      "pid": 3360,
+      "exe": "/opt/robot/share/rl_deploy/bin/rl_deploy"
+    },
+    {
+      "pid": 20961,
+      "exe": "/home/user/m20_native_releases/model45200_recovery95_20261119/install/m20_sdk_deploy/lib/m20_sdk_deploy/rl_deploy"
+    }
+  ],
+  "console_log": "/home/user/m20_native_releases/model45200_recovery95_20261119/artifacts/recovery95_aos_start_20261120_112033.log",
+  "raw_lidar_tmux": "local45200_raw_lidar",
+  "gos_tmux": [
+    "local45200_front_lidar",
+    "local45200_lio_qos",
+    "local45200_gos"
+  ]
+}

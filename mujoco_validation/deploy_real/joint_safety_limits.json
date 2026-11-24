@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "coordinate": "SDK robot joint angle, radians, FL FR HL HR each hip thigh calf wheel",
+  "source": "Exact per-leg SDK software envelopes and velocity limits from user-designated deploy_real_ws/m20_student_deploy/deploy/robot.json. No physical calibration claimed; independent tracking-error torque budgets retained.",
+  "knee_limit_source": "operator_confirmed",
+  "operator_limits_confirmed": true,
+  "user_lower_rad": [
+    -0.436,
+    -2.286,
+    -2.809,
+    -0.611,
+    -2.286,
+    -2.809,
+    -0.436,
+    -2.583,
+    -2.792,
+    -0.611,
+    -2.583,
+    -2.792
+  ],
+  "user_upper_rad": [
+    0.611,
+    2.583,
+    2.792,
+    0.436,
+    2.583,
+    2.792,
+    0.611,
+    2.286,
+    2.809,
+    0.436,
+    2.286,
+    2.809
+  ],
+  "front_left_lower_rad": [
+    -0.436,
+    -2.286,
+    -2.809
+  ],
+  "front_left_upper_rad": [
+    0.611,
+    2.583,
+    2.792
+  ],
+  "leg_velocity_rad_s": [
+    10,
+    12,
+    15
+  ],
+  "target_rate_rad_s": [
+    50,
+    50,
+    50
+  ],
+  "leg_torque_nm": [
+    32.4,
+    76.4,
+    76.4
+  ],
+  "control_tick_s": 0.005,
+  "policy_period_s": 0.02,
+  "feedback_timeout_s": 0.05,
+  "incident_segment_bytes": 16777216,
+  "incident_segments": 4,
+  "incident_disk_reserve_bytes": 536870912,
+  "incident_sync_s": 1.0,
+  "incident_post_fault_s": 2.0,
+  "incident_queue_capacity": 1024,
+  "derivation": {
+    "control_tick_s": "StateMachineBase::RunThread time_init(5)",
+    "policy_period_s": "M20PolicyRunner SetDecimation(4) times control tick",
+    "feedback_timeout_s": "DdsInterface::WaitForStableRobotState existing fresh criterion",
+    "target_rate": "Full-stick operation uses an independent 50 rad/s target-change ceiling; commanded joint velocity and angle/feedback protections remain independent. Policy shaping uses the same target-rate ceiling and the existing 5 ms publication cap.",
+    "tracking_error": "Four named HipX joints use maximum 0.65 rad with a 52.0 Nm position-error proxy ceiling derived at Kp80. Four named HipY joints use a user-requested 95.0 Nm proxy ceiling; this is a software admission threshold and does not claim an official physical torque rating. Four named Knee joints use an operator-requested 85.0 Nm software position-error proxy ceiling; at Kp80 this admits 1.0625 rad error. No manufacturer physical torque rating or drive output limit is inferred.",
+    "recording": "fixed queue and rotating files; disk reserve checked before recorder initialization",
+    "position_bounds": "Use the exact named per-leg corrected SDK envelopes from the user-designated earlier deployment; do not mirror/intersect the generic FL SDK box."
+  },
+  "position_limit_source": "reference_software",
+  "reference_robot_sha256": "bd393fa08cf97ecd2a97d2e0077cd37e0928712d0471ac4dbddc846e17f3c215",
+  "reference_robot_path": "/home/arcus/deeprobotics_m20_rl/deploy_real_ws/m20_student_deploy/deploy/robot.json",
+  "tracking_error_overrides_confirmed": true,
+  "tracking_error_proxy_overrides_confirmed": true,
+  "tracking_error_proxy_overrides": {
+    "fl_hipy_joint": 95.0,
+    "fr_hipy_joint": 95.0,
+    "hl_hipy_joint": 95.0,
+    "hr_hipy_joint": 95.0,
+    "fl_knee_joint": 85.0,
+    "fr_knee_joint": 85.0,
+    "hl_knee_joint": 85.0,
+    "hr_knee_joint": 85.0
+  },
+  "tracking_error_overrides": {
+    "fl_hipx_joint": {
+      "maximum_error_rad": 0.65,
+      "reference_position_gain": 80.0,
+      "source": "User explicitly requested all four HipX joints at 0.65 rad after FR HipX stop in session 160783_1795081484684136054."
+    },
+    "fr_hipx_joint": {
+      "maximum_error_rad": 0.65,
+      "reference_position_gain": 80.0,
+      "source": "User explicitly requested all four HipX joints at 0.65 rad after FR HipX stop in session 160783_1795081484684136054."
+    },
+    "hl_hipx_joint": {
+      "maximum_error_rad": 0.65,
+      "reference_position_gain": 80.0,
+      "source": "User explicitly requested all four HipX joints at 0.65 rad after FR HipX stop in session 160783_1795081484684136054."
+    },
+    "hr_hipx_joint": {
+      "maximum_error_rad": 0.65,
+      "reference_position_gain": 80.0,
+      "source": "User explicitly requested all four HipX joints at 0.65 rad after FR HipX stop in session 160783_1795081484684136054."
+    }
+  }
+}

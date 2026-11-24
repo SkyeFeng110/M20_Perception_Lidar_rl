@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "loss_timeout_s": 2.0,
+  "operator_confirmed": true,
+  "source": "Operator requested two seconds of continuous perception loss before stopping on 2026-11-19.",
+  "semantics": "Measured source age, including its normal freshness window. Duplicate or invalid messages never renew this deadline. Recompute actions from live proprioception and commands using the last valid current 6D measurement. No change to joint, IMU, feedback or emergency protection."
+}

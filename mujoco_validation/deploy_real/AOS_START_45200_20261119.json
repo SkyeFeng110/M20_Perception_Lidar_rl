@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-11-19T03:15:38.546403+00:00",
+  "model_iteration": 45200,
+  "policy_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+  "controller_pid": 19364,
+  "controller_elf": "/home/user/m20_native_releases/model42900_20261118_jointguard_aos/install/m20_sdk_deploy/lib/m20_sdk_deploy/rl_deploy",
+  "joint_guard_elf_sha256": "bcaebf0da8966d7e6be624fc467c05a45739cf480caa110a80ee1e4258141e94",
+  "board_serial": "4c7428ea7d51f4b",
+  "board_mac": "00:e0:9a:4a:ff:8d",
+  "tmux_session": "model45200_aos",
+  "preflight": "PASS",
+  "staircase_received": 995,
+  "staircase_accepted": 995,
+  "continuous_health_checks": 9555,
+  "startup_controls_armed": true,
+  "observed_state": "Idle; zero joystick; waiting for physical R2/L1/L2",
+  "physical_readiness": "confirmed by user in this conversation",
+  "agent_sent_motion_keys": false,
+  "initial_recorder_event": "sdk_or_remote_safety_stop during startup; subsequent captured state safe_mode=0, joint_fault_latched=false",
+  "incident_record_preserved": true,
+  "locomotion_validation": "not_performed",
+  "console_evidence": "/home/user/m20_native_releases/model42900_20261118_jointguard_aos/artifacts/aos45200_start_20261119_console.txt"
+}

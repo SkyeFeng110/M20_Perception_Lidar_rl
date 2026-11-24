@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "robot": "1515",
+  "model_iteration": 45200,
+  "status": "stopped_after_operator_turn_command_tracking_guard_fault",
+  "operator_request": "Continue the existing policy during short front-lidar occlusion including stairs; stop only for sustained perception unavailability.",
+  "loss_limit_source": "perception_grace_limits.json",
+  "loss_ledger_sha256": "f51cd9a3d3325244f3733bf39fb008dc3677ebd733d1e9382d034a999cc2dfc2",
+  "policy_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+  "joint_ledger_sha256": "f10afeaee142767838ba86f4b3437653718042a6ee87040c2fc758fab3b5fca9",
+  "behavior": {
+    "normal": "Original current/retained measured feature selection.",
+    "short_loss": "Hold last valid current 6D terrain with original timestamp; continue actor inference using live joint/IMU state, commands and action history.",
+    "duration": "Age since last genuinely measured valid source; normal source freshness window is included.",
+    "recovery": "A new valid measured frame updates terrain and earns its own bounded loss budget.",
+    "long_loss": "Original latching damping response; recovery arriving after the deadline cannot erase a missed long-loss event.",
+    "hard_faults": "Identity/epoch/publisher/contract/format/fixture faults are not eligible for grace.",
+    "entry": "No first high-gain entry on missing or degraded perception."
+  },
+  "local_checks": {
+    "virtual_clock_production_store_checks": 178,
+    "legacy_store_regression": "PASS",
+    "ledger_negative_checks": "PASS",
+    "unknown_source_guard": "PASS"
+  },
+  "native_checks": {
+    "build01": "Interrupted before admission to include long-loss recovery race fix.",
+    "build02": "Failed native parity because validation_tools contained old-model fixture. Corrected to previously generated and validated 45200 fixture; controller remained blocked.",
+    "build03": {
+      "exit": 0,
+      "virtual_store_checks": 178,
+      "actor_worker_cases": [
+        "ascent",
+        "descent",
+        "flat",
+        "recovery",
+        "hard_fault"
+      ],
+      "native_contract_samples": 128,
+      "native_contract_max_target_error": 0.00120544,
+      "joint_guard_checks": 344,
+      "dds_startup": "PASS",
+      "incident_startup": "PASS",
+      "leg_joint_bounds": "12 joints x 8 checks PASS"
+    },
+    "additional_tests_after_build": "none; user requested immediate formal startup"
+  },
+  "controller_started": true,
+  "physical_occlusion_test": "not performed",
+  "physical_stair_test": "not performed",
+  "backup_on_aos": "/home/user/m20_native_releases/model45200_before_occlusion_grace_20261119",
+  "local_evidence": "artifacts/20261119/occlusion_recovery",
+  "scope": "Runtime tolerance and software command flow; held geometry can become inaccurate while moving. No proof of physical climbing during occlusion.",
+  "recorder_boundary": "Perception stops do not yet freeze the independent incident ring; preserve console and archive promptly.",
+  "git_delivery": {
+    "branch": "agent/codex/fix-startup-recorder",
+    "push": "skipped: hub remote missing; origin is read-only mirror"
+  },
+  "controller_elf_sha256": "cad0a56cd2f1ac99abd415af703a04e80448fc43bb872ae26ee3168524d4192c",
+  "live_startup": {
+    "pid": 126776,
+    "running": true,
+    "elf_sha256": "cad0a56cd2f1ac99abd415af703a04e80448fc43bb872ae26ee3168524d4192c",
+    "last_controller_state": {
+      "accepted": false,
+      "damping_reset_seq": 0,
+      "event": "controller_state",
+      "fault_trigger": false,
+      "imu_rpy_omega_acc": [
+        -0.00501166982576251,
+        -0.018242094665765762,
+        -1.2042515277862549,
+        0.0004138699150644243,
+        -0.0001325054035987705,
+        -0.0011473794002085924,
+        0.18921400606632233,
+        -0.0318400003015995,
+        9.788797378540039
+      ],
+      "inference_id": 0,
+      "joint_fault_latched": false,
+      "joystick": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mono_s": 6137.557070903,
+      "reason": "",
+      "record_seq": 19187,
+      "remote_command_stamp_s": 6137.505061833,
+      "safe_mode": 0,
+      "session": "126776_1795063261853703411",
+      "state": 0,
+      "target_mode": 2,
+      "wall_s": 1795063287.4924448
+    },
+    "first_fault_exists": false,
+    "operator_motion_keys_sent_by_agent": false,
+    "startup_preflight": {
+      "received": 1000,
+      "accepted": 1000,
+      "continuous_health": "PASS",
+      "health_checks": 9597
+    }
+  },
+  "tmux_session": "model45200_grace_aos",
+  "controller_currently_running": false,
+  "latest_operator_result": "R2/L1/L2 succeeded, mapped yaw step caused target_feedback_error on right-front HipX. Incident archived; custom controller stopped; protection unchanged.",
+  "latest_diagnosis": "TURN_STOP_DIAGNOSIS_20261119.json"
+}

@@ -1,0 +1,21 @@
+{
+  "status": "new_task_deployment_contract_passed",
+  "unchanged_fields": [
+    "nominal",
+    "action_scale",
+    "kp",
+    "kd",
+    "effort",
+    "armature"
+  ],
+  "actor_observation_contract_compatible": true,
+  "actor_input": 63,
+  "actor_output": 16,
+  "action_history": {
+    "associated_seed_config": "isaaclab.envs.mdp.observations:last_action",
+    "new_task_config": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_flat_start:executed_last_action",
+    "reason": "Executed zero-command wheel history matches the current production controller; order/scales/shape unchanged"
+  },
+  "checkpoint_sha256": "ef0fafd826687d8de283b4c56842c7d15f345bbd98e30120ed4af692a1cc6589",
+  "no_training_started": true
+}

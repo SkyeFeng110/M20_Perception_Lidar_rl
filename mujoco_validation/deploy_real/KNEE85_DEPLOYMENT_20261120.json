@@ -1,0 +1,314 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "status": "knee85_validated_custom_aos_stopped",
+  "checkpoint_iteration": 45200,
+  "aos": {
+    "schema": 1,
+    "status": "knee85_validated_custom_aos_stopped",
+    "wall_s": 1795151696.0613222,
+    "release": "/home/user/m20_native_releases/model45200_knee85_20261120",
+    "entry": "/home/user/m20_native_releases/model45200_20261119_jointguard_aos",
+    "previous_release": "/home/user/m20_native_releases/model45200_recording_20261120",
+    "elf_sha256": "6564dd04b550965dd9a8a13d9f04635d4751e063c1d0d245703de27f95fa78a7",
+    "joint_ledger_sha256": "4ec1de04636847ee9cbad789cba598a017e70512efc150ea05557015c1929dec",
+    "build": {
+      "status": "pass",
+      "started_wall_s": 1795150791.8619173,
+      "motor_commands": 0,
+      "finished_wall_s": 1795151619.0745811,
+      "elf_sha256": "6564dd04b550965dd9a8a13d9f04635d4751e063c1d0d245703de27f95fa78a7"
+    },
+    "preflight": {
+      "exit_code": 0,
+      "pass": true,
+      "log": "/home/user/m20_native_releases/model45200_knee85_20261120/artifacts/knee85_live_preflight.log",
+      "scope": "read_only_no_motor_commands",
+      "wall_s": 1795151678.9879808
+    },
+    "preserved_sha256": {
+      "policy/model.onnx": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+      "perception_grace_limits.json": "f51cd9a3d3325244f3733bf39fb008dc3677ebd733d1e9382d034a999cc2dfc2",
+      "policy_target_limits.json": "0b44290faab286fa4f2a6d4117cfbb741220a3b40ed63cc22dac90e313090138",
+      "yaw_command_limits.json": "26368e7a56b4d78066bf7a7e577b480a8fb2c807c12986d69fba2653598e1310",
+      "src/M20_sdk_deploy/run_policy/joint_command_guard.hpp": "240bfa0c8af81db4bbe3826ff9ad25723d9f79145be6063dd82f2f6036468317",
+      "src/M20_sdk_deploy/run_policy/perception_grace_limits.hpp": "8f0913a636ced195d1134ae274908655b794ff294ed413009ef83669782a0691",
+      "src/M20_sdk_deploy/run_policy/policy_target_limits.hpp": "13c489a72640e48c2cfe195beb203ce82f40a049a802a00048eb4d445ae25ccc",
+      "src/M20_sdk_deploy/interface/robot/hardware/dds_interface.hpp": "c4c8f2d6738f0bfb69075e8952e639a1bb10fb84925d0136b5dafe4d53493e0b",
+      "src/M20_sdk_deploy/state_machine/quadruped_wheel/rl_control_state.hpp": "a25eab39d0843ba15cf55563c3fa6334a16f89aadfb15812e464fe4885abf089"
+    },
+    "source_files_compared": 2292,
+    "source_files_changed": [
+      "M20_sdk_deploy/run_policy/joint_safety_limits.hpp",
+      "M20_sdk_deploy/scripts/joint_command_guard_test.cpp"
+    ],
+    "perception_loss_timeout_s": 2.0,
+    "perception_fault_triggers": 4,
+    "frozen_incident_archives_tested": 4,
+    "knee_proxy_nm": 85.0,
+    "knee_sdk_indices": [
+      2,
+      6,
+      10,
+      14
+    ],
+    "kp80_equivalent_error_rad": 1.0625,
+    "knee_feedforward_limit_nm": 76.4,
+    "driver_total_torque_limit_verified": false,
+    "custom_controller_started": false,
+    "custom_controller_running": false,
+    "active_rl_deploy": [
+      {
+        "pid": 112090,
+        "exe": "/opt/robot/share/rl_deploy/bin/rl_deploy"
+      }
+    ],
+    "motor_commands": 0,
+    "agent_sent_motion_keys": false,
+    "hardware_locomotion_validation": "not_performed"
+  },
+  "gos": {
+    "schema": 1,
+    "pass": true,
+    "wall_s": 1795151556.0272448,
+    "release": "/home/user/m20_native_releases/model45200_recording_20261120_gos",
+    "build": {
+      "started_wall_s": 1795147199.4234319,
+      "status": "pass",
+      "motor_commands": 0,
+      "finished_wall_s": 1795147302.3060443,
+      "registration_elf_sha256": "005a99e3f48e9e057a9309e19119cb4dfc3c9f7eba211df29bf042097a9eeb30"
+    },
+    "session": {
+      "release": "/home/user/m20_native_releases/model45200_recording_20261120_gos",
+      "output": "/home/user/m20_native_releases/model45200_recording_20261120_gos/artifacts/knee85_residual_live_20261120_130411",
+      "evidence": "/home/user/m20_native_releases/model45200_recording_20261120_gos/artifacts/knee85_residual_live_20261120_130411/registration_evidence",
+      "tmux": "local45200_gos",
+      "owner": {
+        "acceptance": false,
+        "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/native_tools/m20_deploy",
+        "extra_diagnostics": false,
+        "implementation": "cpp",
+        "lio": {
+          "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/stage/lio_release/bin/super_lio_node",
+          "pid": 8831,
+          "start_ticks": "711913"
+        },
+        "motor_commands": 0,
+        "reader": {
+          "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/build/gos6d_reader",
+          "pid": 8829,
+          "start_ticks": "711911"
+        },
+        "registration": {
+          "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/build/gos6d_registration",
+          "pid": 8830,
+          "start_ticks": "711912"
+        },
+        "resource_profile_sha256": "2dc05f461946597f1bc1d0ffae0e37a426ef4645dc5ef3ea66b34e853554f593",
+        "sender": {
+          "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/build/gos6d_sender",
+          "pid": 8828,
+          "start_ticks": "711911"
+        },
+        "sender_dds_profile": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/sender_udp_only.xml",
+        "sender_dds_sha256": "5b1ce26f76ff9e70e80d526468fde93493b85b5b95d1f231114222933418a3c5",
+        "start_ticks": "711894",
+        "supervisor": 8826
+      },
+      "old_supervisor_stopped": 6511,
+      "previous_session_receipt": "/home/user/m20_native_releases/model45200_recording_20261120_gos/artifacts/residual_recording_session_before_knee85.json",
+      "reason": "restart_stalled_registration_after_evidence_preservation_for_knee85_readonly_preflight",
+      "root_cause_fixed": false,
+      "motor_commands": 0,
+      "wall_s": 1795151059.0899084
+    },
+    "registration_elf_sha256": "005a99e3f48e9e057a9309e19119cb4dfc3c9f7eba211df29bf042097a9eeb30",
+    "source_status": {
+      "active": true,
+      "blocked_reason": null,
+      "evidence_dropped": 0,
+      "evidence_write_failed": false,
+      "forwarded": 5004,
+      "frame": "gos_odom",
+      "quality_checks": 501,
+      "registration_stalled": false,
+      "rejected": {},
+      "residual_p95_m": 0.02867446467280388,
+      "residual_threshold_m": 0.15,
+      "source": "gos_local_lio",
+      "source_identity_failed": false
+    },
+    "last_residual": {
+      "decision": "ok",
+      "decision_code": 3,
+      "event": "registration_quality",
+      "forwarded": 5011,
+      "matched": 5030,
+      "mono_s": 7623.158867918,
+      "orientation_xyzw": [
+        -0.002324548317119479,
+        -0.0014340466586872935,
+        0.0019819093868136406,
+        0.9999922513961792
+      ],
+      "p95_finite": true,
+      "p95_m": 0.028403637930750847,
+      "pair_delta_s": 0.0,
+      "position": [
+        -0.01147435326129198,
+        -0.01426788792014122,
+        0.013325734995305538
+      ],
+      "quality_check": 502,
+      "quality_checked": true,
+      "quality_ok": true,
+      "reference_newest_matched": 5029,
+      "reference_oldest_matched": 4981,
+      "reference_points": 1893,
+      "roi_points": 5263,
+      "schema": 1,
+      "source_age_s": 0.04218745231628418,
+      "source_nanosec": 249897480,
+      "source_sec": 1795151555,
+      "source_stamp_s": 1795151555.2498975,
+      "threshold_m": 0.15,
+      "wall_s": 1795151555.292085
+    },
+    "latest_sample_count": 128,
+    "evidence_files": [
+      {
+        "name": "segment_0.jsonl",
+        "bytes": 8386076
+      },
+      {
+        "name": "segment_1.jsonl",
+        "bytes": 5022560
+      }
+    ],
+    "gos_recording_running": true,
+    "motor_commands": 0
+  },
+  "changes": {
+    "knee_joints": [
+      "fl_knee_joint",
+      "fr_knee_joint",
+      "hl_knee_joint",
+      "hr_knee_joint"
+    ],
+    "sdk_indices": [
+      2,
+      6,
+      10,
+      14
+    ],
+    "old_proxy_nm": 76.4,
+    "new_proxy_nm": 85.0,
+    "kp80_error_rad": 1.0625,
+    "feedforward_nm": 76.4,
+    "only_runtime_source_changed": "run_policy/joint_safety_limits.hpp",
+    "driver_config_changed": false
+  },
+  "validation": {
+    "local_guard_checks": 468,
+    "ledger_tests": 7,
+    "native_full_no_motor_suite": "pass",
+    "perception_freeze_triggers": 4,
+    "r2_frozen_archives": 4,
+    "live_preflight_received": 1000,
+    "live_preflight_accepted": 1000,
+    "live_preflight_health_checks": 9181,
+    "recorded_command_replay": {
+      "old": {
+        "checked_attempts": 3628,
+        "first_failure": {
+          "inference_id": 4860,
+          "joint": 2,
+          "limit": 76.4,
+          "mono_s": 5336.836641813,
+          "reason": "target_feedback_error",
+          "record_seq": 175489,
+          "value": 77.56013870239258
+        },
+        "last_hr_hipx_target": -0.2543032765388489,
+        "ledger_sha256": "41546ac515dd7b257759c60c6231cdb260c8f4154b0e120e379561d59a98e434",
+        "scope": "recorded feedback only through original first fault; changed-target dynamics and subsequent locomotion not simulated",
+        "shaped_attempts": 0
+      },
+      "knee85": {
+        "checked_attempts": 3628,
+        "first_failure": null,
+        "last_hr_hipx_target": -0.2543032765388489,
+        "ledger_sha256": "4ec1de04636847ee9cbad789cba598a017e70512efc150ea05557015c1929dec",
+        "scope": "recorded feedback only through original first fault; changed-target dynamics and subsequent locomotion not simulated",
+        "shaped_attempts": 0
+      }
+    }
+  },
+  "tracking_analysis": {
+    "scope": "observed frozen pre-fault prefix; no physical model fitted",
+    "target_peak": {
+      "offset_s": -0.12001644999963901,
+      "inference_id": 4854,
+      "target_rad": 2.3028626441955566,
+      "feedback_rad": 1.9965739250183105,
+      "error_rad": 0.3062887191772461,
+      "proxy_nm": 24.503097534179688,
+      "feedback_velocity_rad_s": 9.105175018310547,
+      "measured_torque_nm": 3.4356775283813477
+    },
+    "feedback_peak": {
+      "offset_s": -0.06010258599962981,
+      "inference_id": 4857,
+      "target_rad": 1.8764171600341797,
+      "feedback_rad": 2.3346290588378906,
+      "error_rad": -0.45821189880371094,
+      "proxy_nm": 36.656951904296875,
+      "feedback_velocity_rad_s": 1.51040780544281,
+      "measured_torque_nm": -18.54061508178711
+    },
+    "peak_phase_difference_ms": 59.9138640000092,
+    "last_80ms_actual_duration_s": 0.08000270199954684,
+    "last_80ms_target_change_rad": -1.0,
+    "last_80ms_feedback_change_rad": -0.17649412155151367,
+    "fault_proxy_nm": 77.56013870239258,
+    "fault_feedback_torque_nm": -90.86473846435547,
+    "physical_cause_unresolved": [
+      "stair/contact loading",
+      "drive saturation",
+      "policy target demand versus available tracking response"
+    ],
+    "driver_total_torque_limit_verified": false
+  },
+  "driver_total_torque_limit_verified": false,
+  "hardware_safe_proxy_value_verified": false,
+  "driver_audit_evidence": [
+    "driver_config_audit.json",
+    "driver_deep_audit.json",
+    "driver_headers_read.json",
+    "driver_journal_limits.json"
+  ],
+  "physical_tracking_root_cause_fixed": false,
+  "gos_registration_stall_root_cause_fixed": false,
+  "root_cause_scope": "Recorded target reversal and feedback lag identified; underlying physical cause unresolved. Proxy threshold update admits original pre-fault prefix only.",
+  "custom_controller_started": false,
+  "custom_controller_running": false,
+  "agent_sent_motion_keys": false,
+  "hardware_locomotion_validation": "not_performed",
+  "local_evidence": "artifacts/20261120/knee85",
+  "source_snapshot": "artifacts/20261120/knee85/src",
+  "patch": "knee85_20261120.patch",
+  "report": "KNEE85_20261120.md",
+  "perception_loss_timeout_s": 2.0,
+  "preserved_features": [
+    "four HipX .65 rad / 52 Nm",
+    "four HipY 95 Nm",
+    "named angle/velocity bounds",
+    "target rate 50 rad/s",
+    "gains and 45200 model",
+    "2 s perception grace",
+    "explicit R2 unload and recovery",
+    "registration residual recorder",
+    "four perception incident freeze paths"
+  ]
+}

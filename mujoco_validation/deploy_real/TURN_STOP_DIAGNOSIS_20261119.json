@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "robot": "1515",
+  "date": "2026-11-19",
+  "model_iteration": 45200,
+  "controller_elf_sha256": "cad0a56cd2f1ac99abd415af703a04e80448fc43bb872ae26ee3168524d4192c",
+  "first_trigger": {
+    "reason": "target_feedback_error",
+    "joint_sdk_index": 4,
+    "joint_name": "right_front_HipX",
+    "inference_id": 198,
+    "target_rad": -0.44343864917755127,
+    "feedback_rad": 0.02728944830596447,
+    "target_error_rad": -0.47072809748351574,
+    "target_error_deg": -26.97073328402824,
+    "kp": 80.0,
+    "kd": 2.0,
+    "computed_proportional_torque_magnitude_nm": 37.65824779868126,
+    "guard_budget_nm": 32.4,
+    "feedback_torque_nm": -27.029985427856445,
+    "feedback_age_ms": 1.4794399994570995,
+    "target_within_angle_limits": true,
+    "angle_limit_lower_rad": -0.6109,
+    "angle_limit_upper_rad": 0.4363
+  },
+  "command_transition": {
+    "before": [
+      0,
+      0,
+      0
+    ],
+    "after": [
+      0.0,
+      -0.0,
+      -0.6000000238418579
+    ],
+    "time_to_trip_ms": 59.8939639994569,
+    "raw_network_stick_packet": "not recorded; do not infer physical stick deflection from mapped actor command"
+  },
+  "preceding_targets": [
+    {
+      "relative_ms": -80.05249300003925,
+      "inference_id": 194,
+      "q_des": -0.04579538106918335,
+      "q_feedback": 0.05292743071913719,
+      "accepted": true
+    },
+    {
+      "relative_ms": -59.887546000027214,
+      "inference_id": 195,
+      "q_des": -0.12416768074035645,
+      "q_feedback": 0.052828069776296616,
+      "accepted": true
+    },
+    {
+      "relative_ms": -40.11112799980765,
+      "inference_id": 196,
+      "q_des": -0.20043879747390747,
+      "q_feedback": 0.05110260471701622,
+      "accepted": true
+    },
+    {
+      "relative_ms": -20.107483999709075,
+      "inference_id": 197,
+      "q_des": -0.322714626789093,
+      "q_feedback": 0.03943091258406639,
+      "accepted": true
+    },
+    {
+      "relative_ms": 0.0,
+      "inference_id": 198,
+      "q_des": -0.44343864917755127,
+      "q_feedback": 0.02728944830596447,
+      "accepted": false
+    }
+  ],
+  "perception_at_fault": {
+    "valid": true,
+    "source_age_s": 0.14769957959651947,
+    "degraded": false
+  },
+  "assessment": "Mapped yaw stepped to its configured magnitude limit. Policy targets moved faster than measured right-front hip feedback; the proportional-error budget rejected inference 198 and published damping. This proves the first software trigger, not physical stick scale or why the joint lagged. The budget is not a measured hardware torque trip threshold.",
+  "actions": {
+    "incident_archived": true,
+    "custom_controller_stopped": true,
+    "factory_controller_untouched": true,
+    "joint_guards_changed": false,
+    "perception_grace_changed": false,
+    "additional_robot_motion_tests": false
+  },
+  "evidence_on_aos": "/var/opt/robot/data/m20_turn_stop_20261119",
+  "next_step": "Apply RL-input yaw-onset ramp without changing the existing full-scale yaw or independent joint guards; physical acceptance pending.",
+  "operator_context": {
+    "right_stick": "large deflection",
+    "feet": "all four on ground and loaded"
+  }
+}

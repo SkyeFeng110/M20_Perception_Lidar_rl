@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "session": "128937_1795079902999545956",
+  "status": "archived_custom_controller_stopped",
+  "board_fault_time": "2026-11-19T17:20:43.739891+08:00",
+  "reason": "target_feedback_error",
+  "joint": "fr_hipx_joint",
+  "sdk_joint_index": 4,
+  "inference_id": 876,
+  "target_rad": -0.3989229202270508,
+  "feedback_rad": 0.017207710072398186,
+  "error_rad": 0.41613063029944897,
+  "old_error_limit_rad": 0.40499999999999997,
+  "position_gain": 80,
+  "proxy_value_nm": 33.29045042395592,
+  "proxy_limit_nm": 32.4,
+  "measured_torque_nm": -31.653453826904297,
+  "feedback_age_ms": 2.136321000762109,
+  "policy_inferences": 876,
+  "policy_active_elapsed_s": 17.48471802200038,
+  "perception_valid_inferences": 876,
+  "perception_max_age_s": 0.18947961926460266,
+  "perception_age_at_fault_s": 0.08964916318655014,
+  "source_loss_timeout_s": 2.0,
+  "raw_command_at_fault": [
+    0,
+    0,
+    -0.6
+  ],
+  "actor_command_at_fault": [
+    0,
+    0,
+    -0.21558718383312225
+  ],
+  "negative_yaw_request_before_fault_s": 0.346,
+  "source_parse_errors": [],
+  "sequence_gaps": [],
+  "archive": "artifacts/hipx_stop_after_hr044_20261119/m20_frhipx_stop_20261119_172043",
+  "robot_archive": "/var/opt/robot/data/m20_frhipx_stop_20261119_172043",
+  "controller_stop": {
+    "pid": 128937,
+    "signal": "SIGINT",
+    "exited": true,
+    "wall_s": 1795080161.1164217,
+    "reason": "FR HipX tracking fault archived; stopped latched custom controller"
+  },
+  "root_cause_scope": "Exact guard trigger and target-following lag confirmed. The records do not isolate mechanical constraint, contact load, driver saturation, or unsuitable policy demand.",
+  "operator_followup": "Requested four HipX joints at .44 rad; native rebuild pending."
+}

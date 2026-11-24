@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "status": "aos_running_idle",
+  "controller_pid": 128937,
+  "tmux": "local45200_aos_hr044",
+  "incident_session": "128937_1795079902999545956",
+  "board_wall_s": 1795079968.5508542,
+  "release": "/home/user/m20_native_releases/model42900_20261118_jointguard_aos",
+  "checkpoint_iteration": 45200,
+  "model_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+  "elf_sha256": "e3981d8b5927d5285d6eb38321583f0343839c342f200793a7cf9f0e7561597d",
+  "last_controller_state": {
+    "accepted": false,
+    "damping_reset_seq": 0,
+    "event": "controller_state",
+    "fault_trigger": false,
+    "imu_rpy_omega_acc": [
+      -0.003247592132538557,
+      -0.004166258033365011,
+      -0.2731979191303253,
+      -0.002394120441749692,
+      -0.0003434982500039041,
+      -0.0005486791487783194,
+      -0.0035389999393373728,
+      -0.04558999836444855,
+      9.791244506835938
+    ],
+    "inference_id": 0,
+    "joint_fault_latched": false,
+    "joystick": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mono_s": 6392.588536617,
+    "reason": "",
+    "record_seq": 51105,
+    "remote_command_stamp_s": 6392.449008377,
+    "safe_mode": 0,
+    "session": "128937_1795079902999545956",
+    "state": 0,
+    "target_mode": 2,
+    "wall_s": 1795079968.5391948
+  },
+  "formal_preflight": {
+    "pass": true,
+    "received": 1000,
+    "accepted": 1000,
+    "continuous_health_checks": 9605
+  },
+  "hr_hipx_tracking_error_rad": 0.44,
+  "perception_loss_timeout_s": 2.0,
+  "operator_start_instruction": "启动aos",
+  "readiness_context": "Previously confirmed field readiness and renewed explicit startup instruction; formal launcher prompts retained; live startup shows neutral joystick and safe_mode=0.",
+  "agent_sent_motion_keys": false,
+  "hardware_locomotion_validation_after_hr044": "not_performed",
+  "console_log": "artifacts/hr044_aos_start_console.log",
+  "console_snapshot": "artifacts/hr044_aos_start_console_snapshot.log"
+}

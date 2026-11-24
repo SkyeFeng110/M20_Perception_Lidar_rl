@@ -1,0 +1,637 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "status": "aos_running_idle_knee85",
+  "host_workspace": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL",
+  "model_iteration": 45200,
+  "checkpoint_sha256": "129abc1f8d8f8335fa6e99830957a52cd2a2b97fd28b6b1dde49fba9dfc12341",
+  "deployed_onnx_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+  "controller_elf_sha256": "6564dd04b550965dd9a8a13d9f04635d4751e063c1d0d245703de27f95fa78a7",
+  "aos_controller_pid": 178565,
+  "aos_tmux": "local45200_aos_knee85",
+  "aos_sensor_tmux": "local45200_raw_lidar",
+  "gos_tmux": [
+    "local45200_front_lidar",
+    "local45200_lio_qos",
+    "local45200_gos"
+  ],
+  "last_observed_controller_state": {
+    "accepted": false,
+    "damping_reset_seq": 0,
+    "event": "controller_state",
+    "fault_trigger": false,
+    "imu_rpy_omega_acc": [
+      -0.001943841576576233,
+      -0.005091212689876556,
+      -1.0131651163101196,
+      0.0006893701502121985,
+      -0.001051560859195888,
+      -0.0034194840118288994,
+      0.05234599858522415,
+      -0.013841000385582447,
+      9.790557861328125
+    ],
+    "inference_id": 0,
+    "joint_fault_latched": false,
+    "joystick": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mono_s": 8712.306222613,
+    "reason": "",
+    "record_seq": 13393,
+    "remote_command_stamp_s": 8712.198213789,
+    "safe_mode": 0,
+    "session": "178565_1795152621666980177",
+    "state": 0,
+    "target_mode": 2,
+    "wall_s": 1795152644.2959418
+  },
+  "root_cause_evidence": "No raw LiDAR traffic while vendor Device.lidarPower=[0,0]; original startup log recorded LiDAR power off. Dedicated LiDAR power call restored both sensor MACs; forwarding then restored live point clouds and perception.",
+  "operator_sleep_setting_minutes": 30,
+  "lidar_boot_setting": {
+    "path": "/opt/robot/share/basic_server/conf/basic_server.toml",
+    "backup": "/var/opt/robot/data/m20_lidar_config_before_local_20261119.toml",
+    "before_sha256": "9b315f494f574027e63c7fb5f1ab9b10033687c3ea54bf0e3d3dc11234398a52",
+    "after_sha256": "5a48f91572a6108b6a84ae7444b95ddb0c2a837792c6498ac9e9330bec14dfa2",
+    "changed_setting": "Device.lidarPower",
+    "before": [
+      0,
+      0
+    ],
+    "after": [
+      1,
+      1
+    ],
+    "sleep_setting": "Sleep = {auto=true,time=30}",
+    "runtime_power_verified_by": "MAC, point cloud and complete AOS preflight",
+    "format_fix": "preserved all original line endings; only the lidarPower line differs"
+  },
+  "restored_preflight": {
+    "pass": true,
+    "received": 999,
+    "accepted": 999,
+    "health_checks": 9177
+  },
+  "formal_launch_preflight": {
+    "pass": true,
+    "received": 1000,
+    "accepted": 1000,
+    "continuous_health_checks": 9613
+  },
+  "gos_chain_probe_seconds": 8.004635952000058,
+  "gos_valid_packets": {
+    "ok": 400
+  },
+  "offline_validation": {
+    "python_tests": 9,
+    "actor_tensors_exact": 8,
+    "replay_samples": 6724,
+    "max_abs_error": 5.7220458984375e-06
+  },
+  "operator_readiness": "explicitly confirmed before formal launch",
+  "agent_sent_motion_keys": false,
+  "hardware_gait_validation": "knee85_not_performed",
+  "source": "LOCAL_MIGRATION_20261119.md",
+  "evidence": "artifacts/local_migration_20261119",
+  "limitations": [
+    "No physical gait/stair/turn acceptance in this session.",
+    "The peripheral-enable setting was backed up and updated; next-boot behavior has not been tested by rebooting the running robot.",
+    "One transient /proc scan failure was retained; the following serial and formal startup preflights passed."
+  ],
+  "sdk_enable_evidence": "[2026-11-19 15:53:56.553.270] [INFO  ] [DDSWorker] set SDK Enable: 200 success ",
+  "sdk_timing_correction": "Operator reported SDK initially omitted and enabled it after startup. Same controller PID remains Idle with safe_mode=0, neutral joystick, no joint fault or first fault; no restart performed. This is controller evidence, not a separate vendor SDK acknowledgment.",
+  "previous_aos_controller_pid": 21129,
+  "latest_incident": {
+    "session": "104435_1795149003711319802",
+    "board_fault_time": "2026-11-20T12:34:28.826363+08:00",
+    "reason": "target_feedback_error",
+    "joint": "fl_knee_joint",
+    "sdk_joint_index": 2,
+    "proxy_nm": 77.56013870239258,
+    "proxy_limit_nm": 76.4,
+    "error_rad": 0.9695017337799072,
+    "evidence": "artifacts/20261120/stair_stop_recording",
+    "report": "STAIR_STOP_RECORDING_20261120.md",
+    "archived_after_R2": true,
+    "incident_frozen": true
+  },
+  "reference_limits_deployment": "REFERENCE_LIMITS_DEPLOYMENT_20261119.json",
+  "perception_grace_retained_seconds": 2.0,
+  "latest_preflight_pass": true,
+  "latest_preflight_log": "/home/user/m20_native_releases/model45200_knee85_20261120/artifacts/knee85_aos_start_20261120_132917.log",
+  "latest_startup_record": "AOS_START_KNEE85_20261120.json",
+  "requested_tracking_override": {
+    "joint": "hr_hipx_joint",
+    "maximum_error_rad": 0.44,
+    "status": "installed_native_and_live_preflight_pass_custom_aos_stopped"
+  },
+  "custom_controller_started_after_hr044": true,
+  "latest_tracking_override": {
+    "revision": "all_four_knee85_v1",
+    "knee_proxy_nm": 85.0,
+    "knee_sdk_indices": [
+      2,
+      6,
+      10,
+      14
+    ],
+    "hipx_tracking_error_rad": 0.65,
+    "hipy_proxy_nm": 95.0,
+    "status": "knee85_validated_custom_aos_stopped",
+    "deployment": "KNEE85_DEPLOYMENT_20261120.json"
+  },
+  "latest_aos_start": {
+    "schema": 1,
+    "status": "aos_running_idle_knee85",
+    "date": "2026-11-20",
+    "release": "/home/user/m20_native_releases/model45200_knee85_20261120",
+    "controller_pid": 178565,
+    "tmux": "local45200_aos_knee85",
+    "board_wall_s": 1795152644.334112,
+    "incident_session": "178565_1795152621666980177",
+    "checkpoint_iteration": 45200,
+    "model_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+    "elf_sha256": "6564dd04b550965dd9a8a13d9f04635d4751e063c1d0d245703de27f95fa78a7",
+    "joint_ledger_sha256": "4ec1de04636847ee9cbad789cba598a017e70512efc150ea05557015c1929dec",
+    "last_controller_state": {
+      "accepted": false,
+      "damping_reset_seq": 0,
+      "event": "controller_state",
+      "fault_trigger": false,
+      "imu_rpy_omega_acc": [
+        -0.001943841576576233,
+        -0.005091212689876556,
+        -1.0131651163101196,
+        0.0006893701502121985,
+        -0.001051560859195888,
+        -0.0034194840118288994,
+        0.05234599858522415,
+        -0.013841000385582447,
+        9.790557861328125
+      ],
+      "inference_id": 0,
+      "joint_fault_latched": false,
+      "joystick": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mono_s": 8712.306222613,
+      "reason": "",
+      "record_seq": 13393,
+      "remote_command_stamp_s": 8712.198213789,
+      "safe_mode": 0,
+      "session": "178565_1795152621666980177",
+      "state": 0,
+      "target_mode": 2,
+      "wall_s": 1795152644.2959418
+    },
+    "controller_state_age_s": 0.036696434020996094,
+    "formal_preflight": {
+      "pass": true,
+      "received": 999,
+      "accepted": 999,
+      "health_checks": 9587
+    },
+    "knee_proxy_nm": 85.0,
+    "hipy_proxy_nm": 95.0,
+    "hipx_tracking_error_rad": 0.65,
+    "perception_loss_timeout_s": 2.0,
+    "perception_incident_revision": "all_four_paths_freeze_v1",
+    "incident_directory": "/var/opt/robot/data/m20_joint_guard_incidents",
+    "first_fault_present": false,
+    "first_fault": null,
+    "recording_new_session": true,
+    "active_rl_deploy": [
+      {
+        "pid": 112090,
+        "exe": "/opt/robot/share/rl_deploy/bin/rl_deploy"
+      },
+      {
+        "pid": 178565,
+        "exe": "/home/user/m20_native_releases/model45200_knee85_20261120/install/m20_sdk_deploy/lib/m20_sdk_deploy/rl_deploy"
+      }
+    ],
+    "console_log": "/home/user/m20_native_releases/model45200_knee85_20261120/artifacts/knee85_aos_start_20261120_132917.log",
+    "agent_sent_motion_keys": false,
+    "readiness_authorization": "Prior operator readiness confirmation and current explicit AOS start instruction; software observations are recorded separately.",
+    "physical_validation": "not_performed",
+    "gos_recording_status": {
+      "running": true,
+      "last_record_age_s": 0.27921009063720703,
+      "quality_check": 1591,
+      "p95_m": 0.03184569999575615,
+      "decision": "ok",
+      "files": [
+        {
+          "name": "segment_2.jsonl",
+          "bytes": 8361952
+        },
+        {
+          "name": "segment_3.jsonl",
+          "bytes": 8361893
+        },
+        {
+          "name": "segment_0.jsonl",
+          "bytes": 8362394
+        },
+        {
+          "name": "segment_1.jsonl",
+          "bytes": 667919
+        }
+      ]
+    },
+    "raw_lidar_tmux": "local45200_raw_lidar",
+    "gos_tmux": [
+      "local45200_front_lidar",
+      "local45200_lio_qos",
+      "local45200_gos"
+    ],
+    "start_time_local": "2026-11-20T13:30:44.334112+08:00"
+  },
+  "custom_controller_started_after_all_hipx_044": true,
+  "custom_controller_started_after_all_hipx_065": true,
+  "last_started_aos_controller_pid": 178565,
+  "custom_controller_running": true,
+  "latest_recovery_deployment": "RECOVERY_FEATURES_DEPLOYMENT_20261119.json",
+  "current_release": "/home/user/m20_native_releases/model45200_knee85_20261120",
+  "updated_date": "2026-11-20",
+  "latest_recording_deployment": "PERCEPTION_RECORDING_DEPLOYMENT_20261120.json",
+  "last_observed_controller_state_is_historical": false,
+  "gos_recording_running": true,
+  "gos_recording_session": {
+    "release": "/home/user/m20_native_releases/model45200_recording_20261120_gos",
+    "output": "/home/user/m20_native_releases/model45200_recording_20261120_gos/artifacts/knee85_residual_live_20261120_130411",
+    "evidence": "/home/user/m20_native_releases/model45200_recording_20261120_gos/artifacts/knee85_residual_live_20261120_130411/registration_evidence",
+    "tmux": "local45200_gos",
+    "owner": {
+      "acceptance": false,
+      "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/native_tools/m20_deploy",
+      "extra_diagnostics": false,
+      "implementation": "cpp",
+      "lio": {
+        "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/stage/lio_release/bin/super_lio_node",
+        "pid": 8831,
+        "start_ticks": "711913"
+      },
+      "motor_commands": 0,
+      "reader": {
+        "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/build/gos6d_reader",
+        "pid": 8829,
+        "start_ticks": "711911"
+      },
+      "registration": {
+        "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/build/gos6d_registration",
+        "pid": 8830,
+        "start_ticks": "711912"
+      },
+      "resource_profile_sha256": "2dc05f461946597f1bc1d0ffae0e37a426ef4645dc5ef3ea66b34e853554f593",
+      "sender": {
+        "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/build/gos6d_sender",
+        "pid": 8828,
+        "start_ticks": "711911"
+      },
+      "sender_dds_profile": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/sender_udp_only.xml",
+      "sender_dds_sha256": "5b1ce26f76ff9e70e80d526468fde93493b85b5b95d1f231114222933418a3c5",
+      "start_ticks": "711894",
+      "supervisor": 8826
+    },
+    "old_supervisor_stopped": 6511,
+    "previous_session_receipt": "/home/user/m20_native_releases/model45200_recording_20261120_gos/artifacts/residual_recording_session_before_knee85.json",
+    "reason": "restart_stalled_registration_after_evidence_preservation_for_knee85_readonly_preflight",
+    "root_cause_fixed": false,
+    "motor_commands": 0,
+    "wall_s": 1795151059.0899084
+  },
+  "aos_start_history": [
+    {
+      "schema": 1,
+      "status": "aos_running_idle_recovery95",
+      "date": "2026-11-20",
+      "release": "/home/user/m20_native_releases/model45200_recovery95_20261119",
+      "controller_pid": 20961,
+      "tmux": "local45200_aos_recovery95",
+      "board_wall_s": 1795144934.579915,
+      "incident_session": "20961_1795144897874643930",
+      "checkpoint_iteration": 45200,
+      "model_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+      "elf_sha256": "9b2afde9bcfd6cbf9de9a668440639f3c95680d6ede0a8e33ea2b01205096f2d",
+      "joint_ledger_sha256": "41546ac515dd7b257759c60c6231cdb260c8f4154b0e120e379561d59a98e434",
+      "last_controller_state": {
+        "accepted": false,
+        "damping_reset_seq": 0,
+        "event": "controller_state",
+        "fault_trigger": false,
+        "imu_rpy_omega_acc": [
+          -0.001965146977454424,
+          -0.0020156458485871553,
+          -0.003319389186799526,
+          0.0008204792975448072,
+          -0.0012561832554638386,
+          -0.0006911329692229629,
+          0.012609999626874924,
+          -0.010274999774992466,
+          9.789519309997559
+        ],
+        "inference_id": 0,
+        "joint_fault_latched": false,
+        "joystick": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mono_s": 1002.182696658,
+        "reason": "",
+        "record_seq": 27707,
+        "remote_command_stamp_s": 1001.985531209,
+        "safe_mode": 0,
+        "session": "20961_1795144897874643930",
+        "state": 0,
+        "target_mode": 2,
+        "wall_s": 1795144934.172416
+      },
+      "formal_preflight": {
+        "pass": true,
+        "received": 999,
+        "accepted": 999,
+        "health_checks": 9579
+      },
+      "perception_loss_timeout_s": 2.0,
+      "hipx_tracking_error_rad": 0.65,
+      "hipy_proxy_nm": 95,
+      "target_rate_rad_s": [
+        50,
+        50,
+        50
+      ],
+      "agent_sent_motion_keys": false,
+      "physical_validation": "not_performed",
+      "active_rl_deploy": [
+        {
+          "pid": 3360,
+          "exe": "/opt/robot/share/rl_deploy/bin/rl_deploy"
+        },
+        {
+          "pid": 20961,
+          "exe": "/home/user/m20_native_releases/model45200_recovery95_20261119/install/m20_sdk_deploy/lib/m20_sdk_deploy/rl_deploy"
+        }
+      ],
+      "console_log": "/home/user/m20_native_releases/model45200_recovery95_20261119/artifacts/recovery95_aos_start_20261120_112033.log",
+      "raw_lidar_tmux": "local45200_raw_lidar",
+      "gos_tmux": [
+        "local45200_front_lidar",
+        "local45200_lio_qos",
+        "local45200_gos"
+      ],
+      "historical_record": true,
+      "current_controller_running": false
+    },
+    {
+      "schema": 1,
+      "status": "aos_running_idle_recording",
+      "date": "2026-11-20",
+      "release": "/home/user/m20_native_releases/model45200_recording_20261120",
+      "controller_pid": 104435,
+      "tmux": "local45200_aos_recording",
+      "board_wall_s": 1795149125.6047394,
+      "incident_session": "104435_1795149003711319802",
+      "checkpoint_iteration": 45200,
+      "model_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+      "elf_sha256": "c229771972ffa41c3b9f69bd91e6702966c88ce09a32a50cef14231b68c502b6",
+      "joint_ledger_sha256": "41546ac515dd7b257759c60c6231cdb260c8f4154b0e120e379561d59a98e434",
+      "last_controller_state": {
+        "accepted": false,
+        "damping_reset_seq": 0,
+        "event": "controller_state",
+        "fault_trigger": false,
+        "imu_rpy_omega_acc": [
+          -0.0014603446470573545,
+          -0.005134461913257837,
+          -1.4971420764923096,
+          0.0006250721635296941,
+          0.001639265683479607,
+          -0.0033719586208462715,
+          0.05545999854803085,
+          -0.02973400056362152,
+          9.76821231842041
+        ],
+        "inference_id": 0,
+        "joint_fault_latched": false,
+        "joystick": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mono_s": 5193.20634251,
+        "reason": "",
+        "record_seq": 84876,
+        "remote_command_stamp_s": 5193.087549112,
+        "safe_mode": 0,
+        "session": "104435_1795149003711319802",
+        "state": 0,
+        "target_mode": 2,
+        "wall_s": 1795149125.1960618
+      },
+      "formal_preflight": {
+        "pass": true,
+        "received": 999,
+        "accepted": 999,
+        "health_checks": 9571
+      },
+      "perception_loss_timeout_s": 2.0,
+      "hipx_tracking_error_rad": 0.65,
+      "hipy_proxy_nm": 95,
+      "target_rate_rad_s": [
+        50,
+        50,
+        50
+      ],
+      "agent_sent_motion_keys": false,
+      "physical_validation": "not_performed",
+      "perception_incident_revision": "all_four_paths_freeze_v1",
+      "incident_directory": "/var/opt/robot/data/m20_joint_guard_incidents",
+      "first_fault_present": false,
+      "recording_new_session": true,
+      "active_rl_deploy": [
+        {
+          "pid": 29120,
+          "exe": "/opt/robot/share/rl_deploy/bin/rl_deploy"
+        },
+        {
+          "pid": 104435,
+          "exe": "/home/user/m20_native_releases/model45200_recording_20261120/install/m20_sdk_deploy/lib/m20_sdk_deploy/rl_deploy"
+        }
+      ],
+      "console_log": "/home/user/m20_native_releases/model45200_recording_20261120/artifacts/recording_aos_start_20261120_122857.log",
+      "raw_lidar_tmux": "local45200_raw_lidar",
+      "gos_tmux": [
+        "local45200_front_lidar",
+        "local45200_lio_qos",
+        "local45200_gos"
+      ],
+      "gos_recording_status": {
+        "running": true,
+        "last_record_age_s": 0.21741604804992676,
+        "quality_check": 1606,
+        "p95_m": 0.03271561488509178,
+        "decision": "ok",
+        "files": [
+          {
+            "name": "segment_2.jsonl",
+            "bytes": 8387358
+          },
+          {
+            "name": "segment_3.jsonl",
+            "bytes": 8363920
+          },
+          {
+            "name": "segment_0.jsonl",
+            "bytes": 8362864
+          },
+          {
+            "name": "segment_1.jsonl",
+            "bytes": 932289
+          }
+        ]
+      },
+      "start_time_local": "2026-11-20T12:30:41.317554+08:00",
+      "sdk_timing_correction": "Operator reported SDK initially omitted and enabled it after startup. Same controller PID remains Idle with safe_mode=0, neutral joystick, no joint fault or first fault; no restart performed. This is controller evidence, not a separate vendor SDK acknowledgment.",
+      "historical_record": true,
+      "current_controller_running": false
+    }
+  ],
+  "custom_controller_started_after_recording_update": true,
+  "gos_perception_active": true,
+  "latest_gos_source_status": {
+    "active": true,
+    "blocked_reason": null,
+    "evidence_dropped": 0,
+    "evidence_write_failed": false,
+    "forwarded": 5004,
+    "frame": "gos_odom",
+    "quality_checks": 501,
+    "registration_stalled": false,
+    "rejected": {},
+    "residual_p95_m": 0.02867446467280388,
+    "residual_threshold_m": 0.15,
+    "source": "gos_local_lio",
+    "source_identity_failed": false
+  },
+  "tracking_override_history": [
+    {
+      "schema": 1,
+      "status": "hr_hipx_044_installed_validated_custom_aos_stopped",
+      "board_wall_s": 1795079553.7556417,
+      "release": "/home/user/m20_native_releases/model42900_20261118_jointguard_aos",
+      "checkpoint_iteration": 45200,
+      "revision": "operator_hr_hipx_044_v1",
+      "joint": "hr_hipx_joint",
+      "sdk_joint_index": 12,
+      "maximum_tracking_error_rad": 0.44,
+      "reference_position_gain": 80,
+      "maximum_error_proxy_nm": 35.2,
+      "feedforward_limit_nm": 32.4,
+      "elf_sha256": "e3981d8b5927d5285d6eb38321583f0343839c342f200793a7cf9f0e7561597d",
+      "joint_ledger_sha256": "9f460a77ac037cd2c93c8b581d0dc7778770dd308b3501e215e4b40496f6c3bb",
+      "model_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+      "backup": "/home/user/m20_native_releases/model42900_20261118_jointguard_aos/artifacts/hr_hipx_044_before_20261119_170116.tar.gz",
+      "native_build_log": "artifacts/joint_guard_build_hr04401.log",
+      "native_validation_exit": "joint_guard_build_hr04401.exit",
+      "native_build_exit": 0,
+      "native_guard_checks": 378,
+      "native_target_limiter_checks": 120027,
+      "native_contract_replay": {
+        "samples": 128,
+        "max_target_error": 0.00120544
+      },
+      "perception_loss_timeout_s": 2.0,
+      "preserved_sha256": {
+        "policy/model.onnx": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+        "perception_grace_limits.json": "f51cd9a3d3325244f3733bf39fb008dc3677ebd733d1e9382d034a999cc2dfc2",
+        "policy_target_limits.json": "e413943203f797e1dec7277e672a1fa0be3af1c8692685eb36ab992433282fd5",
+        "src/M20_sdk_deploy/state_machine/quadruped_wheel/rl_control_state.hpp": "333bab723f6515b974be4517e9bc894239371b164116b7606969f898b7c68529"
+      },
+      "live_preflight": {
+        "pass": true,
+        "scope": "no_joint_commands",
+        "received": 998,
+        "accepted": 998,
+        "health_checks": 9317,
+        "log": "artifacts/hr044_live_preflight.log"
+      },
+      "active_rl_deploy": [
+        {
+          "pid": 13020,
+          "exe": "/opt/robot/share/rl_deploy/bin/rl_deploy"
+        }
+      ],
+      "custom_controller_started": false,
+      "agent_sent_motion_keys": false,
+      "physical_fullstick_validation": "pending",
+      "translation_command_ramp_installed": false,
+      "latest_incident_session": "80931_1795077547725395392",
+      "local_workspace": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL",
+      "local_evidence": "mujoco_validation/deploy_real/artifacts/hr_hipx_044_20261119",
+      "python_tests_passed": 11,
+      "local_guard_checks": 378,
+      "incident_replay": {
+        "old": {
+          "checked_attempts": 7420,
+          "first_failure": {
+            "inference_id": 317,
+            "joint": 12,
+            "limit": 32.4,
+            "mono_s": 4186.212115816,
+            "reason": "target_feedback_error",
+            "record_seq": 168640,
+            "value": 33.10782641172409
+          },
+          "last_hr_hipx_target": -0.35682809352874756,
+          "ledger_sha256": "cf73b8fa23d1bce9f913c4f679cea31d183d2ce286ec483b423781e38cb38e41",
+          "scope": "recorded feedback only through original first fault; changed-target dynamics and subsequent locomotion not simulated",
+          "shaped_attempts": 0
+        },
+        "new": {
+          "checked_attempts": 7420,
+          "first_failure": null,
+          "last_hr_hipx_target": -0.35682809352874756,
+          "ledger_sha256": "9f460a77ac037cd2c93c8b581d0dc7778770dd308b3501e215e4b40496f6c3bb",
+          "scope": "recorded feedback only through original first fault; changed-target dynamics and subsequent locomotion not simulated",
+          "shaped_attempts": 0
+        }
+      }
+    }
+  ],
+  "latest_knee_deployment": "KNEE85_DEPLOYMENT_20261120.json",
+  "latest_preflight_scope": "read_only_no_motor_commands",
+  "driver_total_torque_limit_verified": false,
+  "custom_controller_started_after_knee85": true,
+  "current_status_receipt": "AOS_START_KNEE85_20261120.json",
+  "latest_gos_recording_status": {
+    "running": true,
+    "last_record_age_s": 0.27921009063720703,
+    "quality_check": 1591,
+    "p95_m": 0.03184569999575615,
+    "decision": "ok",
+    "files": [
+      {
+        "name": "segment_2.jsonl",
+        "bytes": 8361952
+      },
+      {
+        "name": "segment_3.jsonl",
+        "bytes": 8361893
+      },
+      {
+        "name": "segment_0.jsonl",
+        "bytes": 8362394
+      },
+      {
+        "name": "segment_1.jsonl",
+        "bytes": 667919
+      }
+    ]
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "status": "aos_running_idle_knee85",
+  "date": "2026-11-20",
+  "release": "/home/user/m20_native_releases/model45200_knee85_20261120",
+  "controller_pid": 178565,
+  "tmux": "local45200_aos_knee85",
+  "board_wall_s": 1795152644.334112,
+  "incident_session": "178565_1795152621666980177",
+  "checkpoint_iteration": 45200,
+  "model_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+  "elf_sha256": "6564dd04b550965dd9a8a13d9f04635d4751e063c1d0d245703de27f95fa78a7",
+  "joint_ledger_sha256": "4ec1de04636847ee9cbad789cba598a017e70512efc150ea05557015c1929dec",
+  "last_controller_state": {
+    "accepted": false,
+    "damping_reset_seq": 0,
+    "event": "controller_state",
+    "fault_trigger": false,
+    "imu_rpy_omega_acc": [
+      -0.001943841576576233,
+      -0.005091212689876556,
+      -1.0131651163101196,
+      0.0006893701502121985,
+      -0.001051560859195888,
+      -0.0034194840118288994,
+      0.05234599858522415,
+      -0.013841000385582447,
+      9.790557861328125
+    ],
+    "inference_id": 0,
+    "joint_fault_latched": false,
+    "joystick": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mono_s": 8712.306222613,
+    "reason": "",
+    "record_seq": 13393,
+    "remote_command_stamp_s": 8712.198213789,
+    "safe_mode": 0,
+    "session": "178565_1795152621666980177",
+    "state": 0,
+    "target_mode": 2,
+    "wall_s": 1795152644.2959418
+  },
+  "controller_state_age_s": 0.036696434020996094,
+  "formal_preflight": {
+    "pass": true,
+    "received": 999,
+    "accepted": 999,
+    "health_checks": 9587
+  },
+  "knee_proxy_nm": 85.0,
+  "hipy_proxy_nm": 95.0,
+  "hipx_tracking_error_rad": 0.65,
+  "perception_loss_timeout_s": 2.0,
+  "perception_incident_revision": "all_four_paths_freeze_v1",
+  "incident_directory": "/var/opt/robot/data/m20_joint_guard_incidents",
+  "first_fault_present": false,
+  "first_fault": null,
+  "recording_new_session": true,
+  "active_rl_deploy": [
+    {
+      "pid": 112090,
+      "exe": "/opt/robot/share/rl_deploy/bin/rl_deploy"
+    },
+    {
+      "pid": 178565,
+      "exe": "/home/user/m20_native_releases/model45200_knee85_20261120/install/m20_sdk_deploy/lib/m20_sdk_deploy/rl_deploy"
+    }
+  ],
+  "console_log": "/home/user/m20_native_releases/model45200_knee85_20261120/artifacts/knee85_aos_start_20261120_132917.log",
+  "agent_sent_motion_keys": false,
+  "readiness_authorization": "Prior operator readiness confirmation and current explicit AOS start instruction; software observations are recorded separately.",
+  "physical_validation": "not_performed",
+  "gos_recording_status": {
+    "running": true,
+    "last_record_age_s": 0.27921009063720703,
+    "quality_check": 1591,
+    "p95_m": 0.03184569999575615,
+    "decision": "ok",
+    "files": [
+      {
+        "name": "segment_2.jsonl",
+        "bytes": 8361952
+      },
+      {
+        "name": "segment_3.jsonl",
+        "bytes": 8361893
+      },
+      {
+        "name": "segment_0.jsonl",
+        "bytes": 8362394
+      },
+      {
+        "name": "segment_1.jsonl",
+        "bytes": 667919
+      }
+    ]
+  },
+  "raw_lidar_tmux": "local45200_raw_lidar",
+  "gos_tmux": [
+    "local45200_front_lidar",
+    "local45200_lio_qos",
+    "local45200_gos"
+  ],
+  "start_time_local": "2026-11-20T13:30:44.334112+08:00"
+}

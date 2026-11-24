@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "robot": "1515",
+  "model_iteration": 45200,
+  "status": "finalized_startup_preflight_running",
+  "source_incident": "TURN_STOP_DIAGNOSIS_20261119.json",
+  "parameter_ledger": "yaw_command_limits.json",
+  "yaw_ledger_sha256": "cb70318a84cd414cfa57e667dfae008d4966c729f060b315919f1b92743c3c47",
+  "local_ramp_checks": 256,
+  "joint_guard_changes": "none",
+  "perception_grace_changes": "none",
+  "weight_changes": "none",
+  "physical_turning_validation": "pending",
+  "runtime_behavior": "Ramp increases in requested yaw magnitude only; neutral, reductions, damping and emergency actions remain immediate. Reset on RL entry, cap accumulated time by policy period.",
+  "runtime_logging": "controller_state joystick retains requested input; policy_inference obs63[8] records applied ramped yaw.",
+  "backup_on_aos": "/home/user/m20_native_releases/model45200_before_yaw_ramp_20261119",
+  "git_delivery": {
+    "branch": "agent/codex/fix-startup-recorder",
+    "push": "skipped: hub remote not configured; origin is read-only mirror"
+  },
+  "controller_elf_sha256": "f084b8cef134678afc4e3dbb3b07a50003743814d33d83696d2124d59ad2a1dd",
+  "native_build_exit": 0,
+  "native_build_log": "joint_guard_build_yaw01.log",
+  "native_yaw_logic_checks": 256,
+  "actor_worker_result": {
+    "pass": true,
+    "early_applied_yaw_rad_s": -0.072,
+    "requested_yaw_rad_s": -0.6,
+    "early_window_s": 0.12,
+    "scope": "actual_actor_no_motors_ideal_feedback"
+  },
+  "existing_guard_and_grace_regressions": "PASS",
+  "tmux_session": "model45200_yawramp_aos"
+}

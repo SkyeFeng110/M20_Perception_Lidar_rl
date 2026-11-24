@@ -1,0 +1,224 @@
+--- a/registration.cpp
++++ b/registration.cpp
+@@ -4,6 +4,7 @@
+ #include "registration_timing.hpp"
+ #include "registration_liveness.hpp"
+ #include "registration_residual_trace.hpp"
++#include "registration_evidence.hpp"
+ #include "source_identity.hpp"
+ #include "json.hpp"
+ #include <rclcpp/rclcpp.hpp>
+@@ -124,6 +125,7 @@
+     const std::string prefix="/staircase_gos_direct",input=prefix+"/lio";
+     auto cloud_pub=out->create_publisher<Cloud>(prefix+"/registered_point_cloud",1);auto odom_pub=out->create_publisher<Odom>(prefix+"/odometry",10);auto tf_pub=out->create_publisher<geometry_msgs::msg::TransformStamped>(prefix+"/transform",10);auto scan_pub=out->create_publisher<staircase_msgs::msg::RegisteredScan>(prefix+"/registered_scan",rclcpp::QoS(1).reliable());auto status_pub=out->create_publisher<std_msgs::msg::String>(prefix+"/source_status",10);
+     gos6d::RegistrationLiveness liveness;
++    gos6d::RegistrationEvidence evidence(std::string(argv[8])+"/registration_evidence");
+     gos6d::SourceIdentityGuard cloud_identity,odom_identity;
+     bool source_identity_failed=false;
+     std::uint64_t cloud_count=0,odom_count=0;double last_cloud=-1,last_odom=-1,last_publish=-1;int fault_count=0,quality_fault_count=0;
+@@ -160,7 +162,10 @@
+     };
+     auto cloud_sub=source->create_subscription<Cloud>(input+"/cloud_world",rclcpp::QoS(1),[&](Cloud::SharedPtr m,const rclcpp::MessageInfo& info){if(!callback_identity(cloud_identity,info,"cloud"))return;double now=mono(),gap=last_cloud<0?0:now-last_cloud,age=wall()-stamp(m->header.stamp);max_cloud_gap=std::max(max_cloud_gap,gap);max_cloud_age=std::max(max_cloud_age,age);if(diagnostics&&event_count<1000&&(gap>core.profile.source_max_age/2||age>core.profile.source_max_age/2)){events<<Json({{"event","lio_cloud_receipt"},{"wall_s",wall()},{"source_stamp_s",stamp(m->header.stamp)},{"receipt_gap_s",gap},{"entry_age_s",age},{"cloud_count",cloud_count+1}}).dump()<<std::endl;++event_count;}++cloud_count;last_cloud=now;auto c=std::make_shared<gos6d::RegistrationCloud>();c->stamp=stamp(m->header.stamp);c->receipt_mono=now;c->source_stamp=gos6d::RegistrationStamp{m->header.stamp.sec,m->header.stamp.nanosec};c->frame=m->header.frame_id;c->payload=m;c->decode=[m](){return decode(*m);};core.add_cloud(c);auto tr=gos6d::TimingTrace::row();tr.v[gos6d::Kind]=0;tr.v[gos6d::Wall]=c->stamp+age;tr.v[gos6d::Mono]=now;tr.v[gos6d::Stamp]=c->stamp;tr.v[gos6d::Age]=age;tr.v[gos6d::PublishGap]=gap;tr.v[gos6d::QueueAfter]=core.clouds.size();tr.v[gos6d::OdomDepth]=core.odoms.size();trace.put(tr,"lio_cloud_receipt");if(trace.enabled())trace.put(gos6d::registration_receipt_row(*c->source_stamp,now,false),"lio_cloud_identity");});
+     auto odom_sub=source->create_subscription<Odom>(input+"/odom",10,[&](Odom::SharedPtr m,const rclcpp::MessageInfo& info){if(!callback_identity(odom_identity,info,"odometry"))return;++odom_count;last_odom=mono();auto o=std::make_shared<gos6d::RegistrationOdom>();o->stamp=stamp(m->header.stamp);o->receipt_mono=last_odom;o->source_stamp=gos6d::RegistrationStamp{m->header.stamp.sec,m->header.stamp.nanosec};o->frame=m->header.frame_id;o->position={m->pose.pose.position.x,m->pose.pose.position.y,m->pose.pose.position.z};o->q={m->pose.pose.orientation.x,m->pose.pose.orientation.y,m->pose.pose.orientation.z,m->pose.pose.orientation.w};o->payload=m;core.add_odom(o);if(trace.enabled())trace.put(gos6d::registration_receipt_row(*o->source_stamp,last_odom,true),"lio_odom_receipt");});
+-    auto publish_status=[&](){std_msgs::msg::String m;m.data=Json({{"source","gos_local_lio"},{"frame","gos_odom"},{"active",!liveness.stalled&&core.state.blocked_reason.empty()&&last_publish>=0&&mono()-last_publish<fresh},{"blocked_reason",core.state.blocked_reason.empty()?Json():Json(core.state.blocked_reason)},{"registration_stalled",liveness.stalled},{"source_identity_failed",source_identity_failed},{"forwarded",core.state.forwarded},{"rejected",core.state.rejected}}).dump();status_pub->publish(m);};
++    auto publish_status=[&](){std_msgs::msg::String m;m.data=Json({{"source","gos_local_lio"},{"frame","gos_odom"},{"active",!liveness.stalled&&core.state.blocked_reason.empty()&&last_publish>=0&&mono()-last_publish<fresh},{"blocked_reason",core.state.blocked_reason.empty()?Json():Json(core.state.blocked_reason)},{"registration_stalled",liveness.stalled},{"source_identity_failed",source_identity_failed},{"forwarded",core.state.forwarded},{"rejected",core.state.rejected},{"evidence_dropped",evidence.dropped()},
++      {"evidence_write_failed",evidence.failed()},{"quality_checks",core.state.quality_checks},
++      {"residual_p95_m",std::isfinite(core.state.last_residual)?Json(core.state.last_residual):Json()},
++      {"residual_threshold_m",core.profile.residual_max}}).dump();status_pub->publish(m);};
+     std::signal(SIGTERM,[](int){running=false;});std::signal(SIGINT,[](int){running=false;});
+     double started=mono(),next_status=started;gos6d::Cadence cadence(started,tick,core.latest_paired);Json phases={{"calls",0},{"total_s",0.},{"max_s",0.}};
+     std::ofstream(std::string(argv[8])+"/registration.ready.json")<<Json({{"pid",getpid()},{"source_domain",0},{"output_domain",87},{"wall_s",wall()},{"spatial_mode",gos6d::spatial_mode_name(core.spatial.mode)}}).dump()<<'\n';
+@@ -169,6 +174,7 @@
+       double source_spin_begin=trace.enabled()?mono():0;source_executor.spin_some();double source_spin_end=trace.enabled()?mono():0;output_executor.spin_some();double now=mono();
+       if(trace.enabled())executor_trace.observe(source_spin_begin,source_spin_end,now);
+       if(cadence.due(now)){double t=mono(),wall_started=wall(),prior_publish=last_publish;auto queue_before=core.clouds.size();auto diagnostic_cloud=core.clouds.empty()?std::shared_ptr<gos6d::RegistrationCloud>():core.clouds.front();auto d=core.forward(wall(),[&](){return graph_identity(input+"/cloud_world",cloud_identity,"cloud")&&graph_identity(input+"/odom",odom_identity,"odometry");});diagnostic_cloud=core.selected_cloud;
++        if(core.selected_cloud)evidence.record(core,d,wall_started,t);
+         auto pair_timing=gos6d::registration_pair_row(core,t);pair_timing.v[gos6d::Wall]=wall_started;pair_timing.v[gos6d::Valid]=d.code;
+         std::array<double,4> publish_begin{},publish_end{};
+         if(d.code==gos6d::RegistrationDecision::Publish){auto c=std::static_pointer_cast<Cloud>(d.cloud->payload);auto o=*std::static_pointer_cast<Odom>(d.odom->payload);auto pc=compact(*c,d);o.header.frame_id="gos_odom";o.child_frame_id="base_link_gos";publish_begin[0]=trace.enabled()?mono():0;odom_pub->publish(o);publish_end[0]=trace.enabled()?mono():0;geometry_msgs::msg::TransformStamped tf;tf.header=o.header;tf.child_frame_id="gos_odom";tf.transform.rotation.w=1.;publish_begin[1]=trace.enabled()?mono():0;tf_pub->publish(tf);publish_end[1]=trace.enabled()?mono():0;publish_begin[2]=trace.enabled()?mono():0;cloud_pub->publish(pc);publish_end[2]=trace.enabled()?mono():0;staircase_msgs::msg::RegisteredScan pair;pair.cloud=core.spatial.current_support?compact(*c,d,true):pc;pair.odometry=o;publish_begin[3]=trace.enabled()?mono():0;scan_pub->publish(pair);publish_end[3]=trace.enabled()?mono():0;double published_at=mono(),gap=last_publish<0?0:published_at-last_publish;max_publish_gap=std::max(max_publish_gap,gap);if(diagnostics&&event_count<1000&&gap>core.profile.source_max_age/2){events<<Json({{"event","registered_publish"},{"wall_s",wall()},{"source_stamp_s",d.cloud->stamp},{"publish_gap_s",gap},{"end_age_s",wall()-d.cloud->stamp},{"forward_s",published_at-t}}).dump()<<std::endl;++event_count;}last_publish=published_at;
+--- a/registration_core.hpp
++++ b/registration_core.hpp
+@@ -53,20 +53,23 @@
+   std::vector<std::size_t> result;for(auto& v:unique)result.push_back(v.second);
+   if(input_order)std::sort(result.begin(),result.end());return result;
+ }
+-template<class Scalar=double> inline double residual_p95(const Points& source,const Points& target,double leaf=.2,int count=128,double quantile=.95) {
++struct DecisionResidualSample {Vec source=Vec::Zero(),nearest=Vec::Zero();double distance=0;bool found=false;};
++template<class Scalar=double> inline double residual_p95(const Points& source,const Points& target,double leaf=.2,int count=128,double quantile=.95,std::vector<DecisionResidualSample>* samples=nullptr) {
++  if(samples)samples->clear();
+   if(source.empty()||target.empty())return std::numeric_limits<double>::infinity();
+   std::unordered_map<Key,std::vector<std::size_t>,KeyHash> grid;
+   for(std::size_t i=0;i<target.size();++i)grid[cell<Scalar>(target[i],leaf)].push_back(i);
+   const auto stride=std::max<std::size_t>(1,source.size()/count);
+   std::vector<double> distances;
+   for(std::size_t i=0;i<source.size()&&distances.size()<std::size_t(count);i+=stride){
+-    auto k=cell<Scalar>(source[i],leaf);Scalar best=std::numeric_limits<Scalar>::infinity();
++    auto k=cell<Scalar>(source[i],leaf);Scalar best=std::numeric_limits<Scalar>::infinity();std::size_t nearest=0;bool found=false;
+     for(int x=-1;x<=1;++x)for(int y=-1;y<=1;++y)for(int z=-1;z<=1;++z){
+       auto it=grid.find({k.x+x,k.y+y,k.z+z});if(it==grid.end())continue;
+       for(auto j:it->second){Scalar dx=Scalar(target[j].x())-Scalar(source[i].x()),dy=Scalar(target[j].y())-Scalar(source[i].y()),dz=Scalar(target[j].z())-Scalar(source[i].z());
+-        Scalar d=Scalar(Scalar(dx*dx+dy*dy)+dz*dz);best=std::min(best,d);}
++        Scalar d=Scalar(Scalar(dx*dx+dy*dy)+dz*dz);if(d<best){best=d;nearest=j;found=true;}}
+     }
+     distances.push_back(std::sqrt(best));
++    if(samples)samples->push_back({source[i],found?target[nearest]:Vec::Zero(),double(distances.back()),found});
+   }
+   std::sort(distances.begin(),distances.end());return distances[std::size_t(quantile*(distances.size()-1))];
+ }
+@@ -137,6 +140,10 @@
+   std::unordered_map<std::string,int> rejected;
+   std::vector<double> quality_p95;std::size_t reference_voxels=0;bool reference_count_set=false;
+   std::string blocked_reason,last_rejection;
++  std::uint64_t quality_checks=0;double last_residual=std::numeric_limits<double>::quiet_NaN();
++  std::vector<DecisionResidualSample> residual_samples;
++  std::size_t quality_roi_points=0,quality_reference_points=0;
++  int quality_reference_oldest=0,quality_reference_newest=0;
+ };
+ struct RegistrationDecision {
+   enum Code {Wait,Reject,Matched,Publish} code=Wait;std::string reason;
+@@ -213,8 +220,11 @@
+       if(pose_recheck)++s.pose_rechecks;
+       const bool recovering=!s.quality_ok&&s.matched>p.quality_start;
+       if(!recovering)for(auto it=s.reference.begin();it!=s.reference.end();)if(s.matched-it->second.second>=p.reference_retention)it=s.reference.erase(it);else ++it;
+-      Points target;for(auto& v:s.reference)target.push_back(v.second.first);
+-      double d=residual_p95<float>(roi,target,p.residual_cell,p.residual_sample_count,p.residual_quantile);s.quality_p95.push_back(d);if(s.quality_p95.size()>600)s.quality_p95.erase(s.quality_p95.begin());
++      Points target;s.quality_reference_oldest=s.matched;s.quality_reference_newest=0;
++      for(auto& v:s.reference){target.push_back(v.second.first);s.quality_reference_oldest=std::min(s.quality_reference_oldest,v.second.second);s.quality_reference_newest=std::max(s.quality_reference_newest,v.second.second);}
++      s.quality_roi_points=roi.size();s.quality_reference_points=target.size();
++      double d=residual_p95<float>(roi,target,p.residual_cell,p.residual_sample_count,p.residual_quantile,&s.residual_samples);
++      ++s.quality_checks;s.last_residual=d;s.quality_p95.push_back(d);if(s.quality_p95.size()>600)s.quality_p95.erase(s.quality_p95.begin());
+       s.quality_ok=d<=p.residual_max;if(!s.quality_ok)return reject("registration_residual");
+       if(recovering)for(auto it=s.reference.begin();it!=s.reference.end();)if(s.matched-it->second.second>=p.reference_retention)it=s.reference.erase(it);else ++it;
+     }
+--- /dev/null
++++ b/registration_evidence.hpp
+@@ -0,0 +1,129 @@
++#pragma once
++// Always-on evidence from the actual quality decision. One producer and one
++// background disk worker; recording never publishes or admits sensor data.
++#include "registration_core.hpp"
++#include "json.hpp"
++#include <atomic>
++#include <chrono>
++#include <filesystem>
++#include <fstream>
++#include <thread>
++#include <sys/resource.h>
++#include <sys/stat.h>
++#include <sys/statvfs.h>
++#include <fcntl.h>
++#include <unistd.h>
++
++namespace gos6d {
++class RegistrationEvidence {
++    static constexpr std::size_t capacity=64,segments=4,segment_bytes=8*1024*1024;
++    struct Event {
++        double wall=0,mono=0,stamp=0,pair_delta=0,p95=0,threshold=0,age=0;
++        std::int32_t sec=0;std::uint32_t nanosec=0;
++        std::uint64_t check=0,matched=0,forwarded=0,roi=0,reference=0;
++        int oldest=0,newest=0,code=0;
++        bool checked=false,quality_ok=false;
++        Vec position=Vec::Zero();Eigen::Vector4d orientation{0,0,0,1};
++        char reason[96]{};
++        std::array<DecisionResidualSample,128> samples{};std::size_t count=0;
++    };
++    std::unique_ptr<Event[]> queue_{new Event[capacity]};
++    std::atomic<std::uint64_t> head_{0},tail_{0},dropped_{0};
++    std::atomic<bool> stopping_{false},failed_{false};
++    std::thread worker_;std::filesystem::path directory_;
++    std::uint64_t last_check_=0;std::size_t segment_=0,bytes_=0;
++    int fd_=-1;bool first_rejection_saved_=false;
++    static nlohmann::json number(double v){return std::isfinite(v)?nlohmann::json(v):nlohmann::json();}
++    static nlohmann::json xyz(const Vec& p){return {p.x(),p.y(),p.z()};}
++    static nlohmann::json encode(const Event& e){
++        using J=nlohmann::json;
++        J j={{"schema",1},{"event","registration_quality"},{"wall_s",e.wall},{"mono_s",e.mono},
++            {"source_stamp_s",e.stamp},{"source_sec",e.sec},{"source_nanosec",e.nanosec},
++            {"source_age_s",e.age},{"pair_delta_s",number(e.pair_delta)},
++            {"decision",e.reason},{"decision_code",e.code},{"quality_checked",e.checked},
++            {"quality_check",e.check},{"quality_ok",e.quality_ok},{"matched",e.matched},{"forwarded",e.forwarded},
++            {"position",xyz(e.position)},{"orientation_xyzw",{e.orientation[0],e.orientation[1],e.orientation[2],e.orientation[3]}}};
++        if(e.checked){
++            j["p95_m"]=number(e.p95);j["p95_finite"]=std::isfinite(e.p95);j["threshold_m"]=e.threshold;
++            j["roi_points"]=e.roi;j["reference_points"]=e.reference;
++            j["reference_oldest_matched"]=e.oldest;j["reference_newest_matched"]=e.newest;
++            j["samples"]=J::array();
++            for(std::size_t i=0;i<e.count;++i){const auto& s=e.samples[i];
++                j["samples"].push_back({{"source_world",xyz(s.source)},
++                    {"nearest_world",s.found?xyz(s.nearest):J()},
++                    {"found",s.found},{"distance_m",number(s.distance)}});}
++        }
++        return j;
++    }
++    static bool write_all(int fd,const std::string& s){
++        auto* p=s.data();auto left=s.size();
++        while(left){auto n=::write(fd,p,left);if(n<0&&errno==EINTR)continue;if(n<=0)return false;p+=n;left-=n;}
++        return true;
++    }
++    void open_segment(){
++        if(fd_>=0){if(::fsync(fd_)!=0)throw std::runtime_error("evidence sync");::close(fd_);}
++        const auto p=directory_/("segment_"+std::to_string(segment_)+".jsonl");
++        fd_=::open(p.c_str(),O_WRONLY|O_CREAT|O_TRUNC|O_NOFOLLOW|O_CLOEXEC,0600);
++        if(fd_<0)throw std::runtime_error("evidence open");bytes_=0;
++    }
++    void work()noexcept{
++        try{
++            double last_sync=0;
++            while(!stopping_||tail_.load()!=head_.load()){
++                const auto t=tail_.load(std::memory_order_relaxed);
++                if(t==head_.load(std::memory_order_acquire)){
++                    if(bytes_&&last_sync>0){
++                        auto now=std::chrono::duration<double>(std::chrono::steady_clock::now().time_since_epoch()).count();
++                        if(now-last_sync>1){if(::fsync(fd_)!=0)throw std::runtime_error("evidence sync");last_sync=now;}}
++                    std::this_thread::sleep_for(std::chrono::milliseconds(5));continue;}
++                const auto e=queue_[t%capacity];tail_.store(t+1,std::memory_order_release);
++                const auto row=encode(e).dump()+"\n";
++                if(row.size()>segment_bytes)throw std::runtime_error("evidence record size");
++                if(bytes_+row.size()>segment_bytes){segment_=(segment_+1)%segments;open_segment();}
++                if(!write_all(fd_,row))throw std::runtime_error("evidence write");bytes_+=row.size();
++                if(e.code==RegistrationDecision::Reject&&!first_rejection_saved_){
++                    const auto p=directory_/"first_rejection.json";
++                    const int first=::open(p.c_str(),O_WRONLY|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC,0600);
++                    if(first<0)throw std::runtime_error("first evidence open");
++                    const bool ok=write_all(first,row)&&::fsync(first)==0;::close(first);
++                    if(!ok)throw std::runtime_error("first evidence write");first_rejection_saved_=true;
++                }
++                if(e.mono-last_sync>1){if(::fsync(fd_)!=0)throw std::runtime_error("evidence sync");last_sync=e.mono;}
++            }
++            if(::fsync(fd_)!=0)throw std::runtime_error("evidence final sync");
++        }catch(...){failed_=true;std::fprintf(stderr,"[REGISTRATION_EVIDENCE_FAILED] inspect evidence_write_failed status\n");}
++    }
++public:
++    explicit RegistrationEvidence(const std::string& path):directory_(path){
++        if(!std::filesystem::create_directory(directory_))throw std::runtime_error("new registration evidence directory required");
++        ::chmod(directory_.c_str(),0700);struct statvfs v{};
++        if(::statvfs(directory_.c_str(),&v)!=0||double(v.f_bavail)*v.f_frsize<128*1024*1024)
++            throw std::runtime_error("registration evidence disk reserve");
++        open_segment();worker_=std::thread([this]{work();});
++    }
++    ~RegistrationEvidence(){stopping_=true;if(worker_.joinable())worker_.join();if(fd_>=0)::close(fd_);}
++    bool failed()const{return failed_.load();}
++    std::uint64_t dropped()const{return dropped_.load();}
++    void record(const RegistrationCore& core,const RegistrationDecision& decision,double wall,double mono){
++        const bool checked=core.state.quality_checks!=last_check_;
++        last_check_=core.state.quality_checks;
++        if(!checked&&decision.code!=RegistrationDecision::Reject)return;
++        if(failed_)return;
++        const auto h=head_.load(std::memory_order_relaxed);
++        if(h-tail_.load(std::memory_order_acquire)>=capacity){++dropped_;return;}
++        auto& e=queue_[h%capacity];e=Event{};
++        const auto& s=core.state;e.wall=wall;e.mono=mono;e.stamp=core.selected_cloud->stamp;e.age=wall-e.stamp;
++        if(core.selected_cloud->source_stamp){e.sec=core.selected_cloud->source_stamp->sec;e.nanosec=core.selected_cloud->source_stamp->nanosec;}
++        e.pair_delta=core.selected_pair_delta;e.code=decision.code;e.checked=checked;e.check=s.quality_checks;
++        e.quality_ok=s.quality_ok;e.matched=s.matched;e.forwarded=s.forwarded;
++        std::strncpy(e.reason,decision.reason.c_str(),sizeof(e.reason)-1);
++        if(core.selected_odom){e.position=core.selected_odom->position;e.orientation=core.selected_odom->q;}
++        if(checked){e.p95=s.last_residual;e.threshold=core.profile.residual_max;
++            e.roi=s.quality_roi_points;e.reference=s.quality_reference_points;
++            e.oldest=s.quality_reference_oldest;e.newest=s.quality_reference_newest;
++            e.count=std::min(e.samples.size(),s.residual_samples.size());
++            std::copy_n(s.residual_samples.begin(),e.count,e.samples.begin());}
++        head_.store(h+1,std::memory_order_release);
++    }
++};
++}

@@ -1,0 +1,175 @@
+{
+  "date": "2026-11-18",
+  "status": "deployed_safety_and_stationary_perception_validated_motion_not_started",
+  "files_deployed": true,
+  "custom_motor_control_started": false,
+  "physical_validation": "not_performed",
+  "aos": {
+    "robot": "1515",
+    "serial": "4c7428ea7d51f4b",
+    "mac": "00:e0:9a:4a:ff:8d",
+    "release": "/home/user/m20_native_releases/model42900_20261118_jointguard_aos",
+    "old_entry_redirected": true,
+    "elf_sha256": "bcaebf0da8966d7e6be624fc467c05a45739cf480caa110a80ee1e4258141e94",
+    "policy_sha256": "e567f79b11e7947722d1cf24e63aa92111bc2cc469c317e4eaac86e2b08392b4",
+    "ledger_sha256": "392f98bad295fa12c1306ca649ea1b861dd594976d36f1b0612c4c68dc73ae00",
+    "incident_directory": "/var/opt/robot/data/m20_joint_guard_incidents"
+  },
+  "model": {
+    "checkpoint": "M20_perception_Lidar_rl/test_model/model_42900.pt",
+    "sha256": "99c00c557d6c84bb50cc09882ac3137bb5fde5830dde75481bff221eb2622813",
+    "unchanged": true,
+    "config_origin": "explicit compatible run; byte-identical log checkpoint origin not established"
+  },
+  "issues": {
+    "1_angle_boundaries": "software implemented/deployed/verified in common final publisher; intersection of operator and SDK limits",
+    "2_jump_and_feedback_error": "software implemented/deployed/verified; SDK-derived thresholds need gait acceptance",
+    "3_post_stair_flat_posture": "not resolved or behaviorally revalidated",
+    "4_actuator_alignment": "software default/order/scaling/PD metadata aligned; physical calibration and driver saturation still unverified",
+    "5_incident_recording": "always-on bounded onboard recorder; independent of optional alignment/cloud capture; first fault preserved and post-window freeze; abrupt power loss may lose unsynced tail"
+  },
+  "checks": {
+    "local_python": 8,
+    "aos_guard_logic_checks": 344,
+    "aos_actual_dds_guard_checks": 108,
+    "aos_command_publisher_compiled_out_in_integration_tests": true,
+    "aos_build_exit": 0,
+    "recording_concurrency": true,
+    "recording_real_write_failure": true,
+    "recording_freeze": true,
+    "small_ring_retained_records": 162,
+    "small_ring_sequence_gaps": 0,
+    "aos_readonly_body_joint_frames": 400,
+    "aos_readonly_body_imu_frames": 1600,
+    "aos_readonly_observed_command_frames": 0,
+    "aos_live_preflight_01_exit": 1,
+    "aos_live_preflight_01_reason": "no staircase packets; GOS blocked before spawn by CPU-capacity equality gate",
+    "aos_live_preflight_02_exit": 1,
+    "aos_live_preflight_02_received": 71,
+    "aos_live_preflight_02_accepted": 0,
+    "aos_live_preflight_02_first_failure": "source_invalid",
+    "gos_topology_test_cases": 5,
+    "gos_registration_forwarded": 562,
+    "gos_reader_received": 562,
+    "gos_formal_published": 2928,
+    "gos_formal_valid": 2733,
+    "gos_formal_reasons": {
+      "ok": 2733,
+      "reader_eof": 1,
+      "waiting_for_source": 194
+    },
+    "final_aos_release_checksums": "pass",
+    "aos_source_lease_rechecked_after_publish_mutex_wait": true,
+    "aos_guard_trace_precedes_actual_publish": true,
+    "aos_live_preflight_06_exit": 0,
+    "aos_live_preflight_06_received": 996,
+    "aos_live_preflight_06_accepted": 996,
+    "aos_live_preflight_06_health_checks": 9121,
+    "aos_live_preflight_06_first_failure": "none",
+    "gos_full_acceptance_09_exit": 0,
+    "gos_full_acceptance_09_pass": true,
+    "gos_verifier_fixture_cases": 28,
+    "gos_verifier_fixture_checks": 765,
+    "gos_registration_matched": 581,
+    "gos_reader_healthy": 562,
+    "gos_reader_expired": 0,
+    "gos_qos_cloud_integrity_matched": 37,
+    "gos_qos_imu_integrity_matched": 692,
+    "gos_qos_content_mismatches": 0,
+    "gos_qos_cdr_variations_reported": true,
+    "finite_gos_children_stopped_after_probe": true,
+    "continuous_gos_children_running": true,
+    "runtime_profiles_unchanged_verified_by_manifest": false
+  },
+  "preserved": [
+    "1516 reference robot",
+    "1515 vendor programs/models/services",
+    "source identity and freshness/lease protections",
+    "physical SDK_READY/AOS_RUN operator confirmations",
+    "stop and damping paths"
+  ],
+  "skipped": [
+    "physical locomotion and stair-flat-joystick behavior acceptance",
+    "1515 extrinsic and actuator commissioning",
+    "hub Space: company knowledge/tools unavailable",
+    "git hub push: no hub remote; GitHub origin read-only"
+  ],
+  "evidence": "artifacts/20261118/joint_guard_final_evidence and artifacts/20261118/lidar_input_final_evidence",
+  "git": {
+    "branch": "agent/codex/joint-publish-safety",
+    "push": "not attempted: hub remote unavailable"
+  },
+  "gos": {
+    "robot": "1515",
+    "serial": "6a3df90cc64ca70b",
+    "mac": "46:40:20:07:09:44",
+    "release": "/home/user/m20_native_releases/model42900_20261118_gos",
+    "supervisor_elf_sha256": "274db8040c4162f81692e8c80668b8a52426ae33a1692af218e73075f79ecdf9",
+    "change": "CPU topology classification; bounded startup settling; loopback discovery and two LIO input topics; independent raw LiDAR and QoS helpers",
+    "changed_existing_files": [
+      "native_tools/m20_deploy",
+      "native_tools/gos_resources.hpp",
+      "runtime/gos_resources.json (startup settling only)",
+      "stage/direct_udp.xml (add loopback)",
+      "stage/lio_release/gos_lio.yaml (two input topics only)"
+    ],
+    "runtime_profiles_unchanged_verified_by_manifest": false,
+    "quiet_units": [],
+    "probe_requested_seconds": 60,
+    "reader_elapsed_seconds": 60.002703433,
+    "probe_exit": 0,
+    "probe_failure": null,
+    "geometry_and_freshness_parameters_unchanged": true,
+    "roles_and_quiet_units_unchanged": true,
+    "thread_settle_passes": 100
+  },
+  "ready_for_motor_control": false,
+  "live_limitation": "Stationary no-motor perception and software checks passed. Physical extrinsics, joint calibration, driver saturation and locomotion/stair-flat behavior remain unverified.",
+  "network_dependency": "Guard and recorder run onboard; no laptop Wi-Fi or SSH dependency. Board network/sensor/remote freshness gates retained.",
+  "first_attempts_retained": [
+    "native build 01 failed on fixture include dependency; fixed before successful builds 02 and 03",
+    "initial GOS probe rejected mixed capacities among same-model big cores; classifier repaired",
+    "GOS repair initially refused unused reference main.cpp; final build saved explicit GOS-only entry",
+    "native build 04 rejected an incorrect expiry-test expected status; fixed expectation and full build 05 passed",
+    "Raw-input and QoS mismatch failures retained with upstream packet captures",
+    "Direct full-cloud TX failed; final raw-packet path adopted instead",
+    "Startup thread set did not settle in original short window; bounded budget repaired and revalidated",
+    "Independent acceptance executable missing; restored from saved sources and tested",
+    "Compiler diagnostic build first lacked Eigen include; fixed before successful fixture tests",
+    "CDR byte-only comparison found padding variations; complete fields and raw data subsequently compared with zero content mismatches",
+    "Sensor admission initially confused inherited SSH affinity with allowed placement; final code verifies kernel readback of requested CPUs"
+  ],
+  "pointcloud_input_repaired": true,
+  "pointcloud_repair": {
+    "root_causes": [
+      "Raw LiDAR traffic existed only on the AOS sensor network; no raw supply at GOS",
+      "Saved LIO requested RELIABLE while original sensor publishers offered BEST_EFFORT"
+    ],
+    "implemented": [
+      "Payload-preserving raw front UDP forwarding to private GOS ports",
+      "GOS-local front decoder and QoS adapter on dedicated LIO input topics",
+      "Loopback discovery and bounded startup thread-set checks",
+      "Restored and tested saved independent acceptance verifier"
+    ],
+    "not_adopted": "Direct complete-cloud transmission: AOS TX qdisc drops prevented GOS reassembly",
+    "raw_probe_msop_received_and_forwarded": 268788,
+    "raw_probe_difop_received_and_forwarded": 120,
+    "raw_probe_imu_received_and_forwarded": 23999,
+    "raw_probe_send_errors": 0,
+    "vendor_configuration_and_services_changed": false,
+    "global_network_settings_changed": false,
+    "source_packet_timestamps_and_geometry_preserved": true
+  },
+  "running_sessions": {
+    "AOS": [
+      "model42900_raw_lidar"
+    ],
+    "GOS": [
+      "model42900_front_lidar",
+      "model42900_lio_qos",
+      "model42900_gos"
+    ],
+    "autostart_service_installed": false,
+    "custom_motor_controller_running": false
+  }
+}

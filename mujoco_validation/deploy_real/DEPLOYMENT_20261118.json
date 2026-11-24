@@ -1,0 +1,107 @@
+{
+  "date": "2026-11-18",
+  "status": "files_deployed_offline_pass_live_perception_blocked",
+  "files_deployed": true,
+  "ready_for_motor_control": false,
+  "custom_motor_control_started": false,
+  "target": {
+    "robot": "1515",
+    "aos": {
+      "directory": "/home/user/m20_native_releases/model42900_20261118_aos",
+      "mac": "00:e0:9a:4a:ff:8d",
+      "hardware_serial": "4c7428ea7d51f4b"
+    },
+    "gos": {
+      "directory": "/home/user/m20_native_releases/model42900_20261118_gos",
+      "mac": "46:40:20:07:09:44",
+      "hardware_serial": "6a3df90cc64ca70b"
+    }
+  },
+  "reference": {
+    "robot": "1516",
+    "route": "office -> NX -> AOS -> GOS",
+    "aos": "/var/opt/robot/data/m20_custom_evidence/current35300_20261113_receiver_reset",
+    "gos": "/home/user/gos_pose_recheck_20261113",
+    "reference_content_unchanged_verified": true,
+    "original_actor_exact_tensor_matches": 8,
+    "baseline_checkpoint_sha256": "4aefe17ddc279ee809ff6257862ba4e28bb1b19ad48b11a5948b116256d61f8b",
+    "baseline_onnx_sha256": "1762caa40a2ae0d4cd1cc63764b9fe0fd61134c57439e790dac0255a93befc32",
+    "reference_latest_receipt_scope": "deployment/build; not a new physical locomotion acceptance"
+  },
+  "model": {
+    "checkpoint": "M20_perception_Lidar_rl/test_model/model_42900.pt",
+    "checkpoint_sha256": "99c00c557d6c84bb50cc09882ac3137bb5fde5830dde75481bff221eb2622813",
+    "onnx_sha256": "e567f79b11e7947722d1cf24e63aa92111bc2cc469c317e4eaac86e2b08392b4",
+    "aos_elf_sha256": "3eb4e4f6726a2731cf94f2429b148bba22270743f6cba2a03b242ef5eba36831",
+    "config_provenance": "explicit compatible run config; checkpoint origin not proven by identical log copy",
+    "export_report": "artifacts/20261118/export_1516/model.onnx.provenance.json"
+  },
+  "changes": [
+    "Actor replacement in verified ONNX graph",
+    "Saved nominal pose shared by observation, target, stand-up endpoint and metadata validation",
+    "Saved clipping with pre-clip finite and raw-target overflow rejection",
+    "GOS isolated message dependency prefix and GOS-only native entry",
+    "GOS background service quiet list empty; role placements unchanged"
+  ],
+  "offline_checks": {
+    "status": "pass",
+    "local_rejection_tests": 5,
+    "onnx_pytorch_replay_samples": 6724,
+    "onnx_pytorch_max_absolute_error": 6.67572021484375e-06,
+    "native_full_controller_cases": 128,
+    "native_max_target_error": 0.00131226,
+    "native_mismatched_nominal_metadata_rejected": true,
+    "source_packet_store_lease_fault_recovery_history_and_alignment_checks": "pass",
+    "native_build_exit": 0,
+    "updated_alignment_checker_saved_clipping_semantics": "pass; 21 rejection cases and both alignment recordings"
+  },
+  "live_checks": {
+    "aos_readonly_body_pass": true,
+    "aos_joint_frames": 400,
+    "aos_imu_frames": 1600,
+    "aos_observed_command_frames": 0,
+    "aos_full_preflight_exit": 1,
+    "aos_full_preflight_failure": "staircase observation: received=0 accepted=0 publishers=0 after bounded GOS probe stopped",
+    "gos_probe_seconds": 20.000723354,
+    "gos_registered_inputs": {
+      "cloud": 0,
+      "odom": 0
+    },
+    "gos_forwarded": 0,
+    "gos_formal_valid": 0,
+    "gos_formal_reasons": {
+      "waiting_for_source": 1004
+    },
+    "passive_lidar_capture": {
+      "seconds": 5,
+      "ethernet_frames": 1614,
+      "configured_lidar_udp_frames": 0
+    },
+    "owned_gos_probe_processes_remaining": false
+  },
+  "preserved": [
+    "reference 1516 configuration/services/controller",
+    "1515 vendor model/configuration/services",
+    "packet provenance/freshness/leases",
+    "SDK/remote/recovery protections and damping",
+    "physical SDK_READY/AOS_RUN confirmations"
+  ],
+  "skipped": [
+    "motor control activation: upstream live observation failed",
+    "physical stairs/noise evaluation",
+    "1515 sensor extrinsic commissioning",
+    "live GOS-to-AOS valid-observation acceptance",
+    "hub Space/push: tools and hub remote unavailable"
+  ],
+  "evidence": [
+    "artifacts/20261118/aos_final_evidence",
+    "artifacts/20261118/gos_final_evidence",
+    "artifacts/20261118/target1515_lidar_network.txt",
+    "artifacts/20261118/reference1516_lidar_network.txt"
+  ],
+  "commands": "START_COMMANDS.md",
+  "git": {
+    "branch": "agent/codex/deploy42900-1515",
+    "push": "not attempted: no hub remote; GitHub origin is read-only by workspace instructions"
+  }
+}

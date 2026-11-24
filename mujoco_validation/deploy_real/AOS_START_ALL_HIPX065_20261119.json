@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "status": "aos_running_idle_all_hipx_065",
+  "controller_pid": 231831,
+  "tmux": "local45200_aos_allhipx065",
+  "incident_session": "231831_1795084995261286587",
+  "board_wall_s": 1795085051.9498372,
+  "release": "/home/user/m20_native_releases/model42900_20261118_jointguard_aos",
+  "checkpoint_iteration": 45200,
+  "model_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+  "elf_sha256": "c95d3240406f172cebac1bafde64107f146b28c850a2229b65067576e3082147",
+  "joint_ledger_sha256": "345a251709150cea881c363a236ac396a1d3f5822eaa52f13f298be39492a00f",
+  "hipx_tracking_error_rad": 0.65,
+  "hipx_sdk_indices": [
+    0,
+    4,
+    8,
+    12
+  ],
+  "hipx_proxy_nm": 52.0,
+  "last_controller_state": {
+    "accepted": false,
+    "damping_reset_seq": 0,
+    "event": "controller_state",
+    "fault_trigger": false,
+    "imu_rpy_omega_acc": [
+      -0.0033053827937692404,
+      -0.004839326720684767,
+      2.199960231781006,
+      0.0005581737495958805,
+      -0.0011242014588788152,
+      -0.001768489833921194,
+      0.05618499964475632,
+      -0.06407299637794495,
+      9.767926216125488
+    ],
+    "inference_id": 0,
+    "joint_fault_latched": false,
+    "joystick": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mono_s": 11475.948809619,
+    "reason": "",
+    "record_seq": 43985,
+    "remote_command_stamp_s": 11475.857636681,
+    "safe_mode": 0,
+    "session": "231831_1795084995261286587",
+    "state": 0,
+    "target_mode": 2,
+    "wall_s": 1795085051.8994677
+  },
+  "formal_preflight": {
+    "pass": true,
+    "received": 1000,
+    "accepted": 1000,
+    "continuous_health_checks": 9617
+  },
+  "perception_loss_timeout_s": 2.0,
+  "agent_sent_motion_keys": false,
+  "physical_validation": "not_performed",
+  "console_log": "artifacts/allhipx065_aos_start_console.log"
+}

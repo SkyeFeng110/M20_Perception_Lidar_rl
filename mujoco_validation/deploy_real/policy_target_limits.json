@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "reference_robot_path": "/home/arcus/deeprobotics_m20_rl/deploy_real_ws/m20_student_deploy/deploy/robot.json",
+  "reference_robot_sha256": "bd393fa08cf97ecd2a97d2e0077cd37e0928712d0471ac4dbddc846e17f3c215",
+  "margin_rad": [
+    0.03,
+    0.05,
+    0.08
+  ],
+  "max_rate_rad_s": [
+    50.0,
+    50.0,
+    50.0
+  ],
+  "publication_dt_cap_s": 0.005,
+  "scope": "Policy worker only; successful policy publications, not feedback or discarded candidates, advance targets. The 50 rad/s ceiling permits full-stick target changes without a slow-start ramp while angle, feedback, target-rate and source guards remain active. Physical gait validation pending."
+}

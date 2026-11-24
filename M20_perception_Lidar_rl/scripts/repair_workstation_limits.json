@@ -1,0 +1,14 @@
+{
+  "default_num_envs": 4096,
+  "max_num_envs": 4096,
+  "default_updates": 100,
+  "max_updates_per_stage": 200,
+  "max_guarded_total_updates": 50000,
+  "total_update_authorization": "On 2026-11-20 the user requested 50000 additional updates for the new StepRetention stage initialized from 47900; training remains manually launched by the user.",
+  "default_guard_interval": 100,
+  "max_guard_interval": 100,
+  "minimum_free_disk_gib": 6,
+  "minimum_available_ram_gib": 6,
+  "basis": "On 2026-11-17 the user requested 4096 environments, a longer behavior-evaluation interval, and then cancellation of automatic stops for behavior-evaluation failures. The default and maximum interval are 100 updates. Valid behavior failures are recorded and training continues; runtime/evaluation-data errors, resource reserves and user interruption still apply. The 4096-environment run completed 100 updates with all eight ascents completed and no falls or stalls; its only retention failure was keyboard-flat speed 0.664365 m/s versus the 0.669547 m/s threshold. This is not proof of long-run hardware stability. Historical files, checkpoints and acceptance thresholds are preserved.",
+  "traction_transition_authorization": "On 2026-11-20 the user requested a new TractionTransition run initialized from model_48900.pt for 50000 additional PPO updates; provide a validated manual launch command without starting PPO."
+}

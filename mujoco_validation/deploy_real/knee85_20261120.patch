@@ -1,0 +1,76 @@
+--- a/run_policy/joint_safety_limits.hpp
++++ b/run_policy/joint_safety_limits.hpp
+@@ -2,7 +2,7 @@
+ #include <array>
+ #include <cstdint>
+ namespace m20 { namespace joint_limits {
+-inline constexpr const char* ledger_sha256 = "41546ac515dd7b257759c60c6231cdb260c8f4154b0e120e379561d59a98e434";
++inline constexpr const char* ledger_sha256 = "4ec1de04636847ee9cbad789cba598a017e70512efc150ea05557015c1929dec";
+ inline constexpr bool operator_limits_confirmed = true;
+ inline constexpr std::array<double,3> front_left_lower_rad = {-0.436,-2.286,-2.809};
+ inline constexpr std::array<double,3> front_left_upper_rad = {0.611,2.583,2.792};
+@@ -21,7 +21,7 @@
+ inline constexpr std::array<float,12> effective_lower = {-0.436f,-2.286f,-2.809f,-0.611f,-2.286f,-2.809f,-0.436f,-2.583f,-2.792f,-0.611f,-2.583f,-2.792f};
+ inline constexpr std::array<float,12> effective_upper = {0.611f,2.583f,2.792f,0.436f,2.583f,2.792f,0.611f,2.286f,2.809f,0.436f,2.286f,2.809f};
+ inline constexpr std::array<double,16> tracking_error_max_rad = {0.65,0.0,0.0,0.0,0.65,0.0,0.0,0.0,0.65,0.0,0.0,0.0,0.65,0.0,0.0,0.0};
+-inline constexpr std::array<double,16> tracking_error_proxy_nm = {52.0,95.0,76.4,0.0,52.0,95.0,76.4,0.0,52.0,95.0,76.4,0.0,52.0,95.0,76.4,0.0};
++inline constexpr std::array<double,16> tracking_error_proxy_nm = {52.0,95.0,85.0,0.0,52.0,95.0,85.0,0.0,52.0,95.0,85.0,0.0,52.0,95.0,85.0,0.0};
+ inline constexpr float lower(int i) { return effective_lower[(i/4)*3+i%4]; }
+ inline constexpr float upper(int i) { return effective_upper[(i/4)*3+i%4]; }
+ }}
+--- a/scripts/joint_command_guard_test.cpp
++++ b/scripts/joint_command_guard_test.cpp
+@@ -55,7 +55,7 @@
+         for(int i=0;i<16;++i)if(i%4!=3){
+             const bool overridden=i==12 || (all_hipx && i%4==0);
+             require(std::abs(m20::joint_limits::tracking_error_max_rad[i]-(overridden?.65:0.))<1e-12,"named angular threshold or override isolation");
+-            const double expected_proxy=(overridden?52.0:(i%4==1?95.0:m20::joint_limits::leg_torque_nm[i%4]));
++            const double expected_proxy=(overridden?52.0:(i%4==1?95.0:(i%4==2?85.0:m20::joint_limits::leg_torque_nm[i%4])));
+             require(std::abs(m20::joint_limits::tracking_error_proxy_nm[i]-expected_proxy)<1e-9,"named proxy ceiling or unchanged joint budget");
+         }
+         for(int joint:{0,4,8,12}){
+@@ -85,6 +85,20 @@
+         if(all_hipx)std::cout<<"ALL_HIPX_TRACKING_OVERRIDE=PASS joints=0,4,8,12 max_error_rad=.65 max_proxy_nm=52.0 ff_limit_nm=32.4\n";
+         else std::cout<<"HR_HIPX_TRACKING_OVERRIDE=PASS max_error_rad=.65 max_proxy_nm=52.0 ff_limit_nm=32.4\n";
+     }
++    for(int joint:{2,6,10,14}) {
++        require(std::abs(m20::joint_limits::tracking_error_proxy_nm[joint]-85.)<1e-9,"four knee proxy override missing");
++        require(m20::joint_limits::tracking_error_max_rad[joint]==0,"knee angular guard unexpectedly changed");
++        require(m20::joint_limits::leg_torque_nm[2]==76.4,"knee feedforward budget changed with proxy");
++        for(float gain:{40.f,80.f,160.f})for(float sign:{-1.f,1.f})for(int side:{-1,1}) {
++            auto c=base;auto f=feedback(base);c[joint][0]=gain;
++            c[joint][1]=sign*float(85./gain+side*.0001);Guard g;g.committed(c,9.99);
++            const auto result=g.validate(c,f,10);
++            require(side<0?result.ok():result.reason==Reason::TrackingError,"knee proxy boundary across gains/directions");
++        }
++        auto c=base;auto f=feedback(base);c[joint][4]=76.5f;Guard g;
++        require(g.validate(c,f,10).reason==Reason::Feedforward,"knee FF budget widened");
++    }
++    std::cout<<"ALL_KNEE_PROXY=PASS joints=2,6,10,14 proxy_nm=85 kp80_error_rad=1.0625 ff_limit_nm=76.4\n";
+     std::cout<<"JOINT_COMMAND_GUARD=PASS checks="<<checks<<" no_motor_io\n";
+     return 0;
+ }catch(const std::exception&e){std::cerr<<"FAIL after "<<checks<<": "<<e.what()<<'\n';return 1;}}
+--- a/joint_safety_limits.json
++++ b/joint_safety_limits.json
+@@ -71,7 +71,7 @@
+     "policy_period_s": "M20PolicyRunner SetDecimation(4) times control tick",
+     "feedback_timeout_s": "DdsInterface::WaitForStableRobotState existing fresh criterion",
+     "target_rate": "Full-stick operation uses an independent 50 rad/s target-change ceiling; commanded joint velocity and angle/feedback protections remain independent. Policy shaping uses the same target-rate ceiling and the existing 5 ms publication cap.",
+-    "tracking_error": "Four named HipX joints use maximum 0.65 rad with a 52.0 Nm position-error proxy ceiling derived at Kp80. Four named HipY joints use a user-requested 95.0 Nm proxy ceiling; this is a software admission threshold and does not claim an official physical torque rating.",
++    "tracking_error": "Four named HipX joints use maximum 0.65 rad with a 52.0 Nm position-error proxy ceiling derived at Kp80. Four named HipY joints use a user-requested 95.0 Nm proxy ceiling; this is a software admission threshold and does not claim an official physical torque rating. Four named Knee joints use an operator-requested 85.0 Nm software position-error proxy ceiling; at Kp80 this admits 1.0625 rad error. No manufacturer physical torque rating or drive output limit is inferred.",
+     "recording": "fixed queue and rotating files; disk reserve checked before recorder initialization",
+     "position_bounds": "Use the exact named per-leg corrected SDK envelopes from the user-designated earlier deployment; do not mirror/intersect the generic FL SDK box."
+   },
+@@ -84,7 +84,11 @@
+     "fl_hipy_joint": 95.0,
+     "fr_hipy_joint": 95.0,
+     "hl_hipy_joint": 95.0,
+-    "hr_hipy_joint": 95.0
++    "hr_hipy_joint": 95.0,
++    "fl_knee_joint": 85.0,
++    "fr_knee_joint": 85.0,
++    "hl_knee_joint": 85.0,
++    "hr_knee_joint": 85.0
+   },
+   "tracking_error_overrides": {
+     "fl_hipx_joint": {

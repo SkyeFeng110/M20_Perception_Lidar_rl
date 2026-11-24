@@ -1,0 +1,294 @@
+--- a/run_policy/incident_recorder.hpp
++++ b/run_policy/incident_recorder.hpp
+@@ -24,7 +24,7 @@
+ namespace m20 { namespace incident {
+ inline double mono(){return std::chrono::duration<double>(std::chrono::steady_clock::now().time_since_epoch()).count();}
+ inline double wall(){return std::chrono::duration<double>(std::chrono::system_clock::now().time_since_epoch()).count();}
+-enum class Kind { Command, Feedback, Inference, State };
++enum class Kind { Command, Feedback, Inference, State, PerceptionFault };
+ struct Record {
+     Kind kind=Kind::Command;
+     double mono_s=0,wall_s=0,feedback_mono_s=0,source_age_s=0,deadline_s=0;
+@@ -33,7 +33,11 @@
+     int joint=-1,state=-1,target_mode=-1,safe_mode=-1;
+     bool accepted=false,latched=false,observation_valid=false,inferred=false;
+     double violation_value=0,violation_limit=0;
+-    char reason[96]{},epoch[96]{};
++    char reason[96]{},epoch[96]{},source_reason[96]{};
++    std::uint64_t fault_generation=0,store_revision=0;
++    double grace_deadline_s=0,wire_stamp_s=0,wire_receipt_mono_s=0;
++    std::uint64_t wire_source_seq=0,wire_publish_seq=0,wire_store_revision=0;
++    char wire_reason[96]{},wire_epoch[96]{};bool wire_captured=false;
+     std::array<float,80> sdk_command{},hardware_command{};
+     std::array<float,16> q{},qd{},tau{},raw_action{},processed_action{},dir{},offset{};
+     std::array<float,63> obs{};
+@@ -57,6 +61,18 @@
+         j["inferred"]=r.inferred;if(r.inferred){j["raw_action16"]=r.raw_action;j["processed_action16"]=r.processed_action;}
+         j["observation_valid"]=r.observation_valid;j["source_age_s"]=r.source_age_s;j["source_deadline_mono_s"]=r.deadline_s;
+         j["epoch"]=r.epoch;j["source_seq"]=r.source_seq;j["publish_seq"]=r.publish_seq;
++    }else if(r.kind==Kind::PerceptionFault){j["event"]="perception_fault";
++        j["state"]=r.state;j["target_mode"]=r.target_mode;j["safe_mode"]=r.safe_mode;
++        j["joystick"]=r.joystick;j["imu_rpy_omega_acc"]=r.imu;
++        j["damping_reset_seq"]=r.damping_reset_seq;j["source_reason"]=r.source_reason;
++        j["observation_valid"]=r.observation_valid;j["source_age_s"]=r.source_age_s;
++        j["source_deadline_mono_s"]=r.deadline_s;j["grace_deadline_mono_s"]=r.grace_deadline_s;
++        j["epoch"]=r.epoch;j["source_seq"]=r.source_seq;j["publish_seq"]=r.publish_seq;
++        j["fault_generation"]=r.fault_generation;j["store_revision"]=r.store_revision;
++        j["latest_wire_captured"]=r.wire_captured;
++        j["latest_wire"]={{"source_seq",r.wire_source_seq},{"publish_seq",r.wire_publish_seq},
++            {"source_stamp_s",r.wire_stamp_s},{"receipt_mono_s",r.wire_receipt_mono_s},
++            {"store_revision",r.wire_store_revision},{"epoch",r.wire_epoch},{"reason",r.wire_reason}};
+     }else {j["event"]="controller_state";j["state"]=r.state;j["target_mode"]=r.target_mode;
+         j["safe_mode"]=r.safe_mode;j["joystick"]=r.joystick;j["imu_rpy_omega_acc"]=r.imu;
+         j["damping_reset_seq"]=r.damping_reset_seq;j["remote_command_stamp_s"]=r.remote_command_stamp_s;}
+--- a/run_policy/guarded_dds_publish.inc
++++ b/run_policy/guarded_dds_publish.inc
+@@ -153,6 +153,38 @@
+         return true;
+     }
+     MatXf GetJointCommand() override {std::lock_guard<std::mutex> lock(joint_publish_mutex_);return joint_cmd_;}
++    void RecordPerceptionFault(int state,const UserCommand& uc,const char* trigger) override {
++        m20::incident::Record r;r.kind=m20::incident::Kind::PerceptionFault;
++        r.fault=true;r.mono_s=m20::incident::mono();r.wall_s=m20::incident::wall();r.state=state;
++        r.target_mode=uc.target_mode.load();r.safe_mode=uc.safe_control_mode.load();
++        r.damping_reset_seq=uc.damping_reset_seq.load();r.latched=HasJointCommandFault();
++        r.inference_id=m20::alignment::context().inference_id;
++        const auto s=v11_store_.Read(r.mono_s);
++        r.observation_valid=s.valid;r.source_age_s=s.age_seconds;r.deadline_s=s.steady_deadline_seconds;
++        r.grace_deadline_s=s.lease.grace_deadline_s;r.fault_generation=s.lease.fault_generation;
++        r.store_revision=s.lease.store_revision;r.source_seq=s.source.source_seq;r.publish_seq=s.source.publish_seq;
++        std::strncpy(r.epoch,s.source.epoch.data(),sizeof(r.epoch)-1);
++        std::strncpy(r.source_reason,s.reason.c_str(),sizeof(r.source_reason)-1);
++        m20::incident::reason(r,trigger);
++        // Capture the latest packet separately from the failed selected lease.
++        // Revisions expose a callback racing this diagnostic snapshot.
++        std_msgs::msg::String::SharedPtr wire;
++        {std::lock_guard<std::mutex> lock(incident_wire_mutex_);wire=incident_last_wire_;
++            r.wire_receipt_mono_s=incident_wire_mono_;r.wire_store_revision=incident_wire_revision_;}
++        if(wire&&wire->data.size()<=16384)try{
++            const auto envelope=nlohmann::json::parse(wire->data);
++            const auto& current=envelope.value("schema",0)==2?envelope.at("current"):envelope;
++            r.wire_source_seq=current.value("source_seq",std::uint64_t(0));
++            r.wire_publish_seq=current.value("publish_seq",std::uint64_t(0));
++            r.wire_stamp_s=current.value("source_stamp_s",0.);
++            const auto epoch=current.value("epoch",std::string{}),reason=current.value("reason",std::string{});
++            std::strncpy(r.wire_epoch,epoch.c_str(),sizeof(r.wire_epoch)-1);
++            std::strncpy(r.wire_reason,reason.c_str(),sizeof(r.wire_reason)-1);r.wire_captured=true;
++        }catch(...){/* malformed input still freezes the first fault */}
++        r.joystick={uc.forward_vel_scale.load(),uc.side_vel_scale.load(),uc.turnning_vel_scale.load()};
++        {std::lock_guard<std::mutex> lock(imu_state_mutex_);for(int i=0;i<3;++i){r.imu[i]=rpy_(i);r.imu[3+i]=omega_body_(i);r.imu[6+i]=acc_(i);}}
++        m20::incident::Recorder::global().put(r);
++    }
+     void RecordControllerState(int state,const UserCommand& uc) override {
+         m20::incident::Record r;r.kind=m20::incident::Kind::State;
+         r.mono_s=m20::incident::mono();r.wall_s=m20::incident::wall();r.state=state;
+--- a/interface/robot/robot_interface.h
++++ b/interface/robot/robot_interface.h
+@@ -146,6 +146,7 @@
+     // passive command before clearing any software command latch.
+     virtual bool ResetJointCommandFaultForRecovery() {return false;}
+     virtual void RecordControllerState(int,const UserCommand&) {}
++    virtual void RecordPerceptionFault(int,const UserCommand&,const char*) {}
+ 
+     virtual MatXf GetJointCommand(){
+         return joint_cmd_;
+--- a/interface/robot/hardware/dds_interface.hpp
++++ b/interface/robot/hardware/dds_interface.hpp
+@@ -110,6 +110,13 @@
+     m20::v11::ObservationStore v11_store_{m20::v11::HardwareObservationSource(
+         std::getenv("M20_V11_OBSERVATION_SOURCE")), .3, m20::perception_limits::loss_timeout_s};
+     std::string v11_last_rejection_reason_;
++    std::mutex incident_wire_mutex_;
++    std_msgs::msg::String::SharedPtr incident_last_wire_;
++    double incident_wire_mono_=0;std::uint64_t incident_wire_revision_=0;
++    void CacheIncidentWire(const std_msgs::msg::String::SharedPtr& wire,double mono,std::uint64_t revision){
++        std::lock_guard<std::mutex> lock(incident_wire_mutex_);
++        incident_last_wire_=wire;incident_wire_mono_=mono;incident_wire_revision_=revision;
++    }
+     static double V11SteadyNow() {
+         return std::chrono::duration<double>(std::chrono::steady_clock::now().time_since_epoch()).count();
+     }
+@@ -337,6 +344,7 @@
+                     std::uint64_t revision = 0;
+                     const bool accepted = v11_store_.UpdatePacket(msg->data, c ? c : "", wall, receipt_mono,
+                         unique, &revision);
++                    CacheIncidentWire(msg,receipt_mono,revision);
+                     auto& journal=m20::alignment::Journal::global();
+                     if(journal.enabled()){
+                         m20::alignment::Event e;e.kind=m20::alignment::Kind::Packet;
+--- a/state_machine/state_machine_base.h
++++ b/state_machine/state_machine_base.h
+@@ -162,6 +162,7 @@
+             MatXf damping_cmd = MatXf::Zero(16, 5);
+             damping_cmd.col(2) = Vec4f(2.0f, 2.0f, 2.0f, 1.0f).replicate(4, 1);
+             ri_ptr_->SetJointCommand(damping_cmd);
++            ri_ptr_->RecordPerceptionFault(int(state),*uc_ptr_->GetUserCommand(),"fsm_perception_fault_damping");
+             std::cerr << "[SAFETY] V11 6D invalid in high-gain state; "
+                          "latching damping until explicit R2 reset. reason="
+                       << observation.reason << " age_s=" << observation.age_seconds
+--- a/state_machine/quadruped_wheel/rl_control_state.hpp
++++ b/state_machine/quadruped_wheel/rl_control_state.hpp
+@@ -157,10 +157,11 @@
+                                  latest.v11_lease.fault_generation != admitted_fault_generation_);
+                             if (v11_required && (attempt == Status::Fault || source_fault)) {
+                                 decision_reason = "source_or_inference_fault_damping";
+-                                data_ptr_->perception_fault_latched.store(true, std::memory_order_release);
++                                const bool first_fault=!data_ptr_->perception_fault_latched.exchange(true, std::memory_order_acq_rel);
+                                 MatXf damping_cmd = MatXf::Zero(16, 5);
+                                 damping_cmd.col(2) = Vec4f(2.0f, 2.0f, 2.0f, 1.0f).replicate(4, 1);
+                                 ri_ptr_->SetJointCommand(damping_cmd);
++                                if(first_fault)ri_ptr_->RecordPerceptionFault(int(StateName::kRLControl),*uc_ptr_->GetUserCommand(),decision_reason);
+                             } else if (attempt == Status::GeometryExpired || selected == Status::GeometryExpired) {
+                                 decision_reason = "geometry_expired_discard";
+                             } else {
+@@ -175,10 +176,11 @@
+                                     alignment_committed=publish_guard.committed;
+                                     if (publish_guard.status==Status::Fault) {
+                                         decision_reason="publisher_source_fault_damping";
+-                                        data_ptr_->perception_fault_latched.store(true,std::memory_order_release);
++                                        const bool first_fault=!data_ptr_->perception_fault_latched.exchange(true,std::memory_order_acq_rel);
+                                         MatXf damping_cmd=MatXf::Zero(16,5);
+                                         damping_cmd.col(2)=Vec4f(2.0f,2.0f,2.0f,1.0f).replicate(4,1);
+                                         ri_ptr_->SetJointCommand(damping_cmd);
++                                        if(first_fault)ri_ptr_->RecordPerceptionFault(int(StateName::kRLControl),*uc_ptr_->GetUserCommand(),decision_reason);
+                                     } else if (publish_guard.status==Status::GeometryExpired) {
+                                         decision_reason="publisher_geometry_expired_discard";
+                                     } else decision_reason="policy_command_committed";
+@@ -306,6 +308,8 @@
+                         MatXf damping_cmd = MatXf::Zero(16, 5);
+                         damping_cmd.col(2) = Vec4f(2.0f, 2.0f, 2.0f, 1.0f).replicate(4, 1);
+                         ri_ptr_->SetJointCommand(damping_cmd);
++                        ri_ptr_->RecordPerceptionFault(int(StateName::kRLControl),*uc_ptr_->GetUserCommand(),
++                            "rl_run_source_fault_damping");
+                         std::cerr << "[SAFETY] V11 6D lost or invalid; latching failover "
+                                      "until explicit R2 reset."
+                                   << std::endl;
+--- a/scripts/dds_joint_guard_no_motor_test.cpp
++++ b/scripts/dds_joint_guard_no_motor_test.cpp
+@@ -6,6 +6,7 @@
+ #include "state_base.h"
+ #include "hardware/m20_interface.hpp"
+ #include <iostream>
++#include <fstream>
+ #include <stdexcept>
+ #include <vector>
+ class Capture : public M20Interface {
+@@ -18,6 +19,12 @@
+         std::lock_guard<std::mutex> lock(joint_state_mutex_);
+         for(int i=0;i<16;++i){joint_pos_(i)=c(i,1);joint_vel_(i)=0;joint_tau_(i)=0;}
+         joint_receipt_mono_s_=m20::incident::mono()-(stale?1.:0.);
++    }
++    void wire_fixture(){
++        auto message=std::make_shared<std_msgs::msg::String>();
++        message->data=nlohmann::json({{"schema",2},{"current",{{"source_seq",77},{"publish_seq",99},
++            {"source_stamp_s",12345.25},{"epoch","wire-epoch"},{"reason","source_timeout"}}}}).dump();
++        CacheIncidentWire(message,m20::incident::mono(),123);
+     }
+     void bad_calibration(){joint_config_[0].dir=NAN;}
+     m20::joint_safety::Reason first_reason(){return joint_guard_.first_fault().reason;}
+@@ -43,13 +50,40 @@
+ bool passive(const drdds::msg::JointsDataCmd&m){for(int i=0;i<16;++i){const auto&j=m.data.joints_data[i];
+     if(j.kp!=0 || j.velocity!=0 || j.torque!=0 || !std::isfinite(j.position) || !std::isfinite(j.kd))return false;}return true;}
+ int main(int argc,char**argv){try{
+-    if(argc!=2 && argc!=4)throw std::runtime_error("usage: dds_joint_guard_no_motor_test EMPTY_OWNED_INCIDENT_DIR [--joint INDEX]");
++    if(argc!=2 && argc!=3 && argc!=4)throw std::runtime_error("usage: dds_joint_guard_no_motor_test EMPTY_OWNED_INCIDENT_DIR [--joint INDEX]");
+     setenv("M20_INCIDENT_DIR",argv[1],1);
+     const auto alignment_path=(std::filesystem::path(argv[1])/"alignment.jsonl").string();
+     setenv("M20_ALIGNMENT_TRACE_PATH",alignment_path.c_str(),1);
+     setenv("M20_ALIGNMENT_SCOPE","offline_dds_guard_component_no_motor",1);
+     setenv("M20_V11_FEATURE_CONTRACT","v11_signed_edges_v2",1);
+     rclcpp::init(argc,argv);
++    if(argc==3){
++        require(std::string(argv[2])=="--perception","unknown test selector");
++        Capture hw;hw.wire_fixture();types::UserCommand uc;uc.safe_control_mode=0;
++        auto& recorder=m20::incident::Recorder::global();
++        for(const char* trigger:{"fsm_perception_fault_damping","rl_run_source_fault_damping","source_or_inference_fault_damping","publisher_source_fault_damping"}){
++            hw.RecordPerceptionFault(4,uc,trigger);
++            std::this_thread::sleep_for(std::chrono::duration<double>(m20::joint_limits::incident_post_fault_s+.1));
++            require(recorder.frozen()&&!recorder.healthy(),"perception stop did not freeze recorder");
++            nlohmann::json first;std::ifstream stream(std::filesystem::path(argv[1])/"first_fault.json");stream>>first;
++            require(first["event"]=="perception_fault"&&first["reason"]==trigger&&first["fault_trigger"]==true,
++                    "perception first trigger lost or replaced by SDK event");
++            require(first["safe_mode"]==0&&first.contains("fault_generation")&&first.contains("source_reason"),
++                    "perception metadata missing");
++            require(first["latest_wire_captured"]==true&&first["latest_wire"]["source_seq"]==77&&
++                    first["latest_wire"]["reason"]=="source_timeout"&&first["latest_wire"]["source_stamp_s"]==12345.25,
++                    "triggering source provenance missing");
++            auto c=active();hw.feedback(c);hw.SetJointCommand(c);
++            require(passive(hw.sent.back()),"frozen evidence allowed active output");
++            require(hw.ResetJointCommandFaultForRecovery(),"R2 failed to archive perception incident and rearm");
++            require(recorder.healthy()&&!std::filesystem::exists(std::filesystem::path(argv[1])/"first_fault.json"),
++                    "R2 left old first trigger active");
++        }
++        int archives=0;for(const auto& e:std::filesystem::directory_iterator(argv[1]))
++            if(e.is_directory()&&e.path().filename().string().rfind("incident_",0)==0)++archives;
++        require(archives==4,"R2 did not preserve each perception incident");
++        rclcpp::shutdown();std::cout<<"DDS_PERCEPTION_FREEZE=PASS triggers=4 archives=4 command_publisher_compiled_out\n";return 0;
++    }
+     if(argc==4){
+     if(std::string(argv[2])!="--joint")throw std::runtime_error("unknown test selector");
+     const int selected=std::stoi(argv[3]);
+--- a/scripts/staircase_fsm_no_motor_test.cpp
++++ b/scripts/staircase_fsm_no_motor_test.cpp
+@@ -36,6 +36,8 @@
+     std::atomic<bool> joint_fault{false};
+     std::atomic<double> deadline{0};
+     std::shared_ptr<m20::v11::ObservationStore> bundle_store;
++    std::atomic<unsigned> perception_fault_records{0};
++    void RecordPerceptionFault(int,const UserCommand&,const char*) override {++perception_fault_records;}
+     unsigned stop_calls=0; bool stop_context_alive=true;
+     std::vector<Submission> submissions;
+     explicit CaptureRobot(const json& input): RobotInterface("no_motor_fixture", 16) {
+@@ -299,6 +301,8 @@
+         commands.push_back({{"mono_s",entry.mono},{"state",entry.state},{"matrix",matrix}});
+     }
+     const bool latched=fsm->current_controller_->data_ptr_->perception_fault_latched.load();
++    if((stand_loss || recovery || expiry || invalid_entry) && !joint_recovery)
++        require(robot->perception_fault_records.load()>0,"FSM/worker perception fault did not invoke incident recorder");
+     bool actor_input_checked=true;
+     VecXf actor_obs;
+     if (rl_high_gain>0) {
+--- a/scripts/perception_grace_worker_test.cpp
++++ b/scripts/perception_grace_worker_test.cpp
+@@ -78,6 +78,7 @@
+     const double stamp_mono=now(),deadline=stamp_mono+m20::perception_limits::loss_timeout_s;
+     run(.35);const auto before=robot->snapshot().size();
+     require(!data->perception_fault_latched.load(),"short loss must not latch");
++    require(robot->perception_fault_records.load()==0,"short loss must not freeze incident history");
+     require(robot->ReadV11Observation().lease.selection==m20::v11::FeatureSelection::DegradedHold,"worker must actually enter degraded hold");
+     user->usr_cmd_->forward_vel_scale=.35f;
+     run(.12);control->OnExit();
+@@ -90,15 +91,19 @@
+     if(name=="hard_fault"){
+         require(!robot->bundle_store->UpdatePacket("{}","v11_signed_edges_v2",m20::alignment::wall(),now(),true),"malformed packet");
+         run(.04);require(data->perception_fault_latched.load(),"hard fault must stop immediately");
++        control->OnExit();
++        require(robot->perception_fault_records.load()==1,"hard fault must record exactly once");
+     }else if(name=="recovery"){
+         put(-height);run(.1);control->OnExit();
+         require(!data->perception_fault_latched.load(),"fresh recovery must stay in policy");
++        require(robot->perception_fault_records.load()==0,"fresh recovery must not freeze incident history");
+         require(control->LastObservationAfterExitForDiagnostics()(58)==-height,"recovery updates actual actor terrain");
+     }else{
+         run(std::max(0.,deadline-.05-now()));
+         require(!data->perception_fault_latched.load(),"policy must continue up to the long-loss deadline");
+         run(.11);
+         require(data->perception_fault_latched.load(),"long loss must stop");
++        require(robot->perception_fault_records.load()==1,"worker stop must record first perception fault exactly once");
+         const auto after=robot->snapshot();require(after.back().command.col(0).isZero(),"long loss commands damping");
+         for(const auto& command:after)
+             if(!command.command.col(0).isZero())require(command.mono<=deadline+.01,"no active command beyond loss deadline");
+--- a/scripts/policy_bundle_worker_test.cpp
++++ b/scripts/policy_bundle_worker_test.cpp
+@@ -84,9 +84,11 @@
+     require(!commands.empty(),"worker must make progress after boundary");
+     if(name=="fault_recovery"||name=="publisher_fault") {
+         require(data->perception_fault_latched.load(),"fault followed by recovery must latch");
++        require(robot->perception_fault_records.load()==1,"worker/publisher first fault must record exactly once");
+         for(const auto& p:commands)require(p.command.col(0).isZero(),"no actor command after fault");
+     }else {
+         require(!data->perception_fault_latched.load(),"geometry lifecycle must not latch");
++        require(robot->perception_fault_records.load()==0,"geometry lifecycle must not freeze incident history");
+         for(const auto& p:commands)require(!p.command.col(0).isZero(),"geometry lifecycle must not command damping");
+         require(control->LastObservationAfterExitForDiagnostics().tail(6).isZero(0),"next actual worker tensor must be zero");
+         if(name=="expire_commit"||name=="expire_selection")require(commands.front().mono>=expiry,"no pre-boundary command after forced wait");

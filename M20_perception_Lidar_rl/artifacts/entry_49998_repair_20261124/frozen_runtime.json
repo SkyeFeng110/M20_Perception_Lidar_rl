@@ -1,0 +1,325 @@
+{
+  "status": "frozen_entry_sequence_runtime_passed",
+  "actor_input": 63,
+  "actor_output": 16,
+  "critic_input": 568,
+  "envs": 64,
+  "steps": 350,
+  "maximum_entry_cost_used": 2.577603340148926,
+  "eligible_entry_envs": 14,
+  "transfer_credit": 12.640385144288302,
+  "flat_samples": 3122,
+  "raw_full_speed_sampled": true,
+  "post_b2_reference_samples": 2212,
+  "all_actor_parameters_trainable": true,
+  "no_b1_imitation": true,
+  "entry_slowdown_reward_disabled": true,
+  "native_velocity_rewards_active": true,
+  "flat_cost_on_stairs_zero": true,
+  "gradients_finite": true,
+  "optimizer_empty": true,
+  "model_weights_unchanged": true,
+  "no_training_started": true,
+  "reward_audit": {
+    "is_terminated": {
+      "weight": -5.0,
+      "func": "isaaclab.envs.mdp.rewards:is_terminated",
+      "params": "{}"
+    },
+    "lin_vel_z_l2": {
+      "weight": -2.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_phase_lin_vel_z_l2",
+      "params": "{}"
+    },
+    "ang_vel_xy_l2": {
+      "weight": -0.06,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.rewards:ang_vel_xy_l2",
+      "params": "{}"
+    },
+    "flat_orientation_l2": {
+      "weight": -0.5,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_phase_flat_orientation_l2",
+      "params": "{}"
+    },
+    "joint_torques_l2": {
+      "weight": -2.5e-05,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.rewards:joint_torques_l2",
+      "params": "{'asset_cfg': SceneEntityCfg(name='robot', joint_names=['fl_hipx_joint', 'fl_hipy_joint', 'fl_knee_joint', 'fr_hipx_joint', 'fr_hipy_joint', 'fr_knee_joint', 'hl_hipx_joint', 'hl_hipy_joint', 'hl_knee_joint', 'hr_hipx_joint', 'hr_hipy_joint', 'hr_knee_joint'], joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False)}"
+    },
+    "joint_acc_l2": {
+      "weight": -2e-07,
+      "func": "isaaclab.envs.mdp.rewards:joint_acc_l2",
+      "params": "{'asset_cfg': SceneEntityCfg(name='robot', joint_names=['fl_hipx_joint', 'fl_hipy_joint', 'fl_knee_joint', 'fr_hipx_joint', 'fr_hipy_joint', 'fr_knee_joint', 'hl_hipx_joint', 'hl_hipy_joint', 'hl_knee_joint', 'hr_hipx_joint', 'hr_hipy_joint', 'hr_knee_joint'], joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False)}"
+    },
+    "joint_pos_limits": {
+      "weight": -5.0,
+      "func": "isaaclab.envs.mdp.rewards:joint_pos_limits",
+      "params": "{'asset_cfg': SceneEntityCfg(name='robot', joint_names=['fl_hipx_joint', 'fl_hipy_joint', 'fl_knee_joint', 'fr_hipx_joint', 'fr_hipy_joint', 'fr_knee_joint', 'hl_hipx_joint', 'hl_hipy_joint', 'hl_knee_joint', 'hr_hipx_joint', 'hr_hipy_joint', 'hr_knee_joint'], joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False)}"
+    },
+    "hipx_joint_pos_penalty": {
+      "weight": -0.4,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.rewards:joint_pos_penalty",
+      "params": "{'command_name': 'base_velocity', 'asset_cfg': SceneEntityCfg(name='robot', joint_names=['fl_hipx_joint', 'fr_hipx_joint', 'hl_hipx_joint', 'hr_hipx_joint'], joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'stand_still_scale': 5.0, 'velocity_threshold': 0.5, 'command_threshold': 0.1}"
+    },
+    "hipy_joint_pos_penalty": {
+      "weight": -0.1,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_phase_relaxed_front_joint_pos_penalty",
+      "params": "{'command_name': 'base_velocity', 'asset_cfg': SceneEntityCfg(name='robot', joint_names=['fl_hipy_joint', 'fr_hipy_joint', 'hl_hipy_joint', 'hr_hipy_joint'], joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'stand_still_scale': 5.0, 'velocity_threshold': 0.5, 'command_threshold': 0.1, 'ang_cmd_threshold': 0.1, 'y_cmd_threshold': 0.1, 'xy_norm_max': 0.1, 'xz_norm_max': 0.1, 'sensor_cfg': SceneEntityCfg(name='height_scanner_base', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'terrain_height_threshold': 0.06, 'high_terrain_penalty_scale': 0.1, 'front_joint_names': ('fl_hipy_joint', 'fr_hipy_joint'), 'active_scale': 0.1}"
+    },
+    "knee_joint_pos_penalty": {
+      "weight": -0.1,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_phase_relaxed_front_joint_pos_penalty",
+      "params": "{'command_name': 'base_velocity', 'asset_cfg': SceneEntityCfg(name='robot', joint_names=['fl_knee_joint', 'fr_knee_joint', 'hl_knee_joint', 'hr_knee_joint'], joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'stand_still_scale': 5.0, 'velocity_threshold': 0.5, 'command_threshold': 0.1, 'ang_cmd_threshold': 0.1, 'y_cmd_threshold': 0.1, 'xy_norm_max': 0.1, 'xz_norm_max': 0.1, 'sensor_cfg': SceneEntityCfg(name='height_scanner_base', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'terrain_height_threshold': 0.06, 'high_terrain_penalty_scale': 0.1, 'front_joint_names': ('fl_knee_joint', 'fr_knee_joint'), 'active_scale': 0.8}"
+    },
+    "joint_mirror": {
+      "weight": -0.03,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:after_rear_approach_reward",
+      "params": "{'reward_func': <function joint_mirror at 0x7798f5b46480>, 'reward_params': {'asset_cfg': SceneEntityCfg(name='robot', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'mirror_joints': [['fl_(hipx|hipy|knee).*', 'hr_(hipx|hipy|knee).*'], ['fr_(hipx|hipy|knee).*', 'hl_(hipx|hipy|knee).*']]}}"
+    },
+    "action_rate_l2": {
+      "weight": -0.014,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_phase_relaxed_action_rate_l2",
+      "params": "{'hipy_active_scale': 0.35, 'knee_active_scale': 1.0}"
+    },
+    "action_smooth_l2": {
+      "weight": -0.025,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_phase_relaxed_action_smooth_l2",
+      "params": "{'hipy_active_scale': 0.5, 'knee_active_scale': 0.8}"
+    },
+    "undesired_contacts": {
+      "weight": -1.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.rewards:undesired_contacts",
+      "params": "{'sensor_cfg': SceneEntityCfg(name='contact_forces', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=['^(?!.*.*_wheel).*'], body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'threshold': 1.0}"
+    },
+    "contact_forces": {
+      "weight": -0.00015,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.rewards:contact_forces",
+      "params": "{'sensor_cfg': SceneEntityCfg(name='contact_forces', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=['.*_wheel'], body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'threshold': 100.0}"
+    },
+    "track_lin_vel_xy_exp": {
+      "weight": 5.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_rear_posture:v111_track_lin_vel_with_descent_support",
+      "params": "{'command_name': 'base_velocity', 'std': 0.7071067811865476}"
+    },
+    "track_ang_vel_z_exp": {
+      "weight": 3.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.rewards:track_ang_vel_z_exp",
+      "params": "{'command_name': 'base_velocity', 'std': 0.7071067811865476}"
+    },
+    "feet_slide_ang_z_cmd": {
+      "weight": -2.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.rewards:feet_slide_ang_z_cmd",
+      "params": "{'command_name': 'base_velocity', 'sensor_cfg': SceneEntityCfg(name='contact_forces', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=['.*_wheel'], body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'asset_cfg': SceneEntityCfg(name='robot', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=['.*_wheel'], body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'cmd_lin_threshold': 0.1, 'cmd_ang_threshold': 0.1}"
+    },
+    "stand_still": {
+      "weight": -1.0,
+      "func": "isaaclab_tasks.manager_based.locomotion.velocity.mdp.rewards:stand_still_joint_deviation_l1",
+      "params": "{'command_name': 'base_velocity', 'asset_cfg': SceneEntityCfg(name='robot', joint_names=['fl_hipx_joint', 'fl_hipy_joint', 'fl_knee_joint', 'fr_hipx_joint', 'fr_hipy_joint', 'fr_knee_joint', 'hl_hipx_joint', 'hl_hipy_joint', 'hl_knee_joint', 'hr_hipx_joint', 'hr_hipy_joint', 'hr_knee_joint'], joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False)}"
+    },
+    "bad_orientation_penalty": {
+      "weight": -1000.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.rewards:bad_orientation_penalty",
+      "params": "{'asset_cfg': SceneEntityCfg(name='robot', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False)}"
+    },
+    "joint_acc_wheel_l2": {
+      "weight": -1e-07,
+      "func": "isaaclab.envs.mdp.rewards:joint_acc_l2",
+      "params": "{'asset_cfg': SceneEntityCfg(name='robot', joint_names=['fl_wheel_joint', 'fr_wheel_joint', 'hl_wheel_joint', 'hr_wheel_joint'], joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False)}"
+    },
+    "landing_event": {
+      "weight": 5.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_landing_event_reward",
+      "params": "{}"
+    },
+    "platform_exit_success": {
+      "weight": 5.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_platform_exit_success_reward",
+      "params": "{}"
+    },
+    "clearance_progress": {
+      "weight": 0.5,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_clearance_progress_reward",
+      "params": "{}"
+    },
+    "pure_yaw_xy_drift": {
+      "weight": -0.5,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_pure_yaw_xy_drift_penalty",
+      "params": "{'cmd_lin_threshold': 0.1, 'cmd_ang_threshold': 0.1, 'speed_scale': 0.35}"
+    },
+    "front_hipy_participation_settlement": {
+      "weight": 0.1,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_front_hipy_participation_settlement_reward",
+      "params": "{'front_hipy_joint_names': ('fl_hipy_joint', 'fr_hipy_joint'), 'front_knee_joint_names': ('fl_knee_joint', 'fr_knee_joint'), 'target_share': 0.5, 'share_half_width': 0.1, 'activation_scale': 0.2}"
+    },
+    "front_knee_excess": {
+      "weight": -0.2,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_front_knee_excess_penalty",
+      "params": "{'front_knee_joint_names': ('fl_knee_joint', 'fr_knee_joint'), 'free_band': 0.55, 'excess_scale': 0.25}"
+    },
+    "landing_center": {
+      "weight": 0.1,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_landing_center_reward",
+      "params": "{}"
+    },
+    "landing_edge": {
+      "weight": 0.2,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_landing_edge_penalty",
+      "params": "{}"
+    },
+    "world_forward_deficit": {
+      "weight": 3.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_rear_posture:v111_world_forward_deficit_with_descent_support",
+      "params": "{'min_speed_fraction': 0.5, 'speed_scale': 0.3}"
+    },
+    "world_forward_progress": {
+      "weight": 2.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_rear_posture:v111_world_forward_with_descent_support",
+      "params": "{'target_speed_fraction': 0.5}"
+    },
+    "path_lateral_deviation": {
+      "weight": 1.35,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_path_lateral_deviation_penalty",
+      "params": "{'tolerance': 0.25, 'deviation_scale': 0.35}"
+    },
+    "path_heading_error": {
+      "weight": 1.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_path_heading_error_penalty",
+      "params": "{'heading_scale': 0.5}"
+    },
+    "non_wheel_leg_contact": {
+      "weight": 2.2,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_non_wheel_contact_force_penalty",
+      "params": "{'sensor_cfg': SceneEntityCfg(name='contact_forces', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=['^(?!(base_link|.*_wheel)$).*'], body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'force_threshold': 20.0, 'force_scale': 180.0, 'max_penalty': 1.0}"
+    },
+    "non_wheel_leg_scrape": {
+      "weight": 1.1,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_non_wheel_scrape_penalty",
+      "params": "{'sensor_cfg': SceneEntityCfg(name='contact_forces', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=['^(?!(base_link|.*_wheel)$).*'], body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'asset_cfg': SceneEntityCfg(name='robot', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=['^(?!(base_link|.*_wheel)$).*'], body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'force_threshold': 8.0, 'speed_threshold': 0.08, 'speed_scale': 0.55, 'max_penalty': 1.0}"
+    },
+    "wheel_impact": {
+      "weight": 0.8,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_wheel_impact_penalty",
+      "params": "{'sensor_cfg': SceneEntityCfg(name='contact_forces', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=['.*_wheel'], body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'asset_cfg': SceneEntityCfg(name='robot', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=['.*_wheel'], body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False), 'speed_threshold': 0.1, 'max_penalty': 1.0}"
+    },
+    "stair_straightness": {
+      "weight": 0.05,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_stair_straightness_penalty",
+      "params": "{}"
+    },
+    "front_riser_contact": {
+      "weight": -1.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v11_continuous:v11_front_riser_contact_penalty",
+      "params": "{}"
+    },
+    "v135_descent_rear_transfer_progress": {
+      "weight": 0.8,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v135_descent_support_transfer:v135_descent_rear_transfer_progress_reward",
+      "params": "{'sensor_cfg': SceneEntityCfg(name='v10_pgtt_scanner', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False)}"
+    },
+    "v135_descent_rear_transfer_completion": {
+      "weight": 1.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v135_descent_support_transfer:v135_descent_rear_transfer_completion_reward",
+      "params": "{'sensor_cfg': SceneEntityCfg(name='v10_pgtt_scanner', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False)}"
+    },
+    "v135_descent_rear_recovery": {
+      "weight": 0.5,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v135_descent_support_transfer:v135_descent_rear_recovery_reward",
+      "params": "{'sensor_cfg': SceneEntityCfg(name='v10_pgtt_scanner', joint_names=None, joint_ids=slice(None, None, None), fixed_tendon_names=None, fixed_tendon_ids=slice(None, None, None), body_names=None, body_ids=slice(None, None, None), object_collection_names=None, object_collection_ids=slice(None, None, None), preserve_order=False)}"
+    },
+    "v135_post_stair_flat_progress": {
+      "weight": 0.5,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v135_descent_stance:v135_post_stair_flat_progress_reward",
+      "params": "{}"
+    },
+    "v135_post_stair_flat_completion": {
+      "weight": 1.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v135_descent_stance:v135_post_stair_flat_completion_reward",
+      "params": "{}"
+    },
+    "v135_post_stair_flat_crawl": {
+      "weight": 0.5,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v135_descent_stance:v135_post_stair_flat_crawl_penalty",
+      "params": "{}"
+    },
+    "v111_adjacent_support": {
+      "weight": 2.4,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:after_front_entry_reward",
+      "params": "{'reward_func': <function support_reward at 0x7798817a0720>, 'reward_params': {}}"
+    },
+    "v111_adjacent_skip": {
+      "weight": 1.5,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:after_front_entry_reward",
+      "params": "{'reward_func': <function skip_penalty at 0x7798817a0e00>, 'reward_params': {}}"
+    },
+    "v111_straight_stability": {
+      "weight": 0.5,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_recovery:straight_stability",
+      "params": "{}"
+    },
+    "v111_recovery_swing": {
+      "weight": 0.75,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:after_front_entry_reward",
+      "params": "{'reward_func': <function overshoot_cost at 0x7798817a2de0>, 'reward_params': {}}"
+    },
+    "v111_recovery_progress": {
+      "weight": 2.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:after_front_entry_reward",
+      "params": "{'reward_func': <function body_progress at 0x7798817a2e80>, 'reward_params': {}}"
+    },
+    "v111_recovery_complete": {
+      "weight": 2.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_recovery:whole_completion",
+      "params": "{}"
+    },
+    "v111_refine_route": {
+      "weight": 0.2,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_refine:route_cost",
+      "params": "{}"
+    },
+    "v111_refine_landing": {
+      "weight": 0.6,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:after_front_entry_reward",
+      "params": "{'reward_func': <function landing_reward at 0x779881949bc0>, 'reward_params': {}}"
+    },
+    "v111_refine_arrival": {
+      "weight": 0.5,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_refine:arrival_reward",
+      "params": "{}"
+    },
+    "v111_quiet_contact": {
+      "weight": 0.15,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_refine:contact_cost",
+      "params": "{}"
+    },
+    "v111_retention_forward_route": {
+      "weight": 1.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:after_front_entry_reward",
+      "params": "{'reward_func': <function route_reward at 0x7798817a2520>, 'reward_params': {}}"
+    },
+    "v111_entry_transfer_progress": {
+      "weight": 1.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:progress_reward",
+      "params": "{}"
+    },
+    "v111_entry_transfer_safety": {
+      "weight": 1.25,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:safety_cost",
+      "params": "{}"
+    },
+    "v111_sequence_flat_motion_cost": {
+      "weight": 1.0,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:flat_motion_cost",
+      "params": "{}"
+    },
+    "v111_sequence_flat_motion_quality": {
+      "weight": 0.75,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:flat_motion_quality",
+      "params": "{}"
+    },
+    "v111_entry_sequence": {
+      "weight": 1.25,
+      "func": "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_entry_transfer:sequence_reward",
+      "params": "{}"
+    }
+  }
+}

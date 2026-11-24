@@ -1,0 +1,243 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "status": "recording_update_validated_custom_aos_stopped",
+  "checkpoint_iteration": 45200,
+  "aos": {
+    "schema": 1,
+    "status": "recording_update_validated_custom_aos_stopped",
+    "wall_s": 1795148565.1084244,
+    "release": "/home/user/m20_native_releases/model45200_recording_20261120",
+    "entry": "/home/user/m20_native_releases/model45200_20261119_jointguard_aos",
+    "previous_release": "/home/user/m20_native_releases/model45200_recovery95_20261119",
+    "elf_sha256": "c229771972ffa41c3b9f69bd91e6702966c88ce09a32a50cef14231b68c502b6",
+    "build": {
+      "started_wall_s": 1795147914.2762568,
+      "status": "pass",
+      "motor_commands": 0,
+      "finished_wall_s": 1795148483.4679525,
+      "elf_sha256": "c229771972ffa41c3b9f69bd91e6702966c88ce09a32a50cef14231b68c502b6"
+    },
+    "preflight": {
+      "exit_code": 0,
+      "pass": true,
+      "log": "/home/user/m20_native_releases/model45200_recording_20261120/artifacts/recording_live_preflight.log",
+      "scope": "read_only_no_motor_commands",
+      "wall_s": 1795148542.9355767
+    },
+    "preserved_sha256": {
+      "policy/model.onnx": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+      "perception_grace_limits.json": "f51cd9a3d3325244f3733bf39fb008dc3677ebd733d1e9382d034a999cc2dfc2",
+      "joint_safety_limits.json": "41546ac515dd7b257759c60c6231cdb260c8f4154b0e120e379561d59a98e434",
+      "policy_target_limits.json": "0b44290faab286fa4f2a6d4117cfbb741220a3b40ed63cc22dac90e313090138",
+      "yaw_command_limits.json": "26368e7a56b4d78066bf7a7e577b480a8fb2c807c12986d69fba2653598e1310",
+      "src/M20_sdk_deploy/run_policy/joint_safety_limits.hpp": "4618bbec8383c2ef4116e6334ae30a67f9657c433fd1e55ba98fa2f0486d36f0",
+      "src/M20_sdk_deploy/run_policy/perception_grace_limits.hpp": "8f0913a636ced195d1134ae274908655b794ff294ed413009ef83669782a0691",
+      "src/M20_sdk_deploy/run_policy/policy_target_limits.hpp": "13c489a72640e48c2cfe195beb203ce82f40a049a802a00048eb4d445ae25ccc"
+    },
+    "perception_loss_timeout_s": 2.0,
+    "perception_fault_triggers": 4,
+    "frozen_incident_archives_tested": 4,
+    "custom_controller_started": false,
+    "custom_controller_running": false,
+    "active_rl_deploy": [
+      {
+        "pid": 29120,
+        "exe": "/opt/robot/share/rl_deploy/bin/rl_deploy"
+      }
+    ],
+    "motor_commands": 0,
+    "agent_sent_motion_keys": false,
+    "old_incident_archive": {
+      "archive": "/var/opt/robot/data/m20_joint_guard_incidents/incident_20961_1795144897874643930",
+      "wall_s": 1795147964.0034173,
+      "session": "20961_1795144897874643930",
+      "first_fault_reason": "sdk_or_remote_safety_stop",
+      "files": [
+        {
+          "file": "first_fault.json",
+          "bytes": 600,
+          "sha256": "8ad306922fe547c9d5b30e489ccbf105dc2fe466ad7735f684d77a0777fc25a9"
+        },
+        {
+          "file": "segment_0.jsonl",
+          "bytes": 16776777,
+          "sha256": "773982ec0e497eda010724707dea57007d69e275c585313252e5a89208d445c8"
+        },
+        {
+          "file": "segment_1.jsonl",
+          "bytes": 16776048,
+          "sha256": "8fc08ce6ae20ffeabe02d498f2710b0b650ba0537103744ce45eea0b48f9acab"
+        },
+        {
+          "file": "segment_2.jsonl",
+          "bytes": 1340593,
+          "sha256": "6272be0a3b1cd53d6c330d2b57d38f88a478640677311178ca842c91d819f7a8"
+        },
+        {
+          "file": "segment_3.jsonl",
+          "bytes": 16776898,
+          "sha256": "486b72804fcc199e7a901c2dcdf7143fde9216b937a0df5115c67b2026d26241"
+        }
+      ],
+      "active_rl_deploy": [
+        {
+          "pid": 29120,
+          "exe": "/opt/robot/share/rl_deploy/bin/rl_deploy"
+        }
+      ],
+      "custom_controller_running": false,
+      "motor_commands": 0
+    }
+  },
+  "gos": {
+    "schema": 1,
+    "pass": true,
+    "wall_s": 1795148467.3050947,
+    "release": "/home/user/m20_native_releases/model45200_recording_20261120_gos",
+    "build": {
+      "started_wall_s": 1795147199.4234319,
+      "status": "pass",
+      "motor_commands": 0,
+      "finished_wall_s": 1795147302.3060443,
+      "registration_elf_sha256": "005a99e3f48e9e057a9309e19119cb4dfc3c9f7eba211df29bf042097a9eeb30"
+    },
+    "session": {
+      "release": "/home/user/m20_native_releases/model45200_recording_20261120_gos",
+      "output": "/home/user/m20_native_releases/model45200_recording_20261120_gos/artifacts/residual_live_20261120_120422",
+      "evidence": "/home/user/m20_native_releases/model45200_recording_20261120_gos/artifacts/residual_live_20261120_120422/registration_evidence",
+      "tmux": "local45200_gos",
+      "owner": {
+        "acceptance": false,
+        "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/native_tools/m20_deploy",
+        "extra_diagnostics": false,
+        "implementation": "cpp",
+        "lio": {
+          "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/stage/lio_release/bin/super_lio_node",
+          "pid": 6516,
+          "start_ticks": "353090"
+        },
+        "motor_commands": 0,
+        "reader": {
+          "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/build/gos6d_reader",
+          "pid": 6514,
+          "start_ticks": "353089"
+        },
+        "registration": {
+          "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/build/gos6d_registration",
+          "pid": 6515,
+          "start_ticks": "353089"
+        },
+        "resource_profile_sha256": "2dc05f461946597f1bc1d0ffae0e37a426ef4645dc5ef3ea66b34e853554f593",
+        "sender": {
+          "exe": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/build/gos6d_sender",
+          "pid": 6513,
+          "start_ticks": "353088"
+        },
+        "sender_dds_profile": "/home/user/m20_native_releases/model45200_recording_20261120_gos/runtime/sender_udp_only.xml",
+        "sender_dds_sha256": "5b1ce26f76ff9e70e80d526468fde93493b85b5b95d1f231114222933418a3c5",
+        "start_ticks": "353070",
+        "supervisor": 6511
+      },
+      "old_supervisor_stopped": 3851,
+      "motor_commands": 0,
+      "wall_s": 1795147469.8485773
+    },
+    "registration_elf_sha256": "005a99e3f48e9e057a9309e19119cb4dfc3c9f7eba211df29bf042097a9eeb30",
+    "source_status": {
+      "active": true,
+      "blocked_reason": null,
+      "evidence_dropped": 0,
+      "evidence_write_failed": false,
+      "forwarded": 10009,
+      "frame": "gos_odom",
+      "quality_checks": 1001,
+      "registration_stalled": false,
+      "rejected": {},
+      "residual_p95_m": 0.03152808919548988,
+      "residual_threshold_m": 0.15,
+      "source": "gos_local_lio",
+      "source_identity_failed": false
+    },
+    "last_residual": {
+      "decision": "ok",
+      "decision_code": 3,
+      "event": "registration_quality",
+      "forwarded": 10011,
+      "matched": 10030,
+      "mono_s": 4534.762135386,
+      "orientation_xyzw": [
+        -1.3451762242766563e-05,
+        -0.0026470243465155363,
+        0.0018863790901377797,
+        0.9999966025352478
+      ],
+      "p95_finite": true,
+      "p95_m": 0.03460921347141266,
+      "pair_delta_s": 0.0,
+      "position": [
+        0.005291027948260307,
+        0.027538858354091644,
+        -0.014113462530076504
+      ],
+      "quality_check": 1002,
+      "quality_checked": true,
+      "quality_ok": true,
+      "reference_newest_matched": 10029,
+      "reference_oldest_matched": 9981,
+      "reference_points": 2366,
+      "roi_points": 6246,
+      "schema": 1,
+      "source_age_s": 0.0453493595123291,
+      "source_nanosec": 850003004,
+      "source_sec": 1795148466,
+      "source_stamp_s": 1795148466.850003,
+      "threshold_m": 0.15,
+      "wall_s": 1795148466.8953524
+    },
+    "latest_sample_count": 128,
+    "evidence_files": [
+      {
+        "name": "segment_0.jsonl",
+        "bytes": 8364207
+      },
+      {
+        "name": "segment_1.jsonl",
+        "bytes": 8362427
+      },
+      {
+        "name": "segment_2.jsonl",
+        "bytes": 8387358
+      },
+      {
+        "name": "segment_3.jsonl",
+        "bytes": 1571429
+      }
+    ],
+    "gos_recording_running": true,
+    "motor_commands": 0
+  },
+  "gos_recording_running": true,
+  "custom_controller_started": false,
+  "custom_controller_running": false,
+  "agent_sent_motion_keys": false,
+  "root_cause_fixed": false,
+  "direct_stop_cause": "source_timeout then source_invalid perception latch; no JOINT_COMMAND_FAULT in the original stop",
+  "root_cause_limit": "The original incident lacks contemporaneous p95/point-pair evidence; new static validation does not prove moving registration failures fixed.",
+  "perception_loss_timeout_s": 2.0,
+  "thresholds_and_model_unchanged": true,
+  "hardware_locomotion_validation": "not_performed",
+  "local_evidence": "artifacts/20261120/perception_recording",
+  "aos_patch": "perception_incident_recording_20261120.patch",
+  "gos_patch": "registration_residual_recording_20261120.patch",
+  "source_snapshot": "artifacts/20261120/perception_recording/src",
+  "validation": {
+    "aos_full_native_no_motor_suite": "pass",
+    "perception_freeze_triggers": 4,
+    "R2_archives_preserved": 4,
+    "gos_actual_baseline_decisions_and_float_p95_identical_frames": 120,
+    "gos_residual_reject_frames_recorded": 40,
+    "gos_recovery_checks": 139,
+    "actual_residual_pairs_per_check": 128
+  }
+}

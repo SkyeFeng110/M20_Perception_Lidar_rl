@@ -1,0 +1,492 @@
+--- a/run_policy/joint_command_guard.hpp
++++ b/run_policy/joint_command_guard.hpp
+@@ -48,12 +48,23 @@
+ public:
+     bool latched()const{return latched_;}
+     Result first_fault()const{return first_;}
++    // Recovery is only invoked by the state machine after an explicit R2
++    // request has already forced the controller into damping.  It clears the
++    // software admission latch and target history; it does not publish a
++    // command by itself.
++    void reset_for_recovery() {
++        latched_=false;
++        first_=Result{};
++        last_q_.fill(0.0);
++        last_time_.fill(0.0);
++        active_.fill(false);
++    }
+     Result fail(Reason reason,int joint=-1,double value=0,double limit=0) {
+         Result r{reason,joint,value,limit};
+         if(!latched_){first_=r;latched_=true;}
+         return r;
+     }
+-    // Never clears latch. No gamepad action or valid output re-enables torque.
++    // Validation never clears a latch. Only explicit FSM recovery can reset it.
+     Result validate(const Command& c,const Feedback& f,double now,bool recorder_ok=true) {
+         if(passive(c))return {};
+         if(latched_)return {Reason::Latched,first_.joint};
+@@ -82,7 +93,7 @@
+             if(c[i][0]==0 && c[i][3]==0 && c[i][4]==0)continue;
+             const double elapsed=active_[i]?now-last_time_[i]:joint_limits::control_tick_s;
+             if(!std::isfinite(elapsed) || elapsed<=0)return fail(Reason::TargetRate,i);
+-            const double allowance=joint_limits::leg_velocity_rad_s[i%4]*std::min(elapsed,joint_limits::policy_period_s);
++            const double allowance=joint_limits::target_rate_rad_s[i%4]*std::min(elapsed,joint_limits::policy_period_s);
+             const double delta=std::abs(double(c[i][1])-(active_[i]?last_q_[i]:f.q[i]));
+             if(delta>allowance)return fail(Reason::TargetRate,i,delta,allowance);
+             const double error_torque=std::abs(double(c[i][1])-f.q[i])*c[i][0];
+--- a/run_policy/incident_recorder.hpp
++++ b/run_policy/incident_recorder.hpp
+@@ -80,6 +80,8 @@
+     std::atomic<std::uint64_t> enqueue_{0},dropped_{0};
+     std::uint64_t dequeue_=0,written_=0,bytes_=0;
+     std::atomic<bool> stopping_{false},failed_{false},sealed_{false};
++    std::atomic<bool> has_fault_{false};
++    std::atomic<std::uint64_t> recovery_requested_{0},recovery_complete_{0},recovery_barrier_{0};
+     std::thread worker_;
+     int directory_fd_=-1,lock_fd_=-1,fd_=-1;
+     std::size_t segment_=0;
+@@ -141,10 +143,43 @@
+     void failed()noexcept {
+         if(!failed_.exchange(true))std::fprintf(stderr,"[INCIDENT_RECORDER_FAILED] high-gain commands will be rejected; stopping/damping remains available\n");
+     }
++    bool reopen_after_recovery(std::uint64_t ticket) {
++        // Worker-only disk work. Preserve the complete old ring and trigger
++        // before opening a fresh ring; no history is overwritten by R2.
++        struct statvfs v{};
++        if(fstatvfs(directory_fd_,&v)!=0 || double(v.f_bavail)*v.f_frsize<
++           joint_limits::incident_disk_reserve_bytes+joint_limits::incident_segment_bytes*joint_limits::incident_segments)
++            return false;
++        if(fd_>=0){if(::fsync(fd_)!=0)return false;::close(fd_);fd_=-1;}
++        const auto archive="incident_"+session_;
++        if(::mkdirat(directory_fd_,archive.c_str(),0700)!=0)return false;
++        const int archive_fd=::openat(directory_fd_,archive.c_str(),O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
++        if(archive_fd<0)return false;
++        bool ok=true;
++        for(std::size_t i=0;i<=joint_limits::incident_segments;++i){
++            const auto name=i==joint_limits::incident_segments?std::string("first_fault.json"):
++                "segment_"+std::to_string(i)+".jsonl";
++            if(::renameat(directory_fd_,name.c_str(),archive_fd,name.c_str())!=0 && errno!=ENOENT)ok=false;
++        }
++        if(::fsync(archive_fd)!=0 || ::fsync(directory_fd_)!=0)ok=false;
++        ::close(archive_fd);
++        if(!ok)return false;
++        session_=std::to_string(getpid())+"_"+std::to_string(std::chrono::system_clock::now().time_since_epoch().count())+"_r"+std::to_string(ticket);
++        segment_=0;written_=0;fault_time_=0;last_sync_=0;
++        if(!open_segment() || ::fsync(fd_)!=0 || ::fsync(directory_fd_)!=0)return false;
++        has_fault_=false;sealed_=false;
++        return true;
++    }
+     void work()noexcept {
+         setpriority(PRIO_PROCESS,0,10);
+         try{
+             for(;;){
++                const auto ticket=recovery_requested_.load(std::memory_order_acquire);
++                if(ticket!=recovery_complete_.load(std::memory_order_relaxed) &&
++                   dequeue_>=recovery_barrier_.load(std::memory_order_acquire)){
++                    if(failed_ || !reopen_after_recovery(ticket))failed();
++                    recovery_complete_.store(ticket,std::memory_order_release);
++                }
+                 if(fault_time_>0 && !sealed_ && mono()-fault_time_>=joint_limits::incident_post_fault_s){
+                     const auto s=nlohmann::json({{"event","incident_frozen"},{"session",session_},
+                         {"mono_s",mono()},{"reason","first_fault_pre_and_post_history_preserved_restart_required"}}).dump()+"\n";
+@@ -202,9 +237,27 @@
+     bool healthy()const{return enabled_ && !failed_ && !sealed_;}
+     bool frozen()const{return sealed_;}
+     bool enabled()const{return enabled_;}
++    // Called only after the policy worker has exited and zero-gain/zero-kd
++    // output has been sent, while holding the final publisher mutex. Existing
++    // queue reservations drain before the worker archives/reopens the ring.
++    // An I/O failure is never cleared by R2.
++    bool restart_after_explicit_recovery() {
++        if(!enabled_ || failed_)return false;
++        if(!has_fault_ && !sealed_)return healthy();
++        auto ticket=recovery_requested_.load(std::memory_order_acquire);
++        if(ticket==recovery_complete_.load(std::memory_order_acquire)){
++            recovery_barrier_.store(enqueue_.load(std::memory_order_acquire),std::memory_order_release);
++            recovery_requested_.store(++ticket,std::memory_order_release);
++        }
++        const auto deadline=mono()+2.;
++        while(recovery_complete_.load(std::memory_order_acquire)!=ticket && !failed_ && mono()<deadline)
++            std::this_thread::sleep_for(std::chrono::milliseconds(1));
++        return recovery_complete_.load(std::memory_order_acquire)==ticket && healthy();
++    }
+     bool put(const Record&r)noexcept {
+         if(!enabled_)return false;
+         if(failed_ || sealed_)return false;
++        if(recovery_requested_.load(std::memory_order_acquire)!=recovery_complete_.load(std::memory_order_acquire))return false;
+         auto position=enqueue_.load(std::memory_order_relaxed);
+         for(int attempt=0;attempt<16;++attempt){
+             auto&c=queue_[position%joint_limits::incident_queue_capacity];
+@@ -212,6 +265,7 @@
+             const auto difference=static_cast<std::int64_t>(sequence-position);
+             if(difference==0){
+                 if(enqueue_.compare_exchange_weak(position,position+1,std::memory_order_relaxed)){
++                    if(r.fault)has_fault_.store(true,std::memory_order_release);
+                     c.record=r;c.seq.store(position+1,std::memory_order_release);return true;}
+             }else if(difference<0)break;
+             else position=enqueue_.load(std::memory_order_relaxed);
+--- a/run_policy/guarded_dds_publish.inc
++++ b/run_policy/guarded_dds_publish.inc
+@@ -60,7 +60,7 @@
+         }
+         if(!result.ok()){
+             const bool first=!joint_command_fault_.exchange(true,std::memory_order_acq_rel);
+-            if(first)std::fprintf(stderr,"[JOINT_COMMAND_FAULT] reason=%s joint=%d value=%.9g limit=%.9g; damping latched until process restart\n",
++            if(first)std::fprintf(stderr,"[JOINT_COMMAND_FAULT] reason=%s joint=%d value=%.9g limit=%.9g; damping latched until explicit R2 recovery\n",
+                 m20::joint_safety::name(result.reason),result.joint,result.value,result.limit);
+         }
+         double publish_begin=0;
+@@ -132,6 +132,26 @@
+     }
+ public:
+     bool HasJointCommandFault() const override {return joint_command_fault_.load(std::memory_order_acquire);}
++    bool ResetJointCommandFaultForRecovery() override {
++        // R2 recovery is consumed only after the FSM has entered damping.
++        // Publish zero gain and zero damping first, then clear the guard and
++        // its target history so manual repositioning cannot inherit a stale
++        // policy target.
++        MatXf passive_cmd = MatXf::Zero(dof_num_, 5);
++        if (!PublishJointMessage(MakeJointCommand(passive_cmd))) return false;
++        {
++            std::lock_guard<std::mutex> lock(joint_publish_mutex_);
++            if (!m20::incident::Recorder::global().restart_after_explicit_recovery()) {
++                std::cerr << "[RECOVERY] Joints unloaded, but incident recorder could not rearm; fault remains latched.\n";
++                return false;
++            }
++            joint_guard_.reset_for_recovery();
++            joint_command_fault_.store(false, std::memory_order_release);
++            joint_cmd_.setZero();
++        }
++        std::cout << "[RECOVERY] Joint command guard reset after passive R2 release" << std::endl;
++        return true;
++    }
+     MatXf GetJointCommand() override {std::lock_guard<std::mutex> lock(joint_publish_mutex_);return joint_cmd_;}
+     void RecordControllerState(int state,const UserCommand& uc) override {
+         m20::incident::Record r;r.kind=m20::incident::Kind::State;
+--- a/run_policy/joint_safety_limits.hpp
++++ b/run_policy/joint_safety_limits.hpp
+@@ -2,12 +2,13 @@
+ #include <array>
+ #include <cstdint>
+ namespace m20 { namespace joint_limits {
+-inline constexpr const char* ledger_sha256 = "345a251709150cea881c363a236ac396a1d3f5822eaa52f13f298be39492a00f";
++inline constexpr const char* ledger_sha256 = "41546ac515dd7b257759c60c6231cdb260c8f4154b0e120e379561d59a98e434";
+ inline constexpr bool operator_limits_confirmed = true;
+ inline constexpr std::array<double,3> front_left_lower_rad = {-0.436,-2.286,-2.809};
+ inline constexpr std::array<double,3> front_left_upper_rad = {0.611,2.583,2.792};
+ inline constexpr std::array<double,3> leg_velocity_rad_s = {10,12,15};
+ inline constexpr std::array<double,3> leg_torque_nm = {32.4,76.4,76.4};
++inline constexpr std::array<double,3> target_rate_rad_s = {50,50,50};
+ inline constexpr double control_tick_s = 0.005;
+ inline constexpr double policy_period_s = 0.02;
+ inline constexpr double feedback_timeout_s = 0.05;
+@@ -20,7 +21,7 @@
+ inline constexpr std::array<float,12> effective_lower = {-0.436f,-2.286f,-2.809f,-0.611f,-2.286f,-2.809f,-0.436f,-2.583f,-2.792f,-0.611f,-2.583f,-2.792f};
+ inline constexpr std::array<float,12> effective_upper = {0.611f,2.583f,2.792f,0.436f,2.583f,2.792f,0.611f,2.286f,2.809f,0.436f,2.286f,2.809f};
+ inline constexpr std::array<double,16> tracking_error_max_rad = {0.65,0.0,0.0,0.0,0.65,0.0,0.0,0.0,0.65,0.0,0.0,0.0,0.65,0.0,0.0,0.0};
+-inline constexpr std::array<double,16> tracking_error_proxy_nm = {52.0,76.4,76.4,0.0,52.0,76.4,76.4,0.0,52.0,76.4,76.4,0.0,52.0,76.4,76.4,0.0};
++inline constexpr std::array<double,16> tracking_error_proxy_nm = {52.0,95.0,76.4,0.0,52.0,95.0,76.4,0.0,52.0,95.0,76.4,0.0,52.0,95.0,76.4,0.0};
+ inline constexpr float lower(int i) { return effective_lower[(i/4)*3+i%4]; }
+ inline constexpr float upper(int i) { return effective_upper[(i/4)*3+i%4]; }
+ }}
+--- a/run_policy/policy_target_limits.hpp
++++ b/run_policy/policy_target_limits.hpp
+@@ -1,7 +1,7 @@
+ #pragma once
+ #include <array>
+ namespace m20::target_limits {
+-inline constexpr char ledger_sha256[]="e413943203f797e1dec7277e672a1fa0be3af1c8692685eb36ab992433282fd5";
++inline constexpr char ledger_sha256[]="0b44290faab286fa4f2a6d4117cfbb741220a3b40ed63cc22dac90e313090138";
+ inline constexpr std::array<double,3> margin_rad={0.03,0.05,0.08};
+-inline constexpr std::array<double,3> max_rate_rad_s={6.0,12.0,15.0};
++inline constexpr std::array<double,3> max_rate_rad_s={50.0,50.0,50.0};
+ }
+--- a/run_policy/yaw_command_limits.hpp
++++ b/run_policy/yaw_command_limits.hpp
+@@ -1,5 +1,5 @@
+ #pragma once
+ namespace m20::yaw_limits {
+-inline constexpr double acceleration=0.6;
+-inline constexpr char ledger_sha256[]="cb70318a84cd414cfa57e667dfae008d4966c729f060b315919f1b92743c3c47";
++inline constexpr double acceleration=100.0;
++inline constexpr char ledger_sha256[]="26368e7a56b4d78066bf7a7e577b480a8fb2c807c12986d69fba2653598e1310";
+ }
+--- a/interface/robot/robot_interface.h
++++ b/interface/robot/robot_interface.h
+@@ -142,6 +142,9 @@
+     }
+ 
+     virtual bool HasJointCommandFault() const {return false;}
++    // Explicit operator recovery path. Implementations publish a truly
++    // passive command before clearing any software command latch.
++    virtual bool ResetJointCommandFaultForRecovery() {return false;}
+     virtual void RecordControllerState(int,const UserCommand&) {}
+ 
+     virtual MatXf GetJointCommand(){
+--- a/state_machine/state_base.h
++++ b/state_machine/state_base.h
+@@ -30,6 +30,10 @@
+     // All states share this latch so recovered DDS traffic cannot re-arm RL.
+     std::atomic<bool> perception_fault_latched{false};
+     std::atomic<bool> v11_perception_required{false};
++    // Set only by the explicit R2 recovery handshake. While true the damping
++    // state publishes zero kp/kd so the operator can reposition the robot by
++    // hand; L1 clears it when the normal stand sequence is admitted.
++    std::atomic<bool> joint_unload_requested{false};
+     // Serialize the RL worker and every fault-triggered damping publication.
+     std::mutex joint_command_mutex;
+ };
+--- a/state_machine/state_machine_base.h
++++ b/state_machine/state_machine_base.h
+@@ -113,9 +113,15 @@
+             command->side_vel_scale.store(0.f);
+             command->turnning_vel_scale.store(0.f);
+             ri_ptr_->ResetV11Observation();
+-            data.perception_fault_latched.store(false, std::memory_order_release);
+-            std::cout << "[RECOVERY] Explicit R2 reset cleared source history; "
+-                         "waiting for valid source and fresh L1/L2.\n";
++            data.joint_unload_requested.store(true, std::memory_order_release);
++            if (ri_ptr_->ResetJointCommandFaultForRecovery()) {
++                data.perception_fault_latched.store(false, std::memory_order_release);
++                std::cout << "[RECOVERY] Explicit R2 reset cleared source and joint history; "
++                             "joint output is unloaded; waiting for fresh L1/L2.\n";
++            } else {
++                data.perception_fault_latched.store(true, std::memory_order_release);
++                std::cerr << "[RECOVERY] R2 passive release failed; command latch remains active.\n";
++            }
+         } else {
+             auto expected = uint8_t(RobotMotionState::StandingUp);
+             command->target_mode.compare_exchange_strong(expected,
+--- a/state_machine/quadruped_wheel/joint_damping_state.hpp
++++ b/state_machine/quadruped_wheel/joint_damping_state.hpp
+@@ -29,16 +29,24 @@
+     ~JointDampingState(){}
+ 
+     virtual void OnEnter() {
++        data_ptr_->joint_unload_requested.store(false, std::memory_order_release);
+         time_record_ = ri_ptr_->GetInterfaceTimeStamp();
+         run_time_ = ri_ptr_->GetInterfaceTimeStamp();
+         msfb_.UpdateCurrentState(RobotMotionState::JointDamping);
+     };
+     virtual void OnExit() {
+-
++        data_ptr_->joint_unload_requested.store(false, std::memory_order_release);
+     }
+     virtual void Run() {
+         run_time_ = ri_ptr_->GetInterfaceTimeStamp();
+-        ri_ptr_->SetJointCommand(joint_cmd_);
++        if (data_ptr_->joint_unload_requested.load(std::memory_order_acquire)) {
++            // Full release requested by R2: kp=kd=qd=tau=0. The target
++            // position is ignored by the SDK when kp=0 and is canonicalized
++            // by the guarded publisher.
++            ri_ptr_->SetJointCommand(MatXf::Zero(16, 5));
++        } else {
++            ri_ptr_->SetJointCommand(joint_cmd_);
++        }
+     }
+     virtual bool LoseControlJudge() {
+         return false;
+@@ -50,6 +58,10 @@
+         if(run_time_ - time_record_ < 3.){
+             return StateName::kJointDamping;
+         }
++        if (uc_ptr_->GetUserCommand()->target_mode !=
++                uint8_t(RobotMotionState::JointDamping)) {
++            data_ptr_->joint_unload_requested.store(false, std::memory_order_release);
++        }
+         return StateName::kIdle;
+     }
+ };
+--- a/scripts/dds_joint_guard_no_motor_test.cpp
++++ b/scripts/dds_joint_guard_no_motor_test.cpp
+@@ -104,6 +104,24 @@
+     {Capture hw;auto c=active();hw.feedback(c);hw.SetJointCommand(c);
+         c(1,1)=0.6f;hw.SetJointCommand(c);
+         require(hw.HasJointCommandFault() && passive(hw.sent.back()),"target jump escaped");}
++    for(int recovery=0;recovery<2;++recovery){Capture hw;auto c=active();hw.feedback(c);c(6,1)=3;hw.SetJointCommand(c);
++        require(hw.HasJointCommandFault() && passive(hw.sent.back()),"fault setup failed");
++        std::this_thread::sleep_for(std::chrono::duration<double>(m20::joint_limits::incident_post_fault_s+.1));
++        require(m20::incident::Recorder::global().frozen(),"recorder did not freeze after fault");
++        const auto before=hw.sent.size();
++        require(hw.ResetJointCommandFaultForRecovery(),"explicit passive R2 reset failed");
++        require(hw.sent.size()==before+1 && passive(hw.sent.back()),"R2 reset did not unload joints");
++        for(const auto&j:hw.sent.back().data.joints_data)
++            require(j.kp==0 && j.kd==0 && j.position==0 && j.velocity==0 && j.torque==0,"R2 retained joint damping");
++        require(m20::incident::Recorder::global().healthy(),"R2 did not reopen frozen recorder");
++        auto good=active();hw.feedback(good);hw.SetJointCommand(good);
++        require(!hw.HasJointCommandFault() && !passive(hw.sent.back()),"R2 reset did not rearm guarded output");
++        unsigned archives=0;
++        for(const auto&e:std::filesystem::directory_iterator(argv[1]))
++            if(e.is_directory() && e.path().filename().string().find("incident_")==0){
++                ++archives;require(std::filesystem::exists(e.path()/"first_fault.json"),"recovery discarded trigger evidence");
++            }
++        require(archives==unsigned(recovery+1),"repeated recovery did not preserve each incident");}
+     rclcpp::shutdown();
+     std::cout<<"DDS_JOINT_GUARD=PASS checks="<<checks<<" command_publisher_compiled_out\n";return 0;
+ }catch(const std::exception&e){std::cerr<<"FAIL after "<<checks<<": "<<e.what()<<'\n';return 1;}}
+--- a/scripts/staircase_fsm_no_motor_test.cpp
++++ b/scripts/staircase_fsm_no_motor_test.cpp
+@@ -33,6 +33,7 @@
+     double anchor_ = now();
+ public:
+     std::atomic<bool> valid{true};
++    std::atomic<bool> joint_fault{false};
+     std::atomic<double> deadline{0};
+     std::shared_ptr<m20::v11::ObservationStore> bundle_store;
+     unsigned stop_calls=0; bool stop_context_alive=true;
+@@ -59,6 +60,12 @@
+     void ResetV11Observation() override {
+         if (bundle_store) bundle_store->Reset();
+         deadline.store(0);
++    }
++    bool HasJointCommandFault() const override { return joint_fault.load(); }
++    bool ResetJointCommandFaultForRecovery() override {
++        SetJointCommand(MatXf::Zero(16,5));
++        joint_fault=false;
++        return true;
+     }
+     interface::V11ObservationSnapshot ReadV11Observation() override {
+         if (bundle_store) {
+@@ -110,14 +117,15 @@
+     const bool invalid_entry = name=="invalid_entry";
+     const bool stand_loss = name=="stand_source_loss";
+     const bool expiry = name=="rl_source_expiry";
+-    const bool explicit_recovery = name=="rl_explicit_recovery";
++    const bool joint_recovery = name=="joint_explicit_recovery";
++    const bool explicit_recovery = name=="rl_explicit_recovery" || joint_recovery;
+     const bool recovery = name=="rl_loss_recovery_latched" || explicit_recovery;
+     const bool reverse = name=="rl_reverse_damping";
+     const bool lie_key = name=="rl_lie_key";
+     const bool trial_end = name=="trial_end_latch";
+     const bool worker_exception = name=="policy_worker_exception";
+     const bool setup_exception = name=="setup_exception_after_start";
+-    if (!invalid_entry && !stand_loss && !expiry && !recovery && !reverse && !lie_key && !trial_end && !worker_exception && !setup_exception && name!="rl_exit") return 2;
++    if (!invalid_entry && !stand_loss && !expiry && !recovery && !reverse && !lie_key && !trial_end && !worker_exception && !setup_exception && !joint_recovery && name!="rl_exit") return 2;
+     std::ifstream file(argv[2]); json input; file >> input;
+     rclcpp::init(0, nullptr);
+     auto robot = std::make_shared<CaptureRobot>(input);
+@@ -160,7 +168,9 @@
+                 wait([&]{return now()>=end;}, .1, true);
+             }
+             if (stand_loss || recovery) {
+-                fault_at=now(); robot->valid.store(false);
++                fault_at=now();
++                if(joint_recovery)robot->joint_fault=true;
++                else robot->valid.store(false);
+             } else if (expiry) {
+                 fault_at=robot->deadline.load(); // Do not renew this original source.
+             } else if (reverse || lie_key) {
+@@ -193,12 +203,14 @@
+                     if (explicit_recovery) {
+                         user->usr_cmd_->target_mode = uint8_t(RobotMotionState::StandingUp);
+                         wait([]{return false;}, .04, true);
+-                        require(shared_data->perception_fault_latched.load(), "L1 without R2 cleared fault");
++                        require(joint_recovery?robot->HasJointCommandFault():shared_data->perception_fault_latched.load(), "L1 without R2 cleared fault");
+                         robot->valid = false;
+                         user->usr_cmd_->target_mode = uint8_t(RobotMotionState::JointDamping);
+                         user->usr_cmd_->damping_reset_seq.fetch_add(1);
+                         wait([]{return false;}, .04, false);
+                         require(!shared_data->perception_fault_latched.load(), "R2 did not clear historical latch while source invalid");
++                        require(!robot->HasJointCommandFault(), "R2 did not clear joint latch");
++                        require(robot->snapshot().back().command.isZero(),"R2 did not fully unload joints");
+                         require(StateBase::msfb_.GetCurrentState()!=RobotMotionState::RLControlMode &&
+                             StateBase::msfb_.GetCurrentState()!=RobotMotionState::StandingUp,
+                             "R2 enabled high gain with invalid source");
+@@ -220,6 +232,7 @@
+                             require(wait([&]{return StateBase::msfb_.GetCurrentState()==RobotMotionState::WaitingForStand;}, 1., true), "reset did not return to idle");
+                             wait([]{return false;}, .04, true);
+                             require(StateBase::msfb_.GetCurrentState()==RobotMotionState::WaitingForStand, "R2 auto-stood");
++                            require(robot->snapshot().back().command.isZero(),"reset retained joint stiffness before L1");
+                             if (!rearm_at) rearm_at=now();
+                             user->usr_cmd_->target_mode=uint8_t(RobotMotionState::StandingUp);
+                             require(wait([&]{return StateBase::msfb_.GetCurrentState()==RobotMotionState::StandingUp;}, .2, true), "recovery L1 did not stand");
+@@ -230,11 +243,14 @@
+                             require(wait([&]{const auto rows=robot->snapshot();return rows.size()>before && rows.back().inference_id>0;}, .2, true), "recovery produced no new policy output");
+                             ++recovery_count;
+                             if(cycle==0){
+-                                robot->valid=false;
++                                if(joint_recovery)robot->joint_fault=true;
++                                else robot->valid=false;
+                                 require(wait([&]{return StateBase::msfb_.GetCurrentState()==RobotMotionState::JointDamping;}, .2, false), "second fault did not damp");
++                                const auto second=robot->snapshot();
++                                require(!second.empty() && (second.back().command.col(2).array()>0).all(),"old R2 release leaked into a new fault");
+                                 robot->valid=true;
+                                 wait([]{return false;}, .04, true);
+-                                require(shared_data->perception_fault_latched.load(), "old reset was reused after second fault");
++                                require(joint_recovery?robot->HasJointCommandFault():shared_data->perception_fault_latched.load(), "old reset was reused after second fault");
+                             }
+                         }
+                     }
+--- a/scripts/joint_command_guard_test.cpp
++++ b/scripts/joint_command_guard_test.cpp
+@@ -32,16 +32,16 @@
+     {Guard g;auto c=damping();c[0][1]=NAN;require(g.validate(c,Feedback{},NAN,false).ok(),"unused passive position");}
+     for(int i=0;i<16;++i){if(i%4==3)continue;
+         auto c=base;Guard g;auto f=feedback(c);require(g.validate(c,f,10).ok(),"initial active");g.committed(c,10);
+-        c[i][1]=float(m20::joint_limits::leg_velocity_rad_s[i%4]*0.005*1.01);f.receipt_mono_s=10.005;
++        c[i][1]=float(m20::joint_limits::target_rate_rad_s[i%4]*0.005*1.01);f.receipt_mono_s=10.005;
+         require(g.validate(c,f,10.005).reason==Reason::TargetRate,"rate violation after actual publish");
+         Guard startup;require(startup.validate(c,f,10.005).reason==Reason::TargetRate,"first command compared to feedback");
+     }
+-    {Guard g;auto c=base;auto f=feedback(c);g.committed(c,10);f.receipt_mono_s=20;c[1][1]=0.6f;
++    {Guard g;auto c=base;auto f=feedback(c);g.committed(c,10);f.receipt_mono_s=20;c[1][1]=1.1f;
+         require(g.validate(c,f,20).reason==Reason::TargetRate,"long pause cannot grant arbitrary jump");}
+     {Guard g;auto c=base;auto f=feedback(c);g.committed(c,10);c[1][1]=0.1f;f.receipt_mono_s=10.02;
+         require(g.validate(c,f,10.02).ok(),"normal target increment");
+         // No committed(): a geometry discard must not advance target history.
+-        c[1][1]=0.48f;require(g.validate(c,f,10.02).reason==Reason::TargetRate,"discard retains last published target");}
++        c[1][1]=1.2f;require(g.validate(c,f,10.02).reason==Reason::TargetRate,"discard retains last published target");}
+     {Guard g;auto c=base;auto f=feedback(base);c[0][0]=1000;c[0][1]=0.1f;g.committed(c,9.99);
+         require(g.validate(c,f,10).reason==Reason::TrackingError,"legal angle with excessive position error");}
+     {Guard g;auto c=base;auto f=feedback(c);c[1][3]=23;
+@@ -55,7 +55,8 @@
+         for(int i=0;i<16;++i)if(i%4!=3){
+             const bool overridden=i==12 || (all_hipx && i%4==0);
+             require(std::abs(m20::joint_limits::tracking_error_max_rad[i]-(overridden?.65:0.))<1e-12,"named angular threshold or override isolation");
+-            require(std::abs(m20::joint_limits::tracking_error_proxy_nm[i]-(overridden?52.0:m20::joint_limits::leg_torque_nm[i%4]))<1e-9,"named proxy ceiling or unchanged joint budget");
++            const double expected_proxy=(overridden?52.0:(i%4==1?95.0:m20::joint_limits::leg_torque_nm[i%4]));
++            require(std::abs(m20::joint_limits::tracking_error_proxy_nm[i]-expected_proxy)<1e-9,"named proxy ceiling or unchanged joint budget");
+         }
+         for(int joint:{0,4,8,12}){
+             if(m20::joint_limits::tracking_error_max_rad[joint]>0){
+@@ -78,7 +79,7 @@
+             require(g.validate(c,f,10).reason==Reason::Feedforward,"HipX FF torque budget widened");
+         }
+         for(int joint=0;joint<16;++joint)if(joint%4==1||joint%4==2){
+-            auto c=base;auto f=feedback(base);c[joint][1]=.96f;Guard g;g.committed(c,9.99);
++            auto c=base;auto f=feedback(base);c[joint][1]=1.2f;Guard g;g.committed(c,9.99);
+             require(g.validate(c,f,10).reason==Reason::TrackingError,"HipY or knee tracking budget changed");
+         }
+         if(all_hipx)std::cout<<"ALL_HIPX_TRACKING_OVERRIDE=PASS joints=0,4,8,12 max_error_rad=.65 max_proxy_nm=52.0 ff_limit_nm=32.4\n";
+--- a/scripts/yaw_command_ramp_test.cpp
++++ b/scripts/yaw_command_ramp_test.cpp
+@@ -8,6 +8,8 @@
+     const double step=m20::yaw_limits::acceleration*period;
+     for(float request:{-.6f,.6f}){
+         m20::YawCommandRamp ramp;ramp.reset(10);
++        check(ramp.sample(request,10+period)==request,"full stick onset was delayed");
++        ramp.reset(10);
+         float previous=0;
+         for(int tick=1;tick<=60;++tick){
+             const float actual=ramp.sample(request,10+tick*period);
+--- a/scripts/perception_grace_worker_test.cpp
++++ b/scripts/perception_grace_worker_test.cpp
+@@ -58,11 +58,16 @@
+         rclcpp::shutdown();return 0;
+     }
+     if(name=="yaw_ramp"){
++        user->usr_cmd_->forward_vel_scale=1.0f;
++        user->usr_cmd_->side_vel_scale=.5f;
+         user->usr_cmd_->turnning_vel_scale=-.6f;
+         run(.12);
+         const float early=control->AppliedYawForDiagnostics();
+-        require(early<0 && early>-.15f,"actual actor turn input jumped to full stick");
+-        run(1.);
++        require(std::abs(early+.6f)<1e-5,"full stick yaw was delayed at actor input");
++        control->OnExit();
++        require(control->LastObservationAfterExitForDiagnostics()(6)==1.0f &&
++                control->LastObservationAfterExitForDiagnostics()(7)==.5f,"full stick translation was delayed at actor input");
++        control->OnEnter();
+         require(std::abs(control->AppliedYawForDiagnostics()+.6f)<1e-5,"full turning magnitude lost");
+         user->usr_cmd_->turnning_vel_scale=0;run(.06);control->OnExit();
+         require(control->LastObservationAfterExitForDiagnostics()(8)==0,"neutral yaw delayed in actor");

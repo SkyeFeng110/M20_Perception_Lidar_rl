@@ -1,0 +1,24 @@
+{
+  "snapshot_scope": "EntrySequenceRepair training plus complete interview_prep",
+  "checks": {
+    "regression_tests": {
+      "passed": 76,
+      "skipped": 3,
+      "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q scripts/tools/test_m20_entry_sequence.py scripts/tools/test_m20_entry_transfer.py scripts/tools/test_m20_step_retention.py scripts/tools/test_m20_guarded_session.py ../../mujoco_validation/deploy/mujoco_v135/test_contract.py",
+      "note": "Selected tests were run from the repository root with full paths. Skipped tests require historical experiment data excluded from this snapshot."
+    },
+    "cpu_preflight": "passed",
+    "entry_sequence_preflight": "passed",
+    "replay_samples": 6730,
+    "post_b2_samples": 2212,
+    "completed_ascent_reference_cases": 8,
+    "manifest_hashes": "passed",
+    "entire_interview_prep_included": true,
+    "python_syntax": "passed"
+  },
+  "limits": [
+    "No new Isaac app or PPO training was started.",
+    "Physical behavior improvement is not established by these checks.",
+    "Cross-machine PPO continuation also requires relocating saved best-candidate archive paths."
+  ]
+}

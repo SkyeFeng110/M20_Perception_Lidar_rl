@@ -1,0 +1,193 @@
+{
+  "schema": 1,
+  "status": "custom_aos_stopped_after_fr_hipx_fault_all_hipx_044_rebuild_pending",
+  "board_wall_s": 1795079553.7556417,
+  "release": "/home/user/m20_native_releases/model42900_20261118_jointguard_aos",
+  "checkpoint_iteration": 45200,
+  "revision": "operator_hr_hipx_044_v1",
+  "joint": "hr_hipx_joint",
+  "sdk_joint_index": 12,
+  "maximum_tracking_error_rad": 0.44,
+  "reference_position_gain": 80,
+  "maximum_error_proxy_nm": 35.2,
+  "feedforward_limit_nm": 32.4,
+  "elf_sha256": "e3981d8b5927d5285d6eb38321583f0343839c342f200793a7cf9f0e7561597d",
+  "joint_ledger_sha256": "9f460a77ac037cd2c93c8b581d0dc7778770dd308b3501e215e4b40496f6c3bb",
+  "model_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+  "backup": "/home/user/m20_native_releases/model42900_20261118_jointguard_aos/artifacts/hr_hipx_044_before_20261119_170116.tar.gz",
+  "native_build_log": "artifacts/joint_guard_build_hr04401.log",
+  "native_validation_exit": "joint_guard_build_hr04401.exit",
+  "native_build_exit": 0,
+  "native_guard_checks": 378,
+  "native_target_limiter_checks": 120027,
+  "native_contract_replay": {
+    "samples": 128,
+    "max_target_error": 0.00120544
+  },
+  "perception_loss_timeout_s": 2.0,
+  "preserved_sha256": {
+    "policy/model.onnx": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+    "perception_grace_limits.json": "f51cd9a3d3325244f3733bf39fb008dc3677ebd733d1e9382d034a999cc2dfc2",
+    "policy_target_limits.json": "e413943203f797e1dec7277e672a1fa0be3af1c8692685eb36ab992433282fd5",
+    "src/M20_sdk_deploy/state_machine/quadruped_wheel/rl_control_state.hpp": "333bab723f6515b974be4517e9bc894239371b164116b7606969f898b7c68529"
+  },
+  "live_preflight": {
+    "pass": true,
+    "scope": "no_joint_commands",
+    "received": 998,
+    "accepted": 998,
+    "health_checks": 9317,
+    "log": "artifacts/hr044_live_preflight.log"
+  },
+  "active_rl_deploy": [
+    {
+      "pid": 13020,
+      "exe": "/opt/robot/share/rl_deploy/bin/rl_deploy"
+    }
+  ],
+  "custom_controller_started": true,
+  "agent_sent_motion_keys": false,
+  "physical_fullstick_validation": "pending",
+  "translation_command_ramp_installed": false,
+  "latest_incident_session": "80931_1795077547725395392",
+  "local_workspace": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL",
+  "local_evidence": "mujoco_validation/deploy_real/artifacts/hr_hipx_044_20261119",
+  "python_tests_passed": 11,
+  "local_guard_checks": 378,
+  "incident_replay": {
+    "old": {
+      "checked_attempts": 7420,
+      "first_failure": {
+        "inference_id": 317,
+        "joint": 12,
+        "limit": 32.4,
+        "mono_s": 4186.212115816,
+        "reason": "target_feedback_error",
+        "record_seq": 168640,
+        "value": 33.10782641172409
+      },
+      "last_hr_hipx_target": -0.35682809352874756,
+      "ledger_sha256": "cf73b8fa23d1bce9f913c4f679cea31d183d2ce286ec483b423781e38cb38e41",
+      "scope": "recorded feedback only through original first fault; changed-target dynamics and subsequent locomotion not simulated",
+      "shaped_attempts": 0
+    },
+    "new": {
+      "checked_attempts": 7420,
+      "first_failure": null,
+      "last_hr_hipx_target": -0.35682809352874756,
+      "ledger_sha256": "9f460a77ac037cd2c93c8b581d0dc7778770dd308b3501e215e4b40496f6c3bb",
+      "scope": "recorded feedback only through original first fault; changed-target dynamics and subsequent locomotion not simulated",
+      "shaped_attempts": 0
+    }
+  },
+  "latest_aos_start": {
+    "schema": 1,
+    "status": "historical_session_stopped_after_fr_hipx_fault",
+    "controller_pid": 128937,
+    "tmux": "local45200_aos_hr044",
+    "incident_session": "128937_1795079902999545956",
+    "board_wall_s": 1795079968.5508542,
+    "release": "/home/user/m20_native_releases/model42900_20261118_jointguard_aos",
+    "checkpoint_iteration": 45200,
+    "model_sha256": "42558572cc833e278aebb3793ba3ca600395e3d0445658b07d400fe5bd61f594",
+    "elf_sha256": "e3981d8b5927d5285d6eb38321583f0343839c342f200793a7cf9f0e7561597d",
+    "last_controller_state": {
+      "accepted": false,
+      "damping_reset_seq": 0,
+      "event": "controller_state",
+      "fault_trigger": false,
+      "imu_rpy_omega_acc": [
+        -0.003247592132538557,
+        -0.004166258033365011,
+        -0.2731979191303253,
+        -0.002394120441749692,
+        -0.0003434982500039041,
+        -0.0005486791487783194,
+        -0.0035389999393373728,
+        -0.04558999836444855,
+        9.791244506835938
+      ],
+      "inference_id": 0,
+      "joint_fault_latched": false,
+      "joystick": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mono_s": 6392.588536617,
+      "reason": "",
+      "record_seq": 51105,
+      "remote_command_stamp_s": 6392.449008377,
+      "safe_mode": 0,
+      "session": "128937_1795079902999545956",
+      "state": 0,
+      "target_mode": 2,
+      "wall_s": 1795079968.5391948
+    },
+    "formal_preflight": {
+      "pass": true,
+      "received": 1000,
+      "accepted": 1000,
+      "continuous_health_checks": 9605
+    },
+    "hr_hipx_tracking_error_rad": 0.44,
+    "perception_loss_timeout_s": 2.0,
+    "operator_start_instruction": "启动aos",
+    "readiness_context": "Previously confirmed field readiness and renewed explicit startup instruction; formal launcher prompts retained; live startup shows neutral joystick and safe_mode=0.",
+    "agent_sent_motion_keys": false,
+    "hardware_locomotion_validation_after_hr044": "not_performed",
+    "console_log": "artifacts/hr044_aos_start_console.log",
+    "console_snapshot": "artifacts/hr044_aos_start_console_snapshot.log",
+    "controller_exited": true
+  },
+  "custom_controller_started_at_installation": false,
+  "latest_incident": {
+    "schema": 1,
+    "session": "128937_1795079902999545956",
+    "status": "archived_custom_controller_stopped",
+    "board_fault_time": "2026-11-19T17:20:43.739891+08:00",
+    "reason": "target_feedback_error",
+    "joint": "fr_hipx_joint",
+    "sdk_joint_index": 4,
+    "inference_id": 876,
+    "target_rad": -0.3989229202270508,
+    "feedback_rad": 0.017207710072398186,
+    "error_rad": 0.41613063029944897,
+    "old_error_limit_rad": 0.40499999999999997,
+    "position_gain": 80,
+    "proxy_value_nm": 33.29045042395592,
+    "proxy_limit_nm": 32.4,
+    "measured_torque_nm": -31.653453826904297,
+    "feedback_age_ms": 2.136321000762109,
+    "policy_inferences": 876,
+    "policy_active_elapsed_s": 17.48471802200038,
+    "perception_valid_inferences": 876,
+    "perception_max_age_s": 0.18947961926460266,
+    "perception_age_at_fault_s": 0.08964916318655014,
+    "source_loss_timeout_s": 2.0,
+    "raw_command_at_fault": [
+      0,
+      0,
+      -0.6
+    ],
+    "actor_command_at_fault": [
+      0,
+      0,
+      -0.21558718383312225
+    ],
+    "negative_yaw_request_before_fault_s": 0.346,
+    "source_parse_errors": [],
+    "sequence_gaps": [],
+    "archive": "artifacts/hipx_stop_after_hr044_20261119/m20_frhipx_stop_20261119_172043",
+    "robot_archive": "/var/opt/robot/data/m20_frhipx_stop_20261119_172043",
+    "controller_stop": {
+      "pid": 128937,
+      "signal": "SIGINT",
+      "exited": true,
+      "wall_s": 1795080161.1164217,
+      "reason": "FR HipX tracking fault archived; stopped latched custom controller"
+    },
+    "root_cause_scope": "Exact guard trigger and target-following lag confirmed. The records do not isolate mechanical constraint, contact load, driver saturation, or unsuitable policy demand.",
+    "operator_followup": "Requested four HipX joints at .44 rad; native rebuild pending."
+  }
+}

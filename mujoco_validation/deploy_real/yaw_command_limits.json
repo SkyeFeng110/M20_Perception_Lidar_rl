@@ -1,0 +1,6 @@
+{
+  "schema": 1,
+  "yaw_acceleration_rad_s2": 100.0,
+  "source": "User requested full-stick yaw to be treated as a normal command without a slow-start onset ramp.",
+  "semantics": "Yaw requests are passed to the policy at the requested magnitude on the next policy update; joint angle, target-rate, feedback, source and posture protections remain independent."
+}

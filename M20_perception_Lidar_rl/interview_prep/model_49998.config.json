@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "checkpoint_sha256": "ef0fafd826687d8de283b4c56842c7d15f345bbd98e30120ed4af692a1cc6589",
+  "config_dir": "params_49998",
+  "config_sha256": {
+    "env.yaml": "ae8188e321588f6c2cbab60e086f7d74e22d599648f57b3f80370ff4dd29b431",
+    "agent.yaml": "ffe29c72fe142484aef822b3746252e456a9f467cc3c26646bb97562d78ed266"
+  },
+  "origin": "49998 original YAML unavailable; inherited 67100/1515 execution contract, already recorded in deployment model_check_49998.json. This is not a claim of original training configuration.",
+  "source": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL/mujoco_validation/M20_NX真机部署项目_20261120/1515_deploy/models/49998/training_params"
+}

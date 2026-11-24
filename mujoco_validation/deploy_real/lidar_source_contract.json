@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "driver_sha256": "683c666adb9e392fa6c3bec6f40fcea11f319f73232b0671d75ce16efed8b262",
+  "timestamp_guard_sha256": "9be7e108d1ede7dcf5c15884c03d38f6d63e0a74df365ac588c80731f9f4e233",
+  "reference_front_config_sha256": "7db223412a24133749562ac95649758ab93ec1b9166398d12e82748d5a901f48",
+  "configuration_provenance": "front-only YAML read from 1516; binaries read from 1515 GOS; 1515 physical calibration not verified",
+  "minimum_available_memory_bytes": 3221225472,
+  "memory_basis": "Measured existing GOS driver RSS 653624 KiB; allow 1 GiB for added driver plus 2 GiB reserve. Recheck populated driver after test.",
+  "cpus": [
+    6,
+    7
+  ],
+  "nice": 10,
+  "domain": 0,
+  "minimum_probe_seconds": 20,
+  "maximum_probe_seconds": 120,
+  "log_segment_bytes": 8388608,
+  "log_segments": 2,
+  "stop_grace_seconds": 3,
+  "dds_socket_buffer_bytes": 8388608,
+  "dds_max_message_bytes": 65500,
+  "transport_basis": "Only loopback carries complete point clouds; the board link carries paced original raw UDP packets.",
+  "relay_ports": {
+    "msop_port": {
+      "original": 6691,
+      "relay": 16691
+    },
+    "difop_port": {
+      "original": 7781,
+      "relay": 17781
+    },
+    "imu_port": {
+      "original": 6681,
+      "relay": 16681
+    }
+  },
+  "front_group": "224.10.10.201",
+  "relay_group": "0.0.0.0",
+  "qos_bridge_depth": 1,
+  "qos_topics": {
+    "cloud": {
+      "input": "/LIDAR/POINTS",
+      "output": "/m20_deploy/lio_input/points"
+    },
+    "imu": {
+      "input": "/IMU",
+      "output": "/m20_deploy/lio_input/imu"
+    }
+  },
+  "lio_baseline_sha256": "2841cee16060ab41e54c5be7f9870ac37cc52b2dcaad4ecf3911eaa96c54ff56",
+  "direct_udp_baseline_sha256": "0b0156a8235cee1ace64d280c86c208f762a15af55ed5f3da19274d46bc4a505"
+}
