@@ -86,8 +86,8 @@ class RecoveryPPO(PPO):
             (loss+quiet).backward()
         torch.nn.utils.clip_grad_norm_([p for p in chain(self.actor.parameters(), self.critic.parameters())
             if p.requires_grad], self.max_grad_norm)
-        self.anchor_losses.append(float(loss.detach()))
-        self.quiet_losses.append(float(quiet.detach()))
+        self.anchor_losses.append(loss.detach())
+        self.quiet_losses.append(quiet.detach())
 
     def _mean_quietness(self):
         ramp = self.quiet_ramp_provider()
@@ -108,9 +108,9 @@ class RecoveryPPO(PPO):
         if self.quiet_mean_weight:
             self.quiet_triplets = valid_quiet_triplets(self.storage.dones)
         losses = super().update()
-        losses['reference_anchor'] = sum(self.anchor_losses)/max(1, len(self.anchor_losses))
+        losses['reference_anchor'] = torch.stack(self.anchor_losses).mean() if self.anchor_losses else torch.zeros((), device=self.device)
         if self.quiet_mean_weight:
-            losses['quiet_mean_reversal'] = sum(self.quiet_losses)/max(1, len(self.quiet_losses))
+            losses['quiet_mean_reversal'] = torch.stack(self.quiet_losses).mean() if self.quiet_losses else torch.zeros((), device=self.device)
             losses['quiet_ramp'] = self.quiet_ramp_provider()
         self.quiet_triplets = None
         return losses

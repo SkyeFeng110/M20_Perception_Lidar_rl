@@ -25,7 +25,7 @@ def command_speed(t, profile, speed):
     raise ValueError(profile)
 
 
-def loaded_contact_slip(robot):
+def loaded_contact_slip(robot, early_window=None, *, return_early=False):
     """Actual contact-point Jacobian, including wheel spin exactly once.
 
     Only >=15N horizontal terrain contacts. No inferred slip from wheel RPM,
@@ -34,6 +34,7 @@ def loaded_contact_slip(robot):
     import mujoco
     import numpy as np
     total, weight = np.zeros(4), np.zeros(4)
+    early_total, early_weight = np.zeros(4), np.zeros(4)
     jac = np.zeros((3, robot.model.nv))
     force = np.zeros(6)
     for i, contact in enumerate(robot.data.contact):
@@ -53,9 +54,17 @@ def loaded_contact_slip(robot):
         velocity = jac@robot.data.qvel
         tangent = velocity-normal*np.dot(normal, velocity)
         index = indices[0]
-        total[index] += np.linalg.norm(tangent)*force[0]
+        slip = np.linalg.norm(tangent)
+        total[index] += slip*force[0]
         weight[index] += force[0]
-    return np.divide(total, weight, out=np.zeros(4), where=weight > 0), weight > 0
+        if early_window is not None and early_window[0] <= contact.pos[0] < early_window[1]:
+            early_total[index] += slip*force[0]
+            early_weight[index] += force[0]
+    result = (np.divide(total, weight, out=np.zeros(4), where=weight > 0), weight > 0)
+    if return_early:
+        result += (np.divide(early_total, early_weight, out=np.zeros(4), where=early_weight > 0),
+                   early_weight > 0)
+    return result
 
 
 def summarize(arrays):
@@ -69,6 +78,8 @@ def summarize(arrays):
     steady = moving & (t-last_change >= .8)
     rear_mask = arrays['support'][:, 2:] & moving[:, None]
     rear_slip = arrays['slip'][:, 2:][rear_mask]
+    early_mask = arrays['early_support'] & moving[:, None]
+    early_slip = arrays['early_slip'][early_mask]
     pitch = np.abs(arrays['pitch'][moving])
     rate = np.abs(arrays['pitch_rate'][moving])
     def percentile(values, q):
@@ -117,6 +128,10 @@ def summarize(arrays):
         rear_slip_mean=float(rear_slip.mean()) if len(rear_slip) else None,
         rear_loaded_samples=int(rear_mask.sum()),
         rear_support_fraction=float(rear_mask.sum()/max(1, 2*moving.sum())),
+        early_ascent_slip_p95=percentile(early_slip, 95),
+        early_ascent_slip_mean=float(early_slip.mean()) if len(early_slip) else None,
+        early_loaded_contact_samples=int(early_mask.sum()),
+        early_loaded_contact_frames=int(early_mask.any(1).sum()),
         steady_tracking_ratio=float(np.mean(arrays['speed'][steady]/command[steady])) if steady.any() else None,
         progress_m=float(arrays['position'][-1, 0]-arrays['position'][0, 0]),
         lateral_signed_final_m=float(arrays['position'][-1, 1]-arrays['position'][0, 1]),
@@ -147,6 +162,8 @@ def run(a):
         suite='traction_transition_v1', frictions=a.frictions, period=saved.period,
         duration=a.seconds, seed=42, contact_force=15., horizontal_normal_min=.98,
         slip_method='mj_jac at actual loaded terrain contact; tangential velocity in m/s',
+        early_tread_window='actual contact x in [start_x, start_x + 3*tread_depth)',
+        early_slip_method='loaded contacts >=15N on horizontal B1-B3 treads; all four wheels',
         startup='standing pose servo until 1s, policy idle until command begins at 2s',
         scope='supplement; full B1, sequential treads, keyboard and descent acceptance still required')
     (a.output/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
@@ -163,7 +180,8 @@ def run(a):
             for geom in range(r.model.ngeom):
                 if geom in r.terrain_geoms or r.model.geom_bodyid[geom] in r.wheels:
                     r.model.geom_friction[geom, 0] = friction
-            records = {k: [] for k in ('time', 'command', 'pitch', 'pitch_rate', 'position', 'speed', 'yaw', 'slip', 'support', 'front_tread', 'action', 'joint_vel')}
+            records = {k: [] for k in ('time', 'command', 'pitch', 'pitch_rate', 'position', 'speed', 'yaw',
+                'slip', 'support', 'early_slip', 'early_support', 'front_tread', 'action', 'joint_vel')}
             last = np.zeros(16)
             fell, bypass, top_frames = False, False, 0
             termination = 'duration'
@@ -182,15 +200,20 @@ def run(a):
                 gravity = rotation.T@np.array([0., 0., -1.])
                 vel = np.zeros(6)
                 mujoco.mj_objectVelocity(r.model, r.data, mujoco.mjtObj.mjOBJ_XBODY, r.base_id, vel, 0)
-                slip, support = loaded_contact_slip(r)
+                start_x = float(r.terrain.parameters.get('start_x', [0.])[0])
+                early_window = ((start_x, start_x+3.*float(tread)) if tread else None)
+                slip, support, early_slip, early_support = loaded_contact_slip(
+                    r, early_window, return_early=True)
                 front_tread = np.full(2, -1, dtype=int)
                 if tread:
                     for side in range(2):
                         if support[side]:
-                            front_tread[side] = int(round(float(r.data.xpos[r.wheels[side], 2]) / .16))
+                            front_tread[side] = int(round(float(r.data.xpos[r.wheels[side], 2]
+                                -saved.perception['wheel_radius']) / .16))
                 values = dict(time=t, command=command, pitch=np.degrees(np.arctan2(gravity[0], np.linalg.norm(gravity[1:]))),
                     pitch_rate=np.degrees((rotation.T@vel[:3])[1]), position=r.data.xpos[r.base_id].copy(),
-                    speed=vel[3], yaw=np.degrees(np.arctan2(rotation[1, 0], rotation[0, 0])), slip=slip, support=support,
+                    speed=vel[3], yaw=np.degrees(np.arctan2(rotation[1, 0], rotation[0, 0])),
+                    slip=slip, support=support, early_slip=early_slip, early_support=early_support,
                     front_tread=front_tread, action=action.copy(), joint_vel=r.data.qvel[r.vids].copy())
                 for key, value in values.items():
                     records[key].append(value)

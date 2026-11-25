@@ -52,6 +52,6 @@ class TargetedPPOV2(TargetedPPO):
     def update(self):
         losses = super().update()
         std = self.actor.distribution.log_std_param.detach().exp()
-        losses['exploration_leg_std_min'] = float(std[:12].min())
-        losses['exploration_wheel_std_min'] = float(std[12:].min())
+        losses['exploration_leg_std_min'] = std[:12].min().detach()
+        losses['exploration_wheel_std_min'] = std[12:].min().detach()
         return losses

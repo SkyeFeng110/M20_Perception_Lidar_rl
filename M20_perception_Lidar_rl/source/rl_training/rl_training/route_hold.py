@@ -46,3 +46,17 @@ def steering_equivariance(direct, reflected):
     wheel = direct[:, 12:]-direct[:, 12:].mean(1, keepdim=True)
     mirrored_wheel = reflected[:, 12:]-reflected[:, 12:].mean(1, keepdim=True)
     return .5*hip_error+.5*(wheel-mirrored_wheel).square().mean()
+
+
+def masked_steering_equivariance(direct, reflected, mask):
+    """Keep the original hip/wheel differential objective on a fixed batch."""
+    from .targeted_reference import mirror_action
+    reflected = mirror_action(reflected)
+    hips = [0, 3, 6, 9]
+    hip_error = (direct[:, hips]-reflected[:, hips]).square().mean(1)
+    wheel = direct[:, 12:]-direct[:, 12:].mean(1, keepdim=True)
+    mirrored_wheel = reflected[:, 12:]-reflected[:, 12:].mean(1, keepdim=True)
+    wheel_error = (wheel-mirrored_wheel).square().mean(1)
+    per_sample = .5*hip_error+.5*wheel_error
+    weights = mask.to(per_sample.dtype)
+    return (per_sample*weights).sum()/weights.sum().clamp_min(1.)

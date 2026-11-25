@@ -62,6 +62,14 @@ def equivariance_loss(action, mirrored_action):
     return (error/(1+error)).mean()
 
 
+def masked_equivariance_loss(action, mirrored_action, mask):
+    """Equivariance over a fixed batch, without GPU-dependent indexing."""
+    error = (action-mirror_action(mirrored_action)).square()
+    per_sample = (error/(1+error)).mean(1)
+    weights = mask.to(per_sample.dtype)
+    return (per_sample*weights).sum()/weights.sum().clamp_min(1.)
+
+
 def idle_wheel_loss(action, mask):
     # No leg-amplitude cost or moving common-drive cost is introduced.
     energy = action[:, 12:].square()

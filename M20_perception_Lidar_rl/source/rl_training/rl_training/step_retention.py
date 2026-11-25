@@ -2,10 +2,12 @@
 import torch
 
 
-def moving_common_drive_loss(predicted, target, command, tolerance=.05):
+def moving_common_drive_loss(predicted, target, command, tolerance=.05, mask=None):
     """Retain mean drive only. A biased teacher cannot constrain steering."""
     error = ((predicted[:, 12:]-target[:, 12:].detach()).mean(1).abs()-tolerance).clamp_min(0).square()
     moving = command.abs() > .1
+    if mask is not None:
+        moving = moving & mask
     return (error*moving).sum()/moving.sum().clamp_min(1)
 
 

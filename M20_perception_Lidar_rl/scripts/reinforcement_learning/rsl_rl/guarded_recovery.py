@@ -235,6 +235,13 @@ def evaluation_scalars(summary):
     # A whole-flight pass is sparse. Keep measured gap trends visible while
     # every case still fails the strict criterion; never alter acceptance.
     gaps = [[t for side in (r.get('skipped_treads') or []) for t in side] for r in stairs]
+    for row in summary.get('traction_cases', []):
+        label = '/'.join(str(row[k]) for k in ('terrain', 'tread', 'speed', 'friction'))
+        for key in ('early_ascent_slip_p95', 'early_ascent_slip_mean',
+                    'early_loaded_contact_samples', 'steady_tracking_ratio', 'rear_support_fraction'):
+            value = row.get(key)
+            if isinstance(value, (int, float)) and math.isfinite(value):
+                values[f'Traction/{label}/{key}'] = value
     values['MuJoCo/b1_skip_cases'] = sum(1 in row for row in gaps)
     values['MuJoCo/later_skip_cases'] = sum(any(t >= 2 for t in row) for row in gaps)
     values['MuJoCo/front_skipped_treads'] = sum(len(row) for row in gaps)
@@ -261,7 +268,19 @@ def evaluation_scalars(summary):
         selection = summary['behavior_selection']
         values['MuJoCo/best_candidate_promoted'] = int(selection['promoted'])
         values['MuJoCo/acquired_behavior_regressions'] = len(selection['regressions'])
-        values['MuJoCo/best_candidate_all_treads_cases'] = selection['best_rank'][0]
+        if 'route_hold_passed' in selection:
+            values['RouteHold/passed'] = int(selection['route_hold_passed'])
+            values['RouteHold/best_score'] = selection['best_rank'][1]
+            values['RouteHold/unresolved_targets'] = len(selection['route_unresolved'])
+            values['RouteHold/steering_weight'] = summary['behavior_feedback']['route_steering_weight']
+            values['RouteHold/flat_preservation_multiplier'] = summary['behavior_feedback']['route_flat_multiplier']
+            values['RouteHold/early_traction_multiplier'] = summary['behavior_feedback']['early_traction_multiplier']
+            values['RouteHold/early_traction_passed'] = int(selection['traction_passed'])
+            values['RouteHold/early_traction_repair_passed'] = int(selection['traction_repair_passed'])
+            values['RouteHold/early_traction_slip_score'] = selection['early_traction_score']
+            values['RouteHold/best_early_traction_slip_score'] = selection['best_early_traction_score']
+        else:
+            values['MuJoCo/best_candidate_all_treads_cases'] = selection['best_rank'][0]
         values['Retention/success_anchor_multiplier'] = summary['behavior_feedback']['success_anchor_multiplier']
     for row in summary['cases']:
         for key in ('speed', 'speed_to_command', 'reach_p95', 'idle_yaw_deg', 'moving_yaw_deg',
@@ -345,6 +364,7 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
         if task == ROUTE_HOLD_TASK:
             from route_hold_selection import RouteHoldBehaviorSelector
             selector_class = RouteHoldBehaviorSelector
+            selection_kwargs['traction_results'] = runner.alg.traction_reference_results
         selector = selector_class(output, runner.alg.behavior_teacher_checkpoint,
                                   runner.alg.behavior_reference_results,
                                   previous_best=runner.alg.behavior_selection_state, **selection_kwargs)
@@ -459,7 +479,8 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                     if extra.returncode != 0:
                         raise RuntimeError('Entry evaluator runtime error; inspect entry.log')
                     selection_kwargs['entry_results'] = target/'results.json'
-                if task in (TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK) and evaluation_profile == 'full':
+                if ((task in (TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK)
+                     and evaluation_profile == 'full') or task == ROUTE_HOLD_TASK):
                     traction = evaluation/'traction'
                     command = [sys.executable, str(ROOT/'scripts/tools/m20_traction_benchmark.py'),
                                '--checkpoint', str(checkpoint), '--output', str(traction)]
@@ -469,6 +490,7 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                         raise RuntimeError('Traction evaluator runtime error; inspect traction.log')
                     selection_kwargs['traction_results'] = traction/'results.json'
                     summary['traction_results'] = str(traction/'results.json')
+                    summary['traction_cases'] = json.loads((traction/'results.json').read_text())
                 if flat_repair:
                     target = evaluation/'flat_start'
                     command = [sys.executable, str(ROOT/'scripts/tools/m20_flat_command_probe.py'),

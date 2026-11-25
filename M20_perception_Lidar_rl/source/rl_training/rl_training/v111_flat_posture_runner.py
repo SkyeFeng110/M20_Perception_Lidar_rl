@@ -74,10 +74,8 @@ class FlatPosturePPO(StepRetentionPPO):
         # Keep drive on recorded flat states; release the teacher's extended
         # flat legs. Stair legs are protected by the separate measured replay.
         flat = scene == 0
-        if flat.any():
-            return self.anchor_weight*moving_common_drive_loss(
-                predicted[flat], target[flat], x[flat, 6], tolerance=.1)
-        return predicted.sum()*0.
+        return self.anchor_weight*moving_common_drive_loss(
+            predicted, target, x[:, 6], tolerance=.1, mask=flat)
 
     def extra_anchor_loss(self):
         inherited = super().extra_anchor_loss()
@@ -91,7 +89,7 @@ class FlatPosturePPO(StepRetentionPPO):
         # full-stick transient. All student layers remain trainable.
         delta = prediction[:, [1, 2, 4, 5, 7, 8, 10, 11]]-target[:, [1, 2, 4, 5, 7, 8, 10, 11]]
         compact = self.compact_anchor_weight*(delta.abs()-.08).clamp_min(0).square().mean()
-        self.compact_losses.append(float(compact.detach()))
+        self.compact_losses.append(compact.detach())
         ids = torch.randint(len(self.deployed_obs), (self.anchor_batch_size,), device=self.device)
         x, target = self.deployed_obs[ids], self.deployed_action[ids]
         reflected = torch.rand(len(ids), device=self.device) < .5
@@ -104,7 +102,7 @@ class FlatPosturePPO(StepRetentionPPO):
     def update(self):
         self.compact_losses.clear()
         result = super().update()
-        result['compact_flat_anchor'] = sum(self.compact_losses)/max(1, len(self.compact_losses))
+        result['compact_flat_anchor'] = torch.stack(self.compact_losses).mean() if self.compact_losses else torch.zeros((), device=self.device)
         return result
 
     def behavior_feedback(self, regressions):

@@ -53,6 +53,31 @@ def test_unloaded_wheels_and_stopping_cannot_improve_traction_reward():
     assert torch.equal(stopped, torch.zeros_like(stopped))
 
 
+def test_early_tread_objective_only_credits_loaded_progress_and_cannot_reward_unloading():
+    slip = torch.tensor([[0., .1, .5, .5], [0., .1, .5, .5],
+                         [0., .1, .5, .5], [0., .1, .5, .5]])
+    supported = torch.tensor([[True, True, True, True], [True, True, False, False],
+                              [True, True, True, True], [True, True, True, True]])
+    early = torch.tensor([[True, True, True, True], [True, True, True, True],
+                          [True, True, False, False], [False, False, False, False]])
+    reward, cost, selected, quality = m.early_tread_traction_terms(
+        slip, supported, early, torch.tensor([1., 1., 1., 0.]), torch.ones(4))
+    assert selected[0].all()
+    assert selected[1].tolist() == [True, True, False, False]
+    assert selected[2].tolist() == [True, True, False, False]
+    combined = .60*reward-.13*cost
+    assert combined[0] > combined[1] > 0.
+    assert reward[3] == cost[3] == 0.
+    assert quality[0, 0] > quality[0, 2]
+    # Even nearly unbounded slip leaves a small positive net load credit;
+    # unloading cannot beat supported rolling in the actual configured mix.
+    severe = torch.full((2, 4), 1000.)
+    severe_support = torch.tensor([[True, True, True, True], [False, False, False, False]])
+    reward, cost, _, _ = m.early_tread_traction_terms(
+        severe, severe_support, torch.ones_like(severe_support), torch.ones(2), torch.ones(2))
+    assert (.60*reward-.13*cost)[0] > (.60*reward-.13*cost)[1]
+
+
 def test_horizontal_patch_rejects_edges_air_impact_slopes_and_invalid_rays():
     hits = torch.zeros(1, 4, 5, 3)
     normals = torch.zeros_like(hits); normals[..., 2] = 1.
@@ -135,6 +160,14 @@ def test_selection_accepts_reduced_slip_with_retained_motion():
     assert not selection.regressions([candidate], [reference])
 
 
+def test_selection_rejects_first_three_tread_slip_regression():
+    reference = dict(traction_row(), terrain='ascent', tread=.26, profile='hold', speed=1., friction=.6,
+        early_ascent_slip_p95=.2, early_ascent_slip_mean=.1)
+    candidate = dict(reference, early_ascent_slip_p95=.4)
+    assert any('early-tread slip regression' in item
+               for item in selection.regressions([candidate], [reference]))
+
+
 def test_exact_mujoco_contact_metric_distinguishes_rolling_from_spin():
     mujoco = pytest.importorskip('mujoco')
     import numpy as np
@@ -153,8 +186,10 @@ def test_exact_mujoco_contact_metric_distinguishes_rolling_from_spin():
                             wheels=np.array([model.body('wheel').id, -1, -2, -3]))
     data.qvel[0], data.qvel[6] = 1., 10.
     mujoco.mj_forward(model, data)
-    rolling, supported = benchmark.loaded_contact_slip(robot)
+    rolling, supported, early_rolling, early_supported = benchmark.loaded_contact_slip(
+        robot, (-.01, .01), return_early=True)
     assert supported[0] and rolling[0] < .02
+    assert early_supported[0] and early_rolling[0] < .02
     data.qvel[0] = 0.
     mujoco.mj_forward(model, data)
     spin, supported = benchmark.loaded_contact_slip(robot)
@@ -211,8 +246,15 @@ def test_guard_runs_both_gates_and_keeps_traction_failure_out_of_repaired_status
         pytest.skip('Local physical traction suite required')
     traction_rows = json.loads((reference/'results.json').read_text())
     manifest = json.loads((reference/'manifest.json').read_text())
+    for row in traction_rows:
+        if row['terrain'] == 'ascent':
+            row['early_ascent_slip_p95'] = row['rear_slip_p95']
+            row['early_ascent_slip_mean'] = row['rear_slip_mean']
+            row['early_loaded_contact_samples'] = row['rear_loaded_samples']
     root = tmp_path/'traction_seed'; root.mkdir()
     manifest['checkpoint_sha256'] = hashlib.sha256(seed.read_bytes()).hexdigest()
+    manifest.setdefault('early_tread_window', 'actual contact x in B1-B3')
+    manifest.setdefault('early_slip_method', 'test fixture')
     (root/'manifest.json').write_text(json.dumps(manifest))
     (root/'results.json').write_text(json.dumps(traction_rows))
     alg = SimpleNamespace(behavior_teacher_checkpoint=str(seed), behavior_reference_results=str(native),

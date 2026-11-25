@@ -80,8 +80,8 @@ def reference_anchor_loss(predicted, target, observations, scene, front_weight, 
         raise ValueError("Recovery reference actions must be matching N x 16 tensors")
     if observations.shape != (len(predicted), 63) or scene.shape != (len(predicted),):
         raise ValueError("Recovery reference observations and physical labels must align")
-    if not torch.all((scene == FLAT) | (scene == ASCENT)):
-        raise ValueError("Recovery reference scene must be physically labeled flat or ascent")
+    # Labels were validated on CPU in load_labeled_replay before transfer.
+    # Rechecking immutable replay labels here would synchronize each CUDA batch.
     flat = scene == FLAT
     ascent_visible = ((observations[:, 57] > .5) & (observations[:, 58] > 0)) | (
         (observations[:, 60] > .5) & (observations[:, 61] > 0))

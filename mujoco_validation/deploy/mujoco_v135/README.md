@@ -1,4 +1,4 @@
-> 2026-11-25 发布更新：新增 FlatPosture `model_56998.pt` 和该 run 的真实配置。验证它请显式传 `--checkpoint M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt`（从仓库根目录启动）。默认仍使用 EntrySequenceRepair 模型。以下为历史说明，当前完整命令见 [仓库 README](../../../README.md)。
+> 2026-11-25 发布更新：新增 RouteHold `model_58098.pt` 和该 run 的真实配置。验证它请显式传 `--checkpoint M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-RouteHold/2026-11-25_11-30-18_303338_route_hold_latest/model_58098.pt`（从仓库根目录启动）。默认仍使用 EntrySequenceRepair 模型。当前完整命令见 [仓库 README](../../../README.md)。
 
 # M20 MuJoCo 验证
 

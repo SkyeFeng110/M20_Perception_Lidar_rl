@@ -134,7 +134,7 @@ def main():
         source_head=git('rev-parse', 'HEAD'),
         source_has_uncommitted_changes=bool(git('status', '--porcelain')),
         contains_original_git_history=False, local_source_files_deleted=0,
-        training_snapshot_note='Only the explicitly selected FlatPosture checkpoint and its run logs are added; previously published EntrySequenceRepair logs are preserved. Ongoing training is not stopped.',
+        training_snapshot_note='Only the explicitly selected RouteHold checkpoint and its run logs are added; previously published EntrySequenceRepair and FlatPosture logs are preserved. Ongoing training is not stopped.',
         robot_submodule_commit=git('-C', str(ROOT / 'M20_perception_Lidar_rl/deep_robotics_model'), 'rev-parse', 'HEAD'),
         policy=policy, checkpoint_files=weights, files=records, filtered=dict(skipped),
         total_bytes=sum(r['bytes'] for r in records))

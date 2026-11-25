@@ -1,8 +1,8 @@
 # M20 Perception LiDAR RL
 
-M20 轮足机器人感知运动策略的 Isaac Lab / RSL-RL 训练代码、MuJoCo 验证程序与真机部署工具。本次更新包含 **`M20-Stair-V11.1-FlatPosture-v0`** 的平地姿态修复、关节目标限位和相关训练/验证代码；EntrySequenceRepair 代码及既有发布内容保留。策略接口为 **63 维观测 → 16 维动作**，Critic 为 568 维。
+M20 轮足机器人感知运动策略的 Isaac Lab / RSL-RL 训练代码、MuJoCo 验证程序与真机部署工具。本次更新发布 **`M20-Stair-V11.1-RouteHold-v0`** 及 RouteHold `model_58098.pt`、真实配置和训练日志；此前 EntrySequenceRepair 与 FlatPosture logs 原样保留。策略接口为 **63 维观测 → 16 维动作**，Critic 为 568 维。
 
-本次 logs 仅新增 `M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt`，连同该 run 的真实 `params/`、TensorBoard 训练与评估事件、观测清单和启动时 Git diff。对应 session 的状态、指标历史与小型评估报告位于 `artifacts/flat_posture_20261124_181441_2759441/`。其他 FlatPosture 权重不上传。
+本次 logs 仅新增 `M20-V11.1-RouteHold/2026-11-25_11-30-18_303338_route_hold_latest/model_58098.pt`，连同该 run 的真实 `params/`、TensorBoard 训练与评估事件、观测清单和启动时 Git diff。其他 RouteHold 权重不上传。RouteHold 56898 冻结教师及其测量轨迹保存在 `artifacts/route_hold_20261125/`，58098 traction 基线结果保存在 `artifacts/route_traction_20261125/reference58098/traction_b1_b3/`。
 
 原先已发布的 EntrySequenceRepair `50498`、`50598` 及其日志原样保留，没有追加该旧实验后来产生的 checkpoint。`interview_prep/` 继续完整分发，包含 `35300` 基线和 `49998` 冻结教师。准确上传时间、文件清单与 SHA-256 见 [PUBLISH_MANIFEST.json](PUBLISH_MANIFEST.json)。训练仍在运行，本次上传不会中断它。
 
@@ -13,7 +13,9 @@ M20_perception_Lidar_rl/
   logs/rsl_rl/M20-V11.1-EntrySequenceRepair/
                             原先发布的 50498、50598 和日志
   logs/rsl_rl/M20-V11.1-FlatPosture/
-                            本次指定的 56998、真实配置与训练日志
+                            前次发布的 56998、真实配置与训练日志
+  logs/rsl_rl/M20-V11.1-RouteHold/
+                            本次指定的 58098、真实配置与训练日志
   interview_prep/           基线、49998 教师、关联配置与说明
   data/m20_recovery/         本阶段带标签回放及来源哈希
   artifacts/entry_49998_repair_20261124/
@@ -22,6 +24,10 @@ M20_perception_Lidar_rl/
                             FlatPosture 教师行为轨迹与基线证据
   artifacts/flat_posture_20261124_181441_2759441/
                             指定 run 的状态、指标与评估日志
+  artifacts/route_hold_20261125/
+                            56898 冻结教师及本阶段物理评估数据
+  artifacts/route_traction_20261125/reference58098/
+                            58098 traction 基线和测量报告
   deep_robotics_model/      官方机器人资源子模块
   docs/                     当前设计与相关历史说明
   tools/                    可重复的快照导出脚本和过滤规则
@@ -41,34 +47,34 @@ python3 -m venv .venv-mujoco
 source .venv-mujoco/bin/activate
 python -m pip install -r mujoco_validation/deploy/mujoco_v135/requirements.txt
 bash mujoco_validation/run_mujoco_v135.sh --viewer --keyboard \
-  --checkpoint M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt \
+  --checkpoint M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-RouteHold/2026-11-25_11-30-18_303338_route_hold_latest/model_58098.pt \
   --stair-height 0.16 --tread-depth 0.26
 ```
 
-上面的命令明确加载本次发布的 `56998`。未指定 `--checkpoint` 时仍沿用 EntrySequenceRepair 默认模型；切换模型时应显式指定路径。运行配置自动读取该模型旁的 `params/env.yaml`、`params/agent.yaml`；迁移模型时应一同复制实际配置。
+上面的命令明确加载本次发布的 `58098`。未指定 `--checkpoint` 时仍沿用 EntrySequenceRepair 默认模型；切换模型时应显式指定路径。运行配置自动读取该模型旁的 `params/env.yaml`、`params/agent.yaml`；迁移模型时应一同复制实际配置。
 
 按 Z 起立、C 进入运控；8/5 前后、4/6 左右、7/9 转向；R 复位站立、Backspace 复位趴卧、Esc 退出。行为评估是否改善须看真实测量，不能仅根据 checkpoint 编号或训练奖励判断。
 
 ## 训练与继续训练
 
-训练环境需要另行安装 Isaac Sim、Isaac Lab 和 RSL-RL 5.x。本机记录的依赖版本见 [environment_versions_20261117.json](M20_perception_Lidar_rl/docs/environment_versions_20261117.json)。两个阶段的入口均保留；默认 2048 环境、追加 50000 更新、每 1000 更新做物理评估。
+训练环境需要另行安装 Isaac Sim、Isaac Lab 和 RSL-RL 5.x。本机记录的依赖版本见 [environment_versions_20261117.json](M20_perception_Lidar_rl/docs/environment_versions_20261117.json)。当前 RouteHold 入口默认 2048 环境、追加 50000 更新、每 1000 更新做物理评估。
 
-FlatPosture 的步态保护教师为已发布的 EntrySequenceRepair `model_50498.pt`。上传版本在原基线目录没有教师副本时自动使用它，权重和 `params/` 均与原教师逐字节一致，不额外上传重复权重。新主机激活已安装好的 Isaac Lab 环境后，从仓库根目录检查：
+新主机激活已安装好的 Isaac Lab 环境后，从仓库根目录检查：
 
 ```bash
 python -m pip install -e M20_perception_Lidar_rl/source/rl_training --no-deps
 cd M20_perception_Lidar_rl
-M20_PYTHON=python bash scripts/train_m20_v111_flat_posture_latest.sh --check-only
+M20_PYTHON=python bash scripts/train_m20_v111_route_hold_latest.sh --check-only
 ```
 
-正式开始新的 FlatPosture 训练阶段：
+正式开始 RouteHold 训练：
 
 ```bash
 M20_PYTHON=python M20_NUM_ENVS=2048 M20_TOTAL_UPDATES=50000 M20_EVAL_EVERY=1000 \
-  bash scripts/train_m20_v111_flat_posture_latest.sh
+  bash scripts/train_m20_v111_route_hold_latest.sh
 ```
 
-该命令自动选择已发布的 `56998` 初始化 Actor/Critic，并创建新的优化器。`M20_RESUME_CHECKPOINT` 是恢复优化器的精确续训模式，跨主机仍需迁移 checkpoint 内最优候选归档的绝对路径及其证据，不能仅通过 `--check-only` 判断完整恢复可用。设计和历史行为检查见 [FlatPosture 说明](M20_perception_Lidar_rl/docs/m20_flat_posture_latest_20261124.md)。
+该命令自动选择已发布的 `58098` 初始化 Actor/Critic，并创建新的优化器；56898 教师和 traction 基线用于保护既有能力及比较早期履带接触滑移。当前日志仅包含权重和常规训练记录，适合初始化新训练；它不包含续训优化器状态。阶段目标、评估协议和未验证边界见 [RouteHold 说明](M20_perception_Lidar_rl/docs/m20_route_hold_56898_20261125.md)。FlatPosture 入口和设计记录仍保留在仓库中。
 
 以下为保留的 EntrySequenceRepair 使用说明，其入口为 `scripts/train_m20_v111_sequence_from49998.sh`。
 

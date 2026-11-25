@@ -1,7 +1,8 @@
 {
-  "training_run_root": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair",
+  "training_run_root": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-RouteHold/2026-11-25_11-30-18_303338_route_hold_latest",
   "include_roots": [
     "README.md",
+    "VALIDATION_REPORT.json",
     "LICENSE",
     ".gitignore",
     ".gitattributes",
@@ -158,7 +159,11 @@
     "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/latest_metrics.json",
     "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/metrics_history.jsonl",
     "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/run_dir.txt",
-    "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/status.json"
+    "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/status.json",
+    "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-RouteHold/2026-11-25_11-30-18_303338_route_hold_latest",
+    "M20_perception_Lidar_rl/data/m20_recovery/route_hold_20261125",
+    "M20_perception_Lidar_rl/artifacts/route_hold_20261125",
+    "M20_perception_Lidar_rl/artifacts/route_traction_20261125/reference58098/traction_b1_b3"
   ],
   "excluded_directory_names": [
     ".git",
@@ -221,19 +226,23 @@
     "mujoco_validation/deploy_real/flat_start_*/*"
   ],
   "maximum_file_bytes": 94371840,
-  "notes": "Update current source and complete interview_prep. Preserve previous EntrySequenceRepair logs byte-for-byte from --published-root. Add only FlatPosture model_56998.pt plus its run event logs, params and small session evaluation reports. Exclude other weights, old logs, duplicate deployments, caches and unrelated historical tools. Reuse the already published model_50498.pt as frozen teacher.",
-  "selected_run_root": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest",
+  "notes": "Update current RouteHold source and complete interview_prep. Preserve the previously published EntrySequenceRepair and FlatPosture logs byte-for-byte from --published-root. Add only RouteHold model_58098.pt plus its run event logs and params. Include the frozen 56898 teacher and measured RouteHold/traction evidence under artifacts. Exclude other RouteHold weights, old logs, duplicate deployments, caches and unrelated historical tools.",
+  "selected_run_root": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-RouteHold/2026-11-25_11-30-18_303338_route_hold_latest",
   "preserved_log_roots": [
-    "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair"
+    "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair",
+    "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture"
   ],
   "checkpoint_allowlist": [
     "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair/2026-11-24_13-27-41_476901_sequence_flat_from49998/model_50498.pt",
     "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair/2026-11-24_13-27-41_476901_sequence_flat_from49998/model_50598.pt",
-    "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt"
+    "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt",
+    "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-RouteHold/2026-11-25_11-30-18_303338_route_hold_latest/model_58098.pt",
+    "M20_perception_Lidar_rl/artifacts/route_hold_20261125/reference56898/teacher/model_56898.pt"
   ],
   "allowed_launchers": [
     "M20_perception_Lidar_rl/scripts/train_m20_v111_sequence_from49998.sh",
-    "M20_perception_Lidar_rl/scripts/train_m20_v111_flat_posture_latest.sh"
+    "M20_perception_Lidar_rl/scripts/train_m20_v111_flat_posture_latest.sh",
+    "M20_perception_Lidar_rl/scripts/train_m20_v111_route_hold_latest.sh"
   ],
   "log_report_paths": [
     "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/best_candidate.json",

@@ -1,54 +1,45 @@
 {
-  "checked_at": "2026-11-25T11:22:14+08:00",
-  "scope": "Current source update; only model_56998.pt and its FlatPosture run logs are added; previous EntrySequenceRepair logs and complete interview_prep are preserved.",
+  "checked_at": "2026-11-25T16:21:16+08:00",
+  "scope": "RouteHold source update; only model_58098.pt and this run's training logs are added. Previously published EntrySequenceRepair and FlatPosture logs are preserved.",
   "selected_checkpoint": {
-    "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt",
-    "sha256": "2467b187c1bbffc96e654e5244c0e165d16ac7907c090556ac3c19f34dd45a4a"
+    "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-RouteHold/2026-11-25_11-30-18_303338_route_hold_latest/model_58098.pt",
+    "sha256": "c21b28919e97e17c99a48776c9189b0fb57e1427318b0d94dfb7ec2d8cfa0db"
   },
   "regression_tests": {
-    "passed": 91,
-    "skipped": 3,
+    "passed": 11,
+    "skipped": 0,
     "suites": [
-      "test_m20_flat_posture.py",
-      "test_m20_joint_limits.py",
-      "test_m20_entry_sequence.py",
-      "test_m20_entry_transfer.py",
-      "test_m20_step_retention.py",
-      "test_m20_guarded_session.py",
-      "mujoco_v135/test_contract.py"
+      "M20_perception_Lidar_rl/scripts/tools/test_m20_route_hold.py"
     ],
-    "skipped_note": "Three guarded-session cases require historical experiment evidence excluded from this publication."
+    "note": "One NumPy deprecation warning; all RouteHold tests passed."
   },
   "preflight": {
-    "cpu": "passed",
-    "joint_target_limits": "passed",
-    "flat_posture": "passed",
-    "gait_samples": 6500,
-    "protected_gait_samples": 3047,
-    "compact_flat_samples": 501,
-    "measured_joint_limit_trajectories": 60,
-    "measured_joint_limit_samples": 37742,
-    "baseline_frames_clipped": 0
-  },
-  "mujoco_smoke": {
-    "checkpoint_iteration": 56998,
-    "simulated_seconds": 3.0,
-    "control_steps": 150,
-    "execution_config": "adjacent params",
-    "fell": false,
-    "strict_gait_acceptance": "not_measured"
+    "status": "route_hold_preflight_passed",
+    "gait_samples": 2920,
+    "compact_flat_samples": 108,
+    "route_flat_samples": 750,
+    "completed_ascent_reference_cases": 8,
+    "traction_cases": 22,
+    "actor_dimensions": [
+      63,
+      16
+    ],
+    "critic_dimensions": 568,
+    "no_training_started": true
   },
   "publication": {
-    "previous_log_files_preserved": 13,
-    "new_checkpoint_count": 1,
-    "new_tensorboard_files": 62,
-    "entire_interview_prep_included": true,
+    "previous_log_roots_preserved_byte_for_byte": [
+      "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair",
+      "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture"
+    ],
+    "new_routehold_run_checkpoints": 1,
+    "routehold_tensorboard_files": 12,
     "manifest_hashes": "passed",
-    "python_syntax": "passed"
+    "python_syntax": "passed",
+    "shell_syntax": "passed"
   },
   "limits": [
-    "No new Isaac app or PPO training was started; the running training was not stopped.",
-    "The short MuJoCo smoke check confirms model/config loading and stepping, not full-stair or real-robot behavior acceptance.",
-    "Cross-host exact optimizer continuation still requires relocating saved best-candidate archive paths and evidence."
+    "The preflight validates saved configurations and measured reference evidence; it does not certify RouteHold 58098 stair performance or real-robot behavior.",
+    "The full Isaac Lab check-only launcher was not run because another training process is active on this host; no training process was stopped."
   ]
 }

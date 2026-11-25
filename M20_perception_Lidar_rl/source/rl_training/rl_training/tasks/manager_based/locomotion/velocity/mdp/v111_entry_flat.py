@@ -25,8 +25,7 @@ def entry_step(certified, approached, support_steps, skip_steps, failed,
     pays a B1 success event. No ordering between FL and FR is imposed.
     """
     finite = torch.isfinite(torch.cat((x, bottom, force_z, lower[:, None], rise[:, None], tread[:, None]), 1)).all()
-    if not finite:
-        raise RuntimeError('Nonfinite first-tread reward geometry')
+    torch._assert_async(finite, 'Nonfinite first-tread reward geometry')
     margin = torch.minimum(torch.full_like(tread, cfg.entry_edge_margin), tread*cfg.entry_edge_fraction)
     end = tread-margin
     contact = force_z >= cfg.entry_contact_force

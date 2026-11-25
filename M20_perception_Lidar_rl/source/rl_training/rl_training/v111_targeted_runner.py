@@ -6,7 +6,7 @@ from tensordict import TensorDict
 from .v111_recovery_runner import RecoveryPPO
 from .recovery_reference import reference_anchor_loss, mean_reversal_loss
 from .targeted_reference import (mirror_observation, correction_scales, settled_idle_mask,
-    straight_mask, equivariance_loss, idle_wheel_loss, flat_workspace_loss, coherent_triplets)
+    straight_mask, masked_equivariance_loss, idle_wheel_loss, flat_workspace_loss, coherent_triplets)
 
 
 class TargetedPPO(RecoveryPPO):
@@ -54,7 +54,7 @@ class TargetedPPO(RecoveryPPO):
             # an unreflected, asymmetric stair state. Explicit turns excluded.
             straight = straight_mask(x)
             reflected = self.actor(TensorDict({'policy': mirror_observation(x)}, batch_size=[len(x)]))
-            symmetry = self.symmetry_weight*equivariance_loss(predicted[straight], reflected[straight]) if straight.any() else predicted.sum()*0
+            symmetry = self.symmetry_weight*masked_equivariance_loss(predicted, reflected, straight)
             idle = self.idle_mean_weight*idle_wheel_loss(predicted, settled_idle_mask(x, phase))
             workspace = self.flat_mean_weight*flat_workspace_loss(predicted, x, self.replay_scene[indices])
             quiet = self._mean_quietness()
@@ -62,12 +62,12 @@ class TargetedPPO(RecoveryPPO):
             (loss+quiet+symmetry+idle+workspace+extra).backward()
         torch.nn.utils.clip_grad_norm_([p for p in chain(self.actor.parameters(), self.critic.parameters())
             if p.requires_grad], self.max_grad_norm)
-        self.anchor_losses.append(float(loss.detach()))
-        self.quiet_losses.append(float(quiet.detach()))
-        self.symmetry_losses.append(float(symmetry.detach()))
-        self.idle_losses.append(float(idle.detach()))
-        self.workspace_losses.append(float(workspace.detach()))
-        self.extra_losses.append(float(extra.detach()))
+        self.anchor_losses.append(loss.detach())
+        self.quiet_losses.append(quiet.detach())
+        self.symmetry_losses.append(symmetry.detach())
+        self.idle_losses.append(idle.detach())
+        self.workspace_losses.append(workspace.detach())
+        self.extra_losses.append(extra.detach())
 
     def _mean_quietness(self):
         rollout = super()._mean_quietness()
@@ -89,8 +89,8 @@ class TargetedPPO(RecoveryPPO):
         self.workspace_losses.clear()
         self.extra_losses.clear()
         losses = super().update()
-        losses['straight_equivariance'] = sum(self.symmetry_losses)/max(1, len(self.symmetry_losses))
-        losses['settled_idle_wheels'] = sum(self.idle_losses)/max(1, len(self.idle_losses))
-        losses['flat_mean_workspace'] = sum(self.workspace_losses)/max(1, len(self.workspace_losses))
-        losses['targeted_extra'] = sum(self.extra_losses)/max(1, len(self.extra_losses))
+        losses['straight_equivariance'] = torch.stack(self.symmetry_losses).mean() if self.symmetry_losses else torch.zeros((), device=self.device)
+        losses['settled_idle_wheels'] = torch.stack(self.idle_losses).mean() if self.idle_losses else torch.zeros((), device=self.device)
+        losses['flat_mean_workspace'] = torch.stack(self.workspace_losses).mean() if self.workspace_losses else torch.zeros((), device=self.device)
+        losses['targeted_extra'] = torch.stack(self.extra_losses).mean() if self.extra_losses else torch.zeros((), device=self.device)
         return losses

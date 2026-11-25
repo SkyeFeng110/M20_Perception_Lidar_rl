@@ -36,7 +36,7 @@ parser.add_argument(
 parser.add_argument("--seed", type=int, default=None, help="Seed used for the environment")
 parser.add_argument("--max_iterations", type=int, default=None, help="RL Policy training iterations.")
 parser.add_argument("--initial-checkpoint", type=str, default=None,
-                    help="EntryFlatRepair: initialize from an exact checkpoint path with fresh Adam state")
+                    help="Initialize a supported repair task from an exact checkpoint with fresh optimizer state")
 parser.add_argument("--resume-checkpoint", type=str, default=None,
                     help="Retention/Traction/EntryTransfer: exact continuation checkpoint, including optimizer and behavior protection state")
 parser.add_argument("--guarded-total-updates", type=int, default=None,
@@ -179,10 +179,10 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
         raise ValueError("EntryFlatRepair requires explicit --num_envs; use its workstation-limited launcher")
     if args_cli.initial_checkpoint is not None and args_cli.resume:
         raise ValueError("Choose --initial-checkpoint for a new objective, or --resume for continuation")
-    fresh_entry_flat = entry_flat_repair and args_cli.initial_checkpoint is not None
+    fresh_initial_checkpoint = entry_flat_repair and args_cli.initial_checkpoint is not None
     if args_cli.initial_checkpoint is not None and not entry_flat_repair:
-        raise ValueError("--initial-checkpoint is only supported by EntryFlatRepair")
-    if fresh_entry_flat:
+        raise ValueError("--initial-checkpoint is only supported by repair tasks")
+    if fresh_initial_checkpoint:
         agent_cfg.resume = True
     if entry_flat_repair and not agent_cfg.resume:
         raise ValueError("EntryFlatRepair requires --initial-checkpoint or --resume")
@@ -245,7 +245,7 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     # save resume path before creating a new log_dir
     _algo_class_name = getattr(getattr(agent_cfg, "algorithm", None), "class_name", None)
     if agent_cfg.resume or _algo_class_name == "Distillation":
-        if fresh_entry_flat:
+        if fresh_initial_checkpoint:
             resume_path = os.path.realpath(args_cli.initial_checkpoint)
             if not os.path.isfile(resume_path):
                 raise FileNotFoundError(resume_path)
@@ -289,7 +289,7 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     if agent_cfg.resume or agent_cfg.algorithm.class_name == "Distillation":
         print(f"[INFO]: Loading model checkpoint from: {resume_path}")
         # load previously trained model
-        if fresh_entry_flat:
+        if fresh_initial_checkpoint:
             # A changed objective needs fresh Adam moments and the configured
             # fine-tuning LR, while preserving the source iteration/schedule.
             checkpoint_infos = runner.load(resume_path, load_cfg={"actor": True, "critic": True,
@@ -322,7 +322,8 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
             if args_cli.task in ('M20-Stair-V11.1-AscentRecovery-v0', 'M20-Stair-V11.1-RecoveryRefine-v0',
                                  'M20-Stair-V11.1-TargetedCorrection-v0', 'M20-Stair-V11.1-TargetedCorrectionV2-v0',
                                  'M20-Stair-V11.1-StepSupport-v0', 'M20-Stair-V11.1-StepRetention-v0',
-                                 'M20-Stair-V11.1-TractionTransition-v0', 'M20-Stair-V11.1-EntryTransfer-v0') and fresh_entry_flat:
+                                 'M20-Stair-V11.1-TractionTransition-v0', 'M20-Stair-V11.1-EntryTransfer-v0',
+                                 'M20-Stair-V11.1-RouteHold-v0') and fresh_initial_checkpoint:
                 from pathlib import Path
                 import yaml
                 source_agent = yaml.safe_load((Path(resume_path).parent/'params/agent.yaml').read_text())
@@ -333,7 +334,7 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
                                  'M20-Stair-V11.1-TargetedCorrectionV2-v0', 'M20-Stair-V11.1-StepSupport-v0',
                                  'M20-Stair-V11.1-StepRetention-v0', 'M20-Stair-V11.1-TractionTransition-v0', 'M20-Stair-V11.1-EntryTransfer-v0',
                                  'M20-Stair-V11.1-EntrySequenceRepair-v0', 'M20-Stair-V11.1-FlatPosture-v0', 'M20-Stair-V11.1-RouteHold-v0'):
-                stage_steps = 0 if fresh_entry_flat else int((checkpoint_infos or {}).get('m20_refine_stage_steps', 0))
+                stage_steps = 0 if fresh_initial_checkpoint else int((checkpoint_infos or {}).get('m20_refine_stage_steps', 0))
                 env.unwrapped._m20_refine_start_step = env.unwrapped.common_step_counter-stage_steps
             env.reset()
             prefix = "V111_REPAIR" if entry_flat_repair else (

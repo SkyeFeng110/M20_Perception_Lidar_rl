@@ -1,0 +1,2740 @@
+--- git commit ---
+e096dbae25a527beacb4ff9b896d5a41ba22f551
+
+
+--- git status ---
+On branch agent/codex/recovery-guarded-30000
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+	modified:   .gitignore
+	modified:   CODEX_SESSION_HANDOFF_20261117.md
+	modified:   M20_perception_Lidar_rl/.gitignore
+	modified:   M20_perception_Lidar_rl/README.md
+	modified:   M20_perception_Lidar_rl/deep_robotics_model (untracked content)
+	deleted:    M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-AscentRecovery/2026-11-17_14-59-02_063111_guarded_30000_from35300/model_36500.pt
+	modified:   M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/guarded_recovery.py
+	modified:   M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/repair_workstation_limits.py
+	modified:   M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/train.py
+	modified:   M20_perception_Lidar_rl/scripts/repair_workstation_limits.json
+	modified:   M20_perception_Lidar_rl/scripts/tools/m20_entry_flat_benchmark.py
+	modified:   M20_perception_Lidar_rl/scripts/tools/m20_recovery_preflight.py
+	modified:   M20_perception_Lidar_rl/scripts/tools/probe_m20_refine_runtime.py
+	modified:   M20_perception_Lidar_rl/scripts/tools/test_m20_guarded_session.py
+	modified:   M20_perception_Lidar_rl/scripts/train_m20_v111_guarded.sh
+	modified:   M20_perception_Lidar_rl/source/rl_training/rl_training/recovery_reference.py
+	modified:   M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/__init__.py
+	modified:   M20_perception_Lidar_rl/source/rl_training/rl_training/v111_recovery_runner.py
+	modified:   README.md
+	modified:   mujoco_validation/deploy/mujoco_v135/README.md
+	modified:   mujoco_validation/deploy/mujoco_v135/checkpoint_config.py
+	modified:   mujoco_validation/deploy/mujoco_v135/key_bindings.py
+	modified:   mujoco_validation/deploy/mujoco_v135/policy.py
+	modified:   mujoco_validation/deploy/mujoco_v135/run.py
+	modified:   mujoco_validation/deploy/mujoco_v135/saved_config.py
+	modified:   mujoco_validation/deploy/mujoco_v135/teleop.py
+	modified:   mujoco_validation/deploy/mujoco_v135/test_contract.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	M20_perception_Lidar_rl (1)/
+	M20_perception_Lidar_rl/artifacts/
+	M20_perception_Lidar_rl/data/m20_recovery/flat_posture_20261124/
+	M20_perception_Lidar_rl/data/m20_recovery/flat_posture_20261124_draft/
+	M20_perception_Lidar_rl/data/m20_recovery/reference_47900_20261120.json
+	M20_perception_Lidar_rl/data/m20_recovery/reference_47900_20261120.npz
+	M20_perception_Lidar_rl/data/m20_recovery/reference_48900_traction_20261120.json
+	M20_perception_Lidar_rl/data/m20_recovery/reference_48900_traction_20261120.npz
+	M20_perception_Lidar_rl/data/m20_recovery/reference_49998_sequence_20261124.json
+	M20_perception_Lidar_rl/data/m20_recovery/reference_49998_sequence_20261124.npz
+	M20_perception_Lidar_rl/data/m20_recovery/reference_52000_entry_20261123.json
+	M20_perception_Lidar_rl/data/m20_recovery/reference_52000_entry_20261123.npz
+	M20_perception_Lidar_rl/data/m20_recovery/reference_52000_entry_v2_20261123.json
+	M20_perception_Lidar_rl/data/m20_recovery/reference_52000_entry_v2_20261123.npz
+	M20_perception_Lidar_rl/data/m20_recovery/reference_66800_entry_20261123.json
+	M20_perception_Lidar_rl/data/m20_recovery/reference_66800_entry_20261123.npz
+	M20_perception_Lidar_rl/data/m20_recovery/route_hold_20261125/
+	M20_perception_Lidar_rl/docs/m20_entry_direct_repair_from68400_20261123.md
+	M20_perception_Lidar_rl/docs/m20_entry_sequence_flat_from49998_20261124.md
+	M20_perception_Lidar_rl/docs/m20_entry_transfer_20261123.md
+	M20_perception_Lidar_rl/docs/m20_flat_command_67100_20261123.md
+	M20_perception_Lidar_rl/docs/m20_flat_posture_latest_20261124.md
+	M20_perception_Lidar_rl/docs/m20_flat_start_repair_20261123.md
+	M20_perception_Lidar_rl/docs/m20_route_hold_56898_20261125.md
+	M20_perception_Lidar_rl/docs/m20_step_retention_20261120.md
+	M20_perception_Lidar_rl/docs/m20_step_support_20261119.md
+	M20_perception_Lidar_rl/docs/m20_targeted_correction_20261118.md
+	M20_perception_Lidar_rl/docs/m20_targeted_v2_20261119.md
+	M20_perception_Lidar_rl/docs/m20_traction_transition_20261120.md
+	M20_perception_Lidar_rl/interview_prep/model_49998.config.json
+	M20_perception_Lidar_rl/interview_prep/model_49998.pt
+	M20_perception_Lidar_rl/interview_prep/params_49998/
+	M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair/
+	M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/
+	M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/behavior_selection.py
+	M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/entry_selection.py
+	M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/flat_posture_selection.py
+	M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/flat_start_selection.py
+	M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/route_hold_selection.py
+	M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/traction_selection.py
+	M20_perception_Lidar_rl/scripts/tools/analyze_m20_flat_trace.py
+	M20_perception_Lidar_rl/scripts/tools/analyze_m20_refinement_plateau.py
+	M20_perception_Lidar_rl/scripts/tools/m20_build_entry_replay.py
+	M20_perception_Lidar_rl/scripts/tools/m20_build_flat_posture_replay.py
+	M20_perception_Lidar_rl/scripts/tools/m20_build_route_flat_replay.py
+	M20_perception_Lidar_rl/scripts/tools/m20_entry_diagnostics.py
+	M20_perception_Lidar_rl/scripts/tools/m20_entry_sequence_preflight.py
+	M20_perception_Lidar_rl/scripts/tools/m20_flat_command_probe.py
+	M20_perception_Lidar_rl/scripts/tools/m20_flat_posture_preflight.py
+	M20_perception_Lidar_rl/scripts/tools/m20_flat_start_preflight.py
+	M20_perception_Lidar_rl/scripts/tools/m20_joint_limits_preflight.py
+	M20_perception_Lidar_rl/scripts/tools/m20_production_transition_benchmark.py
+	M20_perception_Lidar_rl/scripts/tools/m20_route_hold_preflight.py
+	M20_perception_Lidar_rl/scripts/tools/m20_step_retention_preflight.py
+	M20_perception_Lidar_rl/scripts/tools/m20_traction_benchmark.py
+	M20_perception_Lidar_rl/scripts/tools/m20_traction_preflight.py
+	M20_perception_Lidar_rl/scripts/tools/prepare_m20_flat_start_deploy.py
+	M20_perception_Lidar_rl/scripts/tools/probe_m20_entry_sequence.py
+	M20_perception_Lidar_rl/scripts/tools/probe_m20_entry_transfer.py
+	M20_perception_Lidar_rl/scripts/tools/probe_m20_flat_start.py
+	M20_perception_Lidar_rl/scripts/tools/test_m20_entry_sequence.py
+	M20_perception_Lidar_rl/scripts/tools/test_m20_entry_transfer.py
+	M20_perception_Lidar_rl/scripts/tools/test_m20_flat_posture.py
+	M20_perception_Lidar_rl/scripts/tools/test_m20_flat_start.py
+	M20_perception_Lidar_rl/scripts/tools/test_m20_joint_limits.py
+	M20_perception_Lidar_rl/scripts/tools/test_m20_route_hold.py
+	M20_perception_Lidar_rl/scripts/tools/test_m20_step_retention.py
+	M20_perception_Lidar_rl/scripts/tools/test_m20_step_support.py
+	M20_perception_Lidar_rl/scripts/tools/test_m20_targeted_correction.py
+	M20_perception_Lidar_rl/scripts/tools/test_m20_traction_transition.py
+	M20_perception_Lidar_rl/scripts/train_m20_v111_entry_repair_from68400.sh
+	M20_perception_Lidar_rl/scripts/train_m20_v111_entry_transfer_from52000.sh
+	M20_perception_Lidar_rl/scripts/train_m20_v111_entry_transfer_from66800.sh
+	M20_perception_Lidar_rl/scripts/train_m20_v111_flat_posture_latest.sh
+	M20_perception_Lidar_rl/scripts/train_m20_v111_flat_start_from67100.sh
+	M20_perception_Lidar_rl/scripts/train_m20_v111_flat_start_from67700.sh
+	M20_perception_Lidar_rl/scripts/train_m20_v111_route_hold_latest.sh
+	M20_perception_Lidar_rl/scripts/train_m20_v111_sequence_from49998.sh
+	M20_perception_Lidar_rl/scripts/train_m20_v111_traction_from48900.sh
+	M20_perception_Lidar_rl/source/rl_training/rl_training/entry_sequence.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/entry_transfer.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/flat_posture.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/flat_start.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/joint_target_limits.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/route_hold.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/step_retention.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/step_support.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/targeted_reference.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_entry_transfer_env_cfg.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_flat_posture_env_cfg.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_route_hold_env_cfg.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_step_retention_env_cfg.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_step_support_env_cfg.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_targeted_env_cfg.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_targeted_v2_env_cfg.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_traction_transition_env_cfg.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_entry_transfer.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_flat_posture.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_flat_start.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_joint_limits.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_route_hold.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_step_retention.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_step_support.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_targeted.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_traction_transition.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/traction_transition.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/v111_entry_sequence_runner.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/v111_entry_transfer_runner.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/v111_flat_posture_runner.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/v111_flat_start_runner.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/v111_route_hold_runner.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/v111_step_retention_runner.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/v111_targeted_runner.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/v111_targeted_v2_runner.py
+	M20_perception_Lidar_rl/source/rl_training/rl_training/v111_traction_transition_runner.py
+	M20_perception_Lidar_rl/tools/entry_sequence_export_policy.json
+	M20_perception_Lidar_rl/tools/export_entry_sequence_snapshot.py
+	mujoco_validation/deploy/mujoco_v135/command_filter.py
+	mujoco_validation/deploy_real/
+
+no changes added to commit (use "git add" and/or "git commit -a") 
+
+
+--- git diff ---
+diff --git a/.gitignore b/.gitignore
+index 77fd653..db2fea3 100755
+--- a/.gitignore
++++ b/.gitignore
+@@ -5,11 +5,11 @@
+ **/.idea/
+ **/.codex-scratch/
+ **/.venv*/
+-**/logs/
++**/logs/*
+ **/runs/
+ **/outputs/
+ **/exported/
+-**/artifacts/
++**/artifacts/*
+ *.pyc
+ *.log
+ *.pt
+@@ -17,8 +17,30 @@
+ *.onnx
+ *.ckpt
+ *.safetensors
+-!M20_perception_Lidar_rl/interview_prep/model_35300.pt
+ .env
+ .env.*
+ *.mp4
+ *.webm
++
++# Publish only the requested training run and its reproducibility evidence.
++!M20_perception_Lidar_rl/logs/rsl_rl/
++M20_perception_Lidar_rl/logs/rsl_rl/*
++!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair/
++!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair/**
++!M20_perception_Lidar_rl/artifacts/entry_49998_repair_20261124/
++*.tar
++*.tar.gz
++*.tar.gz.sha256
++*.zip
++mujoco_validation/M20_NX*/
++
++# Explicitly requested baseline and teacher assets.
++!M20_perception_Lidar_rl/interview_prep/**
++
++# FlatPosture publication: one requested checkpoint plus logs and params.
++!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/
++M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/*
++!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/
++!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/**
++M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/*.pt
++!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt
+diff --git a/CODEX_SESSION_HANDOFF_20261117.md b/CODEX_SESSION_HANDOFF_20261117.md
+index 2c4a0fb..51252bb 100644
+--- a/CODEX_SESSION_HANDOFF_20261117.md
++++ b/CODEX_SESSION_HANDOFF_20261117.md
+@@ -2,6 +2,8 @@
+ 
+ 整理日期：2026-11-17（Asia/Shanghai）。
+ 
++2026-11-19 后续补充：按用户新要求取消 Actor 参数冻结，保持 63 维部署输入及 16 维输出，新增独立 `TargetedCorrectionV2` 任务，以选择性固定教师参考、可学习的探索方差下限、承重落脚信用和 B1 之后的正向速度奖励降低“少动少错”诱因。V2 手动启动默认从用户指定的 45100 初始化，4096 环境、追加 30000 更新，每 100 更新评测，行为失败继续训练。152 项 CPU 回归与 40 环境/180 步固定策略检查通过；本次未启动新 PPO。实施细节、验证和命令见 [11 月 19 日 V2 记录](M20_perception_Lidar_rl/docs/m20_targeted_v2_20261119.md)。旧 V1 会话最后记录已追加 5100 更新、权重 50200；工作期间复查 PID 49747 已不在进程列表，日志未记录退出原因，未发送停止信号或自动重启。下文的冻结说明属于历史配置。
++
+ 2026-11-18 后续补充：用户已停止原会话，并要求同步实现剩余行为修复与声学降噪。最新分析、独立 `RecoveryRefine` 任务、冻结验证与手动启动命令见 [11 月 18 日实施记录](M20_perception_Lidar_rl/docs/m20_recovery_refine_quiet_20261118.md)。该次实现没有启动 PPO 或改变历史权重；下文是原时点纪要。
+ 
+ 本文件记录本轮从迁移阅读、行为修复、训练验收调整，到上下楼降噪调研的问答与结论，供用户迁移到另一台主机后继续改进训练。它是按任务整理的**问答纪要，不是逐字聊天导出**；引号内保留关键用户原话，回答部分结合当前代码和保存的报告归纳。旧主机历史见 [原交接文件](CODEX_HANDOFF_20261117.md)，最新要求以本次对话为准。
+@@ -470,3 +472,35 @@ python3 scripts/tools/watch_m20_recovery.py \
+ ## 11. 可直接发给下一台主机助手的接手说明
+ 
+ > 请先阅读仓库根目录 `CODEX_SESSION_HANDOFF_20261117.md`，再看 `CODEX_HANDOFF_20261117.md`、连续学习说明、当前代码和评测证据。旧文档中的行为验收失败即停训已被本轮用户要求覆盖。当前默认 4096 环境、每 100 次更新评测、目标追加 30000 次更新；所有有效行为失败记录后继续，不能重新加入行为自动停止，也不能把失败模型标成通过。训练由我手动启动，先分析和准备改进，不要自动运行 PPO、短训或离线拟合。原模型仍是指定 35300，保留原始配置、全部历史权重与日志。重点先处理漏阶、站立起步伸腿、C 后静止偏航及速度保持，避免持续惩罚导致少动/失去上楼能力。当前问题解决后再推进降噪：触地声一直存在，电机啸叫在高速或大幅度动作时明显；阅读已保存的文献调研，优先局部轻触地、载荷过渡和减少多余抖动，不能靠整段降速、不走或压低必要抬腿幅度获得安静。首先核对工作目录是否包含尚未提交的新代码、v2 回放、完整原模型基线及诊断证据，并检查新主机适用的规则和实际环境。
++
++## 12. 2026-11-18 后续状态补充
++
++上文记录历史要求；后续用户已明确将细化阶段初始化改为 **43800**，冻结教师仍用 35300，并要求将行为修复与声学代理优化同步实现。细化任务为 `M20-Stair-V11.1-RecoveryRefine-v0`，说明见 `M20_perception_Lidar_rl/docs/m20_recovery_refine_quiet_20261118.md`。
++
++最新定向改进为独立任务 `M20-Stair-V11.1-TargetedCorrection-v0`，手动启动器参数 `--targeted`。详细机制、1200 更新对比、验证与启动命令见 [定向修复说明](M20_perception_Lidar_rl/docs/m20_targeted_correction_20261118.md)。新任务保持 43800 初始化、35300 教师、4096 环境、每 100 更新测评、最多追加 30000 更新；不因有效行为失败停止。
++
++分析旧 Refine 的 1200 更新固定快照仍为 8/8 上楼到顶、0/8 逐阶完整；Z→C→8 平地静止偏航约 9.47°，尚未修复。新增镜像均值约束、窄范围静止轮速修复、平地目标工作空间辅助、下降/承重阶段有限落脚信用、加强稳定支撑正奖励，并把降噪均值正则在训练 rollout 与连续部署回放间各分配一半。没有新增全楼梯减速或持续动作幅度处罚。
++
++本次仅做代码/CPU 检查、40 环境 180 步 Isaac 冻结测试和启动预检查；没有启动新训练、拟合权重、停止或重启现有训练。撰写时旧 Refine 的 PID 为 4153706，后续接手须重新核查实际进程状态。新改动不自动进入已导入旧配置的运行进程。用户手动结束旧会话后，才能用新目录启动新任务；不要同时运行两组 4096 环境。
++
++## 13. 2026-11-19：V2 结果与逐阶支撑改进
++
++后续用户将初始化指定为 Refine 的 45100，并要求全 Actor 解冻、不得扩展输入。V2 已按此实现；配置与验证见 `M20_perception_Lidar_rl/docs/m20_targeted_v2_20261119.md`。V2 首次会话在 45800 后中断；用户又手动续训 500 更新至 46300，状态为 `completed_with_retention_failures`。新近测评维持 8/8 到顶，但逐阶结果波动。续训会话 46000 的逐阶完整为 4/8、前轮漏阶项合计 7；46300 为 0/8、合计 20。46000 仍未通过完整行为验收。
++
++用户继续要求直接改善逐阶。已完成独立任务 `M20-Stair-V11.1-StepSupport-v0`（启动器 `--step-support`），说明及手动命令见 [逐阶支撑阶段](M20_perception_Lidar_rl/docs/m20_step_support_20261119.md)。采用下一台阶有限预算的接近/下降/连续加载信用，加强相邻支撑正奖励；四列专练 16 cm/26、30 cm 和 0.5/0.7/1.0 m/s，两列保留原高度课程；GAE lambda 为 0.97。原生前进收益独立、成本预算未增加，Actor 全部可训练，63D 输入及部署动作协议不变。
++
++建议本阶段显式从 V2 续训目录 `2026-11-19_14-42-49_949461_resume_from45800_probe500/model_46000.pt` 初始化网络、新建 Adam，先 1500 更新/4096 环境/每 100 更新测评；行为失败继续记录训练。134 项 CPU 测试、40 环境 420 步固定策略检查（46000 和 46300）与启动器 check-only 通过，证据在 `M20_perception_Lidar_rl/artifacts/step_support_validation_20261119/`。没有启动新 PPO 或拟合，没有生成解决漏阶的新权重；训练仍由用户手动启动。接手时重新核对进程，不能把固定策略运行时通过解释成逐阶行为已经改善。
++
++## 14. 2026-11-20：47900 右偏与长训遗忘保护
++
++用户要求查清后期退化，允许用 47900 替代 35300 作为新阶段教师，又明确指出 47900 上楼严重右偏。新任务为 `M20-Stair-V11.1-StepRetention-v0`，启动器 `--step-retention`；详细证据、实现边界与手动启动/续训命令见 `M20_perception_Lidar_rl/docs/m20_step_retention_20261120.md`。
++
++47900 重新物理测评为 7/8 前轮逐阶完整、8/8 到顶，但存在最大约 9.3～16.5° 右偏航、.387～.414 m 右横移，仍未通过完整修复验收。旧训练 50900 已退化到 1/8 逐阶、7/8 到顶、1 次跌倒。旧教师与回放来自 35300，不能保护后来得到的 47900 成功逐阶动作；旧参考损失下降不代表部署行为改善。
++
++本轮已接入三项训练保护：47900 的 7 个真实成功工况均衡回放、基于当轮 rollout 更新前均值与固定标准差的局部软约束、MuJoCo 实测退化后降低学习率并增强成功保护。教师只保护成功的腿部前后向动作和平均轮驱动，释放 hipx 与轮差速，成功样本观测/目标同步镜像；新增正向路线奖励纠正偏航/横移，静止得零分。保持 63D 输入/16D 输出、全 Actor 可训练、原生前进奖励、漏阶后仍可前进、行为失败继续训练。
++
++最佳候选按物理结果独立归档。历史真实 50900 检查已证明无法替换 47900。每次评测后另存 `resume_after_eval.pt`，保留最新学习率、保护倍数、优化器、课程和已测最佳候选；续训用 `--resume-checkpoint`，保留原最佳归档资产。原 `model_N.pt` 与其 hash 不因评测反馈被重写。
++
++116 项 CPU 测试（新阶段 15 项）、40 环境 600 步 Isaac 固定策略检查和启动器预检通过。未启动新 PPO，未产生改进后权重，不宣称右偏或长期遗忘已经解决。保护是软约束；后续更优模型会归档，但不会自动生成新的教师回放，长期效果需实测。检查时旧 PID 495916 已不存在，旧 status.json 仍显示 training，不能只靠该文件判断训练活跃。
++
++用户随后确认旧训练已停止，要求新阶段训练 50000 轮并由其手动启动。总更新上限已从 30000 调整到 50000；使用 `--step-retention --total-updates 50000`，4096 环境、每 100 更新评测，47900 初始化，目标索引约 97900。没有自动启动训练。
+diff --git a/M20_perception_Lidar_rl/.gitignore b/M20_perception_Lidar_rl/.gitignore
+index 2597646..3903d55 100755
+--- a/M20_perception_Lidar_rl/.gitignore
++++ b/M20_perception_Lidar_rl/.gitignore
+@@ -20,7 +20,6 @@
+ 
+ # Outputs
+ *.pt
+-!interview_prep/model_35300.pt
+ *.pth
+ *.ckpt
+ *.onnx
+@@ -50,3 +49,20 @@ CLAUDE.md
+ m20_depth_rl/
+ 
+ **/usd/*
++
++# Selected training is intentionally versioned; other runs stay local.
++!logs/rsl_rl/
++logs/rsl_rl/*
++!logs/rsl_rl/M20-V11.1-EntrySequenceRepair/
++!logs/rsl_rl/M20-V11.1-EntrySequenceRepair/**
++
++# Explicitly requested baseline and teacher assets.
++!interview_prep/**
++
++# FlatPosture publication: one requested checkpoint plus logs and params.
++!logs/rsl_rl/M20-V11.1-FlatPosture/
++logs/rsl_rl/M20-V11.1-FlatPosture/*
++!logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/
++!logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/**
++logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/*.pt
++!logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt
+diff --git a/M20_perception_Lidar_rl/README.md b/M20_perception_Lidar_rl/README.md
+index b9da3c6..f61d1d2 100755
+--- a/M20_perception_Lidar_rl/README.md
++++ b/M20_perception_Lidar_rl/README.md
+@@ -1,512 +1,7 @@
+-# M20 PRO 感知楼梯统一运动策略
++# M20 感知训练工程
+ 
+-> 当前迁移版本以 `interview_prep/model_35300.pt`（V11.1）为唯一分发基线，Actor 为 63D→16D。运行方法、依赖及未验证项见 [MIGRATION.md](docs/MIGRATION.md)。下文保留历史项目说明，其中的版本标记、验收结论和旧模型路径不能视为当前基线的验证结论。
++本次更新包含 **`M20-Stair-V11.1-FlatPosture-v0`** 的平地姿态修复和关节目标限位。logs 新增指定 run 的 `model_56998.pt`、真实配置及训练日志；EntrySequenceRepair 之前发布的 `50498`、`50598` 和日志原样保留，`interview_prep/` 继续完整上传。
+ 
+-## First-Riser Perception Guided Command-Conditioned Locomotion
++克隆、MuJoCo 验证、两阶段训练及跨机器恢复的边界见 [仓库 README](../README.md)。本次设计见 [FlatPosture 说明](docs/m20_flat_posture_latest_20261124.md)，上一阶段见 [EntrySequenceRepair 说明](docs/m20_entry_sequence_flat_from49998_20261124.md)。训练源码中的早期版本保留为当前任务的基础依赖。
+ 
+-基于 DeepRobotics M20 PRO 官方 Rough Locomotion，我们构建了一套统一的感知运动策略：局部感知负责解决“第一阶怎么过”，实时速度指令始终负责决定“机器人往哪里走”。
+-
+-> **核心原则**
+->
+-> Perception teaches the first riser; locomotion remains in charge of the robot.
+-
+-![Isaac Sim](https://img.shields.io/badge/Isaac%20Sim-5.1.0-76B900)
+-![Isaac Lab](https://img.shields.io/badge/Isaac%20Lab-2.3.2-4C8BF5)
+-![RSL--RL](https://img.shields.io/badge/RSL--RL-5.0.1-8A2BE2)
+-![Robot](https://img.shields.io/badge/Robot-M20%20PRO-0A84FF)
+-![Actor](https://img.shields.io/badge/Actor-60D%20%E2%86%92%2016D-FF8C00)
+-![Audit](https://img.shields.io/badge/Reward%20Audit-PASS-2EA44F)
+-
+----
+-
+-## 1. 方法概览
+-
+-系统不是在“平地策略”和“楼梯策略”之间切换，而是在同一个 Actor 中融合官方本体感觉、实时 command 和第一阶几何感知。
+-
+-```mermaid
+-flowchart LR
+-    A[LiDAR / Point Cloud] --> B[Local Elevation Map]
+-    B --> C[First-Riser Extraction]
+-    C --> D[B / H / D]
+-    E[Official 57D Observation] --> F[Unified 60D Actor]
+-    D --> F
+-    G[Live Command vx / vy / wz] --> F
+-    F --> H[16D M20 Action]
+-    H --> I[12 Joint Position Targets]
+-    H --> J[4 Wheel Velocity Targets]
+-```
+-
+-整体方法可写为：
+-
+-$$
+-\text{First-Riser Perception}
+-\rightarrow
+-\text{Locomotion Handoff}
+-\rightarrow
+-\text{Command-Conditioned Locomotion}.
+-$$
+-
+-感知层回答第一阶的局部几何问题，Locomotion 层持续执行用户给出的运动意图。
+-
+----
+-
+-## 2. 官方 Command-Conditioned Locomotion 基础
+-
+-官方 M20 Rough Policy 接收 57 维观测并输出 16 维动作：
+-
+-$$
+-\mathbf{o}^{\mathrm{off}}_t \in \mathbb{R}^{57},
+-\qquad
+-\mathbf{a}_t \in \mathbb{R}^{16}.
+-$$
+-
+-16 维动作保持 M20 官方定义：
+-
+-$$
+-\mathbf{a}_t=
+-\left[
+-\mathbf{a}^{\mathrm{leg}}_t,
+-\mathbf{a}^{\mathrm{wheel}}_t
+-\right],
+-$$
+-
+-其中
+-
+-$$
+-\mathbf{a}^{\mathrm{leg}}_t \in \mathbb{R}^{12},
+-\qquad
+-\mathbf{a}^{\mathrm{wheel}}_t \in \mathbb{R}^{4}.
+-$$
+-
+-官方 XY 速度跟踪奖励为
+-
+-$$
+-r^v_t=
+-\exp\!\left(
+--\frac{
+-\left\|
+-\mathbf{v}^{\mathrm{cmd}}_{xy,t}-
+-\mathbf{v}^{\mathrm{base}}_{xy,t}
+-\right\|_2^2
+-}{\sigma_v^2}
+-\right).
+-$$
+-
+-因此，策略通过持续跟踪 $[v_x,v_y,\omega_z]$，并在姿态、接触、轮腿协调和平滑性约束下，自主形成适应复杂地形的运动方式。
+-
+----
+-
+-## 3. 第一阶几何感知：B / H / D
+-
+-我们没有把整张高程图直接输入 Actor，而是把第一阶跨越最关键的信息压缩为三个可部署变量：
+-
+-$$
+-\mathbf{p}_t=[B_t,H_t,D_t].
+-$$
+-
+-### 3.1 激活标志 B
+-
+-$$
+-B_t\in\{0,1\}.
+-$$
+-
+-$B_t=1$ 表示当前存在满足几何条件、需要处理的有效第一阶；否则为 0。
+-
+-### 3.2 第一阶高度 H
+-
+-$$
+-H_t=z_{\mathrm{upper},t}-z_{\mathrm{lower},t}.
+-$$
+-
+-$z_{\mathrm{upper}}$ 与 $z_{\mathrm{lower}}$ 分别为第一阶上表面和下层地面高度。
+-
+-### 3.3 第一阶距离 D
+-
+-$$
+-D_t=
+-\left(
+-\mathbf{x}_{\mathrm{riser},t}-
+-\mathbf{x}_{\mathrm{robot},t}
+-\right)^{\!\top}
+-\mathbf{d}_{\mathrm{approach},t}.
+-$$
+-
+-$\mathbf{d}_{\mathrm{approach}}$ 表示当前接近方向，$D_t$ 表示沿该方向到第一阶立面的纵向距离。
+-
+-Actor 输入由官方 57D 扩展为统一 60D：
+-
+-$$
+-\mathbf{o}_t=
+-\left[
+-\mathbf{o}^{\mathrm{off}}_t,
+-B_t,H_t,D_t
+-\right]
+-\in\mathbb{R}^{60}.
+-$$
+-
+----
+-
+-## 4. Unified Actor
+-
+-V10 Actor 保留官方动作空间，通过共享表示和 FR 几何分支实现感知辅助：
+-
+-$$
+-\mathbf{h}_t=f_{\theta}\!\left(\mathbf{o}^{\mathrm{off}}_t,B_t\right),
+-$$
+-
+-$$
+-\mathbf{a}^{\mathrm{support}}_t=g_s(\mathbf{h}_t),
+-$$
+-
+-$$
+-\mathbf{a}^{\mathrm{FR}}_t=g_{\mathrm{FR}}\!\left(\mathbf{h}_t,H_t,D_t\right).
+-$$
+-
+-最终动作仍为
+-
+-$$
+-\mathbf{a}_t=
+-\left[
+-\mathbf{a}^{\mathrm{support}}_t,
+-\mathbf{a}^{\mathrm{FR}}_t
+-\right]
+-\in\mathbb{R}^{16}.
+-$$
+-
+-其中，$B$ 进入 shared trunk，可以调制 whole-body action；$H/D$ 直接进入 FR 特殊分支，为第一阶跨越提供高度和距离信息。Action Manager、DelayedPD、关节定义和轮速控制形式保持不变。
+-
+-### 4.1 PPO 策略与关节控制主流程（文字图）
+-
+-```text
+-┌─────────────────────────────────────────────────────────────────────────────┐
+-│                     4096 Parallel IsaacLab Environments                    │
+-│                  24 control steps / environment / rollout                  │
+-└──────────────────────────────────┬──────────────────────────────────────────┘
+-                                   │
+-              ┌────────────────────┴────────────────────┐
+-              │                                         │
+-              ▼                                         ▼
+-┌──────────────────────────────┐          ┌──────────────────────────────────┐
+-│ Actor observation: 60D       │          │ Asymmetric critic input: 569D   │
+-│                              │          │                                  │
+-│ [ 0: 3] base angular velocity│          │ Official privileged obs: 247D  │
+-│ [ 3: 6] projected gravity    │          │ Clean PGTT map:          315D  │
+-│ [ 6: 9] command vx, vy, wz   │          │ Geometry truth:            3D  │
+-│ [ 9:25] joint position       │          │ Teacher labels:            4D  │
+-│ [25:41] joint velocity       │          └─────────────────┬────────────────┘
+-│ [41:57] previous action      │                            │
+-│ [57]    B                    │                            ▼
+-│ [58]    H                    │                     Value V_phi(s_t)
+-│ [59]    D                    │
+-└───────────────┬──────────────┘
+-                │
+-                ▼
+-┌─────────────────────────────────────────────────────────────────────────────┐
+-│ Unified Actor                                                              │
+-│                                                                             │
+-│ [official 57D + B] ──► Shared MLP: 58 → 512 → 256 → 128                    │
+-│                                      │                                      │
+-│                    ┌─────────────────┴─────────────────┐                    │
+-│                    ▼                                   ▼                    │
+-│          Support head: 128 → 13          FR head: [128 + H + D] → 128 → 3 │
+-│                    └─────────────────┬─────────────────┘                    │
+-│                                      ▼                                      │
+-│                    Gaussian policy pi_theta(a_t | o_t)                      │
+-│                         mean mu_theta, learned sigma                        │
+-└──────────────────────────────────────┬──────────────────────────────────────┘
+-                                       │ sample during training
+-                                       ▼
+-┌────────────────────────────── 16D ACTION ───────────────────────────────────┐
+-│                                                                             │
+-│                           FRONT / robot +X                                  │
+-│                                                                             │
+-│       FL: [0] hipx  [1] hipy  [2] knee     FR: [3] hipx  [4] hipy  [5] knee│
+-│           [12] wheel                             [13] wheel                  │
+-│                                                   ▲                         │
+-│                                              H / D direct path              │
+-│                                                                             │
+-│       HL: [6] hipx  [7] hipy  [8] knee     HR: [9] hipx [10] hipy [11] knee│
+-│           [14] wheel                             [15] wheel                  │
+-│                                                                             │
+-│                            REAR / robot -X                                  │
+-└──────────────────────────────────────┬──────────────────────────────────────┘
+-                                       │
+-                                       ▼
+-┌─────────────────────────────────────────────────────────────────────────────┐
+-│ Action Manager → DelayedPD → M20 dynamics                                  │
+-│                                                                             │
+-│ hipx position target: q_target = q_default + 0.125 a_i                      │
+-│ hipy/knee target:     q_target = q_default + 0.250 a_i                      │
+-│ wheel velocity target: omega_target = 5.0 a_i                              │
+-└──────────────────────────────────────┬──────────────────────────────────────┘
+-                                       │
+-                                       ▼
+-                        reward r_t, done d_t, next state
+-                                       │
+-                                       ▼
+-┌─────────────────────────────────────────────────────────────────────────────┐
+-│ Rollout Buffer: 4096 × 24 = 98,304 transitions / PPO iteration             │
+-│                                                                             │
+-│ TD residual → GAE (gamma = 0.99, lambda = 0.95)                             │
+-│ → normalized advantage                                                     │
+-│ → PPO clipped objective (epsilon = 0.20)                                   │
+-│ → 5 learning epochs × 4 mini-batches                                       │
+-│ → update Actor theta, Critic phi and action log standard deviation         │
+-└──────────────────────────────────────┬──────────────────────────────────────┘
+-                                       │
+-                                       └──────────────► next rollout
+-```
+-
+----
+-
+-## 5. 第一阶学习信号
+-
+-第一阶感知奖励由成功事件、净空进度和 MISS 事件组成：
+-
+-$$
+-r^{\mathrm{perception}}_t=
+-w_f I^{\mathrm{FIRST}}_t+w_c\Delta C_t-w_m I^{\mathrm{MISS}}_t.
+-$$
+-
+-Clearance 使用历史最大进度：
+-
+-$$
+-\Delta C_t=\max\!\left(0,C_t-C^{\max}_{t-1}\right),
+-$$
+-
+-$$
+-C^{\max}_t=\max\!\left(C^{\max}_{t-1},C_t\right).
+-$$
+-
+-因此，只有创造新的净空进展才获得奖励；重复抬落或回到已经达到的位置不会重复领取相同进度奖励。
+-
+-当前事件脉冲经过 control step $\Delta t=0.02\,\mathrm{s}$ 后为：
+-
+-| Reward term | 配置权重 | 实际事件贡献 |
+-|---|---:|---:|
+-| `first_step_success` | `+41.2426414` | `+0.824852828` |
+-| `perception_miss` | `-41.2426414` | `-0.824852828` |
+-| `fr_clearance_progress` | `+2.0` | 与新增净空进度成正比 |
+-| `joint_success` | `+1649.705658` | 约 `+32.9941` |
+-
+-FIRST 与 MISS 保持同一数量级，使局部感知教学信号保持对称。
+-
+-第一阶几何表达已在固定楼梯测试中完成验证：
+-
+-| 楼梯高度 | 完整通过结果 |
+-|---:|---:|
+-| 17 cm | 5 / 5 |
+-| 18 cm | 5 / 5 |
+-
+-这验证了 $B/H/D$ 能够为第一阶提前抬升与跨越提供有效几何条件。
+-
+----
+-
+-## 6. Perception-to-Locomotion Handoff
+-
+-FIRST 成功后定义 episode-level handoff latch：
+-
+-$$
+-L_t=
+-\begin{cases}
+-0, & \text{FIRST 之前},\\
+-1, & \text{FIRST 之后}.
+-\end{cases}
+-$$
+-
+-Handoff 奖励复用官方实时 XY velocity tracking：
+-
+-$$
+-r^{\mathrm{handoff}}_t=L_t\,w_h\,r^v_t.
+-$$
+-
+-当前官方速度跟踪权重与额外 handoff 权重均为 5：
+-
+-$$
+-w_v=5,
+-\qquad
+-w_h=5.
+-$$
+-
+-因此
+-
+-$$
+-r^{\mathrm{velocity}}_t=
+-\begin{cases}
+-5r^v_t, & L_t=0,\\
+-10r^v_t, & L_t=1.
+-\end{cases}
+-$$
+-
+-该 handoff：
+-
+-- 跟随实时 command $[v_x,v_y]$；
+-- 不依赖 $B$；
+-- 不依赖 first-riser rearm；
+-- 不使用 frozen target direction；
+-- FIRST 后保持到 episode reset。
+-
+-这保证第一阶完成后，机器人整体运动意图继续由实时 command 决定：前进指令对应前进，零指令对应停止，后退指令对应后退。
+-
+----
+-
+-## 7. 最终 Reward 职责划分
+-
+-整体 reward 写为
+-
+-$$
+-r_t=
+-r^{\mathrm{official}}_t+r^{\mathrm{first}}_t+r^{\mathrm{clearance}}_t
+-+r^{\mathrm{miss}}_t+r^{\mathrm{handoff}}_t+r^{\mathrm{completion}}_t.
+-$$
+-
+-| Reward group | 职责 |
+-|---|---|
+-| $r^{\mathrm{official}}$ | 始终承担整体 locomotion 主任务 |
+-| $r^{\mathrm{first}}$ | 教会第一阶成功事件 |
+-| $r^{\mathrm{clearance}}$ | 提供连续的第一阶净空学习信号 |
+-| $r^{\mathrm{miss}}$ | 标记第一阶感知处理失败 |
+-| $r^{\mathrm{handoff}}$ | FIRST 后强化实时 command following |
+-| $r^{\mathrm{completion}}$ | 稀疏完整通过信号 |
+-
+-对应的 PPO Return 为
+-
+-$$
+-G_t=\sum_{k=0}^{\infty}\gamma^k r_{t+k}.
+-$$
+-
+-通过约束局部事件奖励的数值尺度，最终优化关系保持为：
+-
+-$$
+-\boxed{\text{Official Locomotion is the primary objective}}
+-$$
+-
+----
+-
+-## 8. Reward Balance Audit
+-
+-在 4096 个环境、984 control steps、PPO horizon 24、seed 42 的真实 rollout 中，得到以下账单：
+-
+-| 分组 | 累计 Reward | Sample variance | Absolute-mass share |
+-|---|---:|---:|---:|
+-| Official total | `+47633.2262` | `0.0106423` | `45.2463%` |
+-| FIRST（18 次） | `+14.8474` | `0.0000152` | `0.0107%` |
+-| MISS（121 次） | `-99.8072` | `0.0001021` | `0.0722%` |
+-| Clearance | `+271.5506` | `0.0001859` | `0.1965%` |
+-| Post-FIRST tracking | `+293.8245` | `0.0000276` | `0.2126%` |
+-| FULL / Joint（1 次） | `+32.9941` | `0.0013508` | `0.0239%` |
+-| V10-added total | `+513.4094` | `0.0017547` | `0.5146%` |
+-
+-Signed return 中：
+-
+-$$
+-\mathrm{Share}_{\mathrm{official}}\approx98.93\%,
+-\qquad
+-\mathrm{Share}_{\mathrm{V10-added}}\approx1.07\%.
+-$$
+-
+-MISS variance 相对 V10-added variance 的比例为
+-
+-$$
+-\frac{\mathrm{Var}(r^{\mathrm{MISS}})}
+-{\mathrm{Var}(r^{\mathrm{V10-added}})}
+-\approx5.82\%.
+-$$
+-
+-运行时审计结果：
+-
+-```text
+-REWARD_BALANCE_AUDIT=PASS
+-POST_FIRST_RUNTIME_CONTRACT=PASS
+-```
+-
+-完整账单位于 [`docs/v10_reward_audit_symmetric_miss_seed42/`](docs/v10_reward_audit_symmetric_miss_seed42/)。
+-
+----
+-
+-## 9. Sim-to-Real 接口
+-
+-真实机器人链路为：
+-
+-```text
+-LiDAR
+-  → Local Point Cloud / Elevation Map
+-  → First-Riser Geometry Extraction
+-  → B / H / D
+-  → Unified 60D Actor
+-  → 16D M20 Action
+-```
+-
+-$B/H/D$ 全部由真实 LiDAR 高程数据和机器人坐标系在线计算，不进入仿真专有 teacher label。仿真与真机保持一致的 Actor interface：
+-
+-$$
+-\mathbf{o}_t=
+-\left[
+-\mathbf{o}^{\mathrm{off}}_t,B_t,H_t,D_t
+-\right]
+-\in\mathbb{R}^{60}.
+-$$
+-
+----
+-
+-## 10. 代码入口
+-
+-| 模块 | 路径 |
+-|---|---|
+-| V10 环境与 reward 配置 | `source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v10_unified_env_cfg.py` |
+-| FIRST lifecycle、事件与统计 | `source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v10_unified.py` |
+-| 60D Unified Actor | `source/rl_training/rl_training/v10_unified_policy.py` |
+-| PPO runner 与 TensorBoard 指标 | `source/rl_training/rl_training/v10_unified_runner.py` |
+-| Reward balance audit | `scripts/tools/audit_m20_v10_reward_balance.py` |
+-
+-训练任务 ID：
+-
+-```text
+-M20-Stair-Unified-Perceptive-v0
+-```
+-
+-从零训练 60K：
+-
+-```bash
+-source /home/ubuntu/.holosoma_deps/miniconda3/bin/activate /home/ubuntu/.holosoma_deps/miniconda3/envs/hssim
+-TERM=xterm PYTHONPATH="$PWD/source/rl_training" /home/ubuntu/.holosoma_deps/IsaacLab/isaaclab.sh -p \
+-  scripts/reinforcement_learning/rsl_rl/train.py \
+-  --task M20-Stair-Unified-Perceptive-v0 \
+-  --num_envs 4096 \
+-  --max_iterations 60000 \
+-  --headless \
+-  --run_name v10_first_miss_symmetric_postxy_from_scratch_60k
+-```
+-
+----
+-
+-## 11. 环境与安装
+-
+-- Ubuntu 24.04
+-- Python 3.11
+-- Isaac Sim 5.1.0
+-- Isaac Lab 2.3.2
+-- RSL-RL 5.0.1
+-- DeepRobotics M20 PRO
+-
+-```bash
+-git clone --recurse-submodules https://arcusgit.vip.cpolar.cn/arcus/kunyu_ppo.git
+-cd kunyu_ppo
+-python -m pip install -e source/rl_training
+-```
+-
+----
+-
+-## 12. 一句话总结
+-
+-> 本项目将局部第一阶感知与官方 Command-Conditioned Locomotion 放入同一套 PPO Policy：感知教会机器人如何跨越第一阶，而实时 command 始终掌握整机运动方向。
+-
+-$$
+-\boxed{
+-\text{Perception Assistance}
+-+
+-\text{Live Command}
+-+
+-\text{Official Locomotion}
+-}
+-$$
++当前训练入口：`scripts/train_m20_v111_flat_posture_latest.sh`。新主机先用 `M20_PYTHON=python bash scripts/train_m20_v111_flat_posture_latest.sh --check-only` 检查。验证 `56998` 时显式指定 checkpoint，程序读取该 run 的真实 `params/`。
+diff --git a/M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-AscentRecovery/2026-11-17_14-59-02_063111_guarded_30000_from35300/model_36500.pt b/M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-AscentRecovery/2026-11-17_14-59-02_063111_guarded_30000_from35300/model_36500.pt
+deleted file mode 100644
+index 9aa5d2a..0000000
+Binary files a/M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-AscentRecovery/2026-11-17_14-59-02_063111_guarded_30000_from35300/model_36500.pt and /dev/null differ
+diff --git a/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/guarded_recovery.py b/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/guarded_recovery.py
+index 2d3e8c3..8e2140c 100644
+--- a/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/guarded_recovery.py
++++ b/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/guarded_recovery.py
+@@ -17,6 +17,15 @@ ROOT = Path(__file__).resolve().parents[3]
+ LEDGER = ROOT / 'scripts/repair_workstation_limits.json'
+ TASK = 'M20-Stair-V11.1-AscentRecovery-v0'
+ REFINE_TASK = 'M20-Stair-V11.1-RecoveryRefine-v0'
++TARGETED_TASK = 'M20-Stair-V11.1-TargetedCorrection-v0'
++TARGETED_V2_TASK = 'M20-Stair-V11.1-TargetedCorrectionV2-v0'
++STEP_SUPPORT_TASK = 'M20-Stair-V11.1-StepSupport-v0'
++STEP_RETENTION_TASK = 'M20-Stair-V11.1-StepRetention-v0'
++TRACTION_TRANSITION_TASK = 'M20-Stair-V11.1-TractionTransition-v0'
++ENTRY_TRANSFER_TASK = 'M20-Stair-V11.1-EntryTransfer-v0'
++ENTRY_SEQUENCE_TASK = 'M20-Stair-V11.1-EntrySequenceRepair-v0'
++FLAT_POSTURE_TASK = 'M20-Stair-V11.1-FlatPosture-v0'
++ROUTE_HOLD_TASK = 'M20-Stair-V11.1-RouteHold-v0'
+ 
+ 
+ class TrainingInterrupted(KeyboardInterrupt):
+@@ -84,7 +93,8 @@ def write_json(path, value):
+ 
+ def validate_session(task, total_updates, segment_updates, baseline_path, output_path):
+     limits = json.loads(LEDGER.read_text())
+-    if task not in (TASK, REFINE_TASK):
++    if task not in (TASK, REFINE_TASK, TARGETED_TASK, TARGETED_V2_TASK, STEP_SUPPORT_TASK,
++                    STEP_RETENTION_TASK, TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
+         raise ValueError('Guarded training is restricted to recovery tasks')
+     if type(total_updates) is not int or not 1 <= total_updates <= limits['max_guarded_total_updates']:
+         raise ValueError('Invalid guarded total update count')
+@@ -102,11 +112,18 @@ def validate_session(task, total_updates, segment_updates, baseline_path, output
+     failures = gate.validate_rows(rows, json.loads(gate.CRITERIA.read_text()))
+     if failures:
+         raise ValueError('Invalid original-model baseline: ' + '; '.join(failures))
+-    source = json.loads((ROOT/'interview_prep/CHECKPOINT.json').read_text())['sha256']
++    source = (hashlib.sha256(Path(os.environ.get('M20_RECOVERY_TEACHER', ROOT/'interview_prep/model_49998.pt')).read_bytes()).hexdigest()
++              if task == ENTRY_SEQUENCE_TASK else
++              json.loads((ROOT/'interview_prep/CHECKPOINT.json').read_text())['sha256'])
++    if task in (FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
++        teacher = Path(os.environ.get('M20_RECOVERY_TEACHER', ''))
++        if not teacher.is_file():
++            raise ValueError('FlatPosture requires its measured stair teacher')
++        source = hashlib.sha256(teacher.read_bytes()).hexdigest()
+     for profile in ('standing', 'keyboard'):
+         manifest = json.loads((baseline.parent/profile/'manifest.json').read_text())
+         if manifest.get('checkpoint_sha256') != source:
+-            raise ValueError('Retention baseline must come from the original selected 35300')
++            raise ValueError('Retention baseline must come from the selected task seed')
+     if not output_path:
+         raise ValueError('Guarded training requires a session output directory')
+     output = Path(output_path)
+@@ -195,6 +212,10 @@ def evaluation_summary(report, baseline_path):
+                           idle_yaw_deg=row['after_c_idle_yaw_max_change_deg'],
+                           moving_yaw_deg=row['forward_yaw_max_change_deg'],
+                           lateral_m=row['forward_lateral_max_abs'],
++                          yaw_min_deg=row.get('forward_yaw_min_change_deg'),
++                          yaw_max_deg=row.get('forward_yaw_max_signed_change_deg'),
++                          lateral_min_m=row.get('forward_lateral_min_m'),
++                          lateral_max_m=row.get('forward_lateral_max_m'),
+                           fell=row['fell'], stalled=row['stall_detected'],
+                           whole_body_top_supported=row['whole_body_top_supported'],
+                           all_treads_supported=row.get('all_treads_supported'),
+@@ -211,9 +232,48 @@ def evaluation_scalars(summary):
+     stairs = [r for r in summary['cases'] if '/ascent/' in r['case']]
+     values['MuJoCo/ascent_top_cases'] = sum(bool(r['whole_body_top_supported']) for r in stairs)
+     values['MuJoCo/all_treads_cases'] = sum(bool(r['all_treads_supported']) for r in stairs)
++    # A whole-flight pass is sparse. Keep measured gap trends visible while
++    # every case still fails the strict criterion; never alter acceptance.
++    gaps = [[t for side in (r.get('skipped_treads') or []) for t in side] for r in stairs]
++    values['MuJoCo/b1_skip_cases'] = sum(1 in row for row in gaps)
++    values['MuJoCo/later_skip_cases'] = sum(any(t >= 2 for t in row) for row in gaps)
++    values['MuJoCo/front_skipped_treads'] = sum(len(row) for row in gaps)
++    if 'flat_start_cases' in summary:
++        values['FlatStart/passed'] = int(summary['flat_start_passed'])
++        for row in summary['flat_start_cases']:
++            for key in ('pitch_peak_deg', 'pitch_rate_peak_deg_s', 'fr_inward_y_change_m',
++                        'yaw_peak_deg', 'lateral_peak_m',
++                        'front_width_min_m', 'final_speed_m_s', 'hipx_target_jump_peak_deg',
++                        'sagittal_target_jump_peak_deg', 'wheel_target_jump_peak_rad_s'):
++                values[f'FlatStart/{row["case"]["name"]}/{key}'] = row[key]
++            values[f'FlatStart/{row["case"]["name"]}/front_hipx_peak_deg'] = max(row['front_hipx_angle_peak_deg'])
++        values['Production/passed'] = int(summary['production_passed'])
++        for row in summary['production_cases']:
++            name = f'{row["profile"]}/{row["terrain"]}/{row["tread"]}/{row["command_speed"]}'
++            for key in ('forward_yaw_max_change_deg', 'forward_lateral_max_abs', 'route_mean_velocity_x',
++                        'later_stairs_route_velocity_x', 'p95_max_abs_reach', 'all_treads_supported'):
++                if isinstance(row.get(key), (float, int)):
++                    values[f'Production/{name}/{key}'] = row[key]
++            for key, value in row.get('entry_transfer', {}).items():
++                if isinstance(value, (float, int)):
++                    values[f'Production/{name}/entry/{key}'] = value
++    if 'behavior_selection' in summary:
++        selection = summary['behavior_selection']
++        values['MuJoCo/best_candidate_promoted'] = int(selection['promoted'])
++        values['MuJoCo/acquired_behavior_regressions'] = len(selection['regressions'])
++        if 'route_hold_passed' in selection:
++            values['RouteHold/passed'] = int(selection['route_hold_passed'])
++            values['RouteHold/best_score'] = selection['best_rank'][0]
++            values['RouteHold/unresolved_targets'] = len(selection['route_unresolved'])
++            values['RouteHold/steering_weight'] = summary['behavior_feedback']['route_steering_weight']
++            values['RouteHold/flat_preservation_multiplier'] = summary['behavior_feedback']['route_flat_multiplier']
++        else:
++            values['MuJoCo/best_candidate_all_treads_cases'] = selection['best_rank'][0]
++        values['Retention/success_anchor_multiplier'] = summary['behavior_feedback']['success_anchor_multiplier']
+     for row in summary['cases']:
+         for key in ('speed', 'speed_to_command', 'reach_p95', 'idle_yaw_deg', 'moving_yaw_deg',
+-                    'lateral_m', 'fell', 'stalled', 'whole_body_top_supported', 'all_treads_supported'):
++                    'lateral_m', 'yaw_min_deg', 'yaw_max_deg', 'lateral_min_m', 'lateral_max_m',
++                    'fell', 'stalled', 'whole_body_top_supported', 'all_treads_supported'):
+             value = row.get(key)
+             if isinstance(value, (float, int)) and math.isfinite(value):
+                 values[f'MuJoCo/{row["case"]}/{key}'] = value
+@@ -241,7 +301,8 @@ def write_evaluation_tensorboard(summary, log_dir):
+             writer.add_scalar(tag, value, summary['completed_updates'])
+ 
+ 
+-def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, output_path, log_dir, task=TASK):
++def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, output_path, log_dir,
++                  task=TASK, evaluation_every_updates=None, evaluation_profile='full'):
+     """Preserve optimizer and continue learning through valid behavior failures.
+ 
+     RSL 5 records the last update index, not the next index. We explicitly
+@@ -249,14 +310,58 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
+     Only segment-final weights are written; baseline/user assets are untouched.
+     """
+     limits = validate_session(task, total_updates, segment_updates, baseline_path, output_path)
++    if evaluation_every_updates is None:
++        evaluation_every_updates = segment_updates
++    if (type(evaluation_every_updates) is not int or evaluation_every_updates < segment_updates
++            or evaluation_every_updates % segment_updates):
++        raise ValueError('Evaluation interval must be a multiple of the guarded segment size')
++    if task in (ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK) and evaluation_profile != 'entry':
++        raise ValueError('EntrySequence uses the entry profile with full-stick and flat probes')
++    if evaluation_profile not in ('full', 'entry'):
++        raise ValueError('Unknown guarded evaluation profile')
++    if evaluation_profile == 'entry' and task not in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
++        raise ValueError('Entry evaluation profile is restricted to EntryTransfer')
++    flat_repair = hasattr(getattr(runner, 'alg', None), 'flat_reference_results')
+     output = Path(output_path).resolve()
+     output.mkdir(parents=True, exist_ok=True)
+     log_dir = Path(log_dir).resolve()
+     baseline_path = Path(baseline_path).resolve()
++    selector = None
++    if task in (STEP_RETENTION_TASK, TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
++        from behavior_selection import BehaviorSelector
++        selector_class, selection_kwargs = BehaviorSelector, {}
++        if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
++            from entry_selection import EntryBehaviorSelector
++            selector_class = EntryBehaviorSelector
++            selection_kwargs['entry_results'] = runner.alg.entry_reference_results
++            if evaluation_profile == 'full':
++                selection_kwargs['traction_results'] = runner.alg.traction_reference_results
++            if flat_repair:
++                from flat_start_selection import FlatEntryBehaviorSelector
++                selector_class = FlatEntryBehaviorSelector
++                selection_kwargs.update(flat_reference_results=runner.alg.flat_reference_results,
++                    flat_reference_checkpoint=runner.alg.flat_reference_checkpoint,
++                    forward_reference_results=runner.alg.forward_reference_results)
++        elif task == TRACTION_TRANSITION_TASK and evaluation_profile == 'full':
++            from traction_selection import TractionBehaviorSelector
++            selector_class = TractionBehaviorSelector
++            selection_kwargs['traction_results'] = runner.alg.traction_reference_results
++        if task == FLAT_POSTURE_TASK:
++            from flat_posture_selection import FlatPostureBehaviorSelector
++            selector_class = FlatPostureBehaviorSelector
++        if task == ROUTE_HOLD_TASK:
++            from route_hold_selection import RouteHoldBehaviorSelector
++            selector_class = RouteHoldBehaviorSelector
++        selector = selector_class(output, runner.alg.behavior_teacher_checkpoint,
++                                  runner.alg.behavior_reference_results,
++                                  previous_best=runner.alg.behavior_selection_state, **selection_kwargs)
++        runner.alg.behavior_selection_state = selector.export_state()
+     source_iteration = int(runner.current_learning_iteration)
+     initial_iteration = source_iteration + 1
+     status = dict(status='starting', task=task, pid=os.getpid(), started=timestamp(), updated=timestamp(),
+                   total_updates=total_updates, completed_updates=0, segment_updates=segment_updates,
++                  evaluation_every_updates=evaluation_every_updates,
++                  evaluation_profile=evaluation_profile,
+                   initial_iteration=initial_iteration, source_iteration=source_iteration, log_dir=str(log_dir),
+                   baseline_results=str(baseline_path),
+                   baseline_sha256=hashlib.sha256(baseline_path.read_bytes()).hexdigest(),
+@@ -292,6 +397,23 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
+             if not checkpoint.is_file():
+                 raise RuntimeError('Segment did not save its final checkpoint')
+             completed += count
++            evaluate = completed == total_updates or completed % evaluation_every_updates == 0
++            if not evaluate:
++                status.update(status='training', completed_updates=completed,
++                              last_checkpoint=str(checkpoint), updated=timestamp(),
++                              elapsed_seconds=time.monotonic() - started)
++                write_json(output / 'status.json', status)
++                if task in (ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
++                    # Only this new run's unevaluated intermediate files are
++                    # pruned. Evaluated checkpoints and best archives survive.
++                    for saved in log_dir.glob('model_*.pt'):
++                        iteration = int(saved.stem.split('_')[-1])
++                        additional = iteration-initial_iteration+1
++                        if (0 < additional < completed-segment_updates
++                                and additional % evaluation_every_updates):
++                            saved.unlink()
++                print(f'[RECOVERY SESSION] acceptance deferred at {completed}/{total_updates}', flush=True)
++                continue
+             evaluation = output / f'eval_{completed:06d}'
+             if hashlib.sha256(baseline_path.read_bytes()).hexdigest() != status['baseline_sha256']:
+                 raise RuntimeError('Original-model baseline changed during training')
+@@ -304,7 +426,7 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
+                        '--checkpoint', str(checkpoint), '--output', str(evaluation),
+                        '--baseline-results', str(baseline_path), '--gate', 'retention']
+             # Keep periodic full evidence; every interval retains metrics and sequences.
+-            if completed % 250:
++            if completed % 250 or task in (ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
+                 command.append('--no-trajectories')
+             with (output / f'eval_{completed:06d}.log').open('w') as stream:
+                 result = run_evaluation(command, env=cpu_env, stdout=stream)
+@@ -320,7 +442,9 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
+             summary = evaluation_summary(report, baseline_path)
+             summary.update(completed_updates=completed, checkpoint=str(checkpoint), report=str(report_path),
+                            retention_passed=report.get('retention_passed'), repair_passed=report.get('repair_passed'))
+-            if task == REFINE_TASK:
++            if (evaluation_profile == 'full' and task in
++                    (REFINE_TASK, TARGETED_TASK, TARGETED_V2_TASK, STEP_SUPPORT_TASK,
++                     STEP_RETENTION_TASK, TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK)):
+                 supplement = evaluation/'quiet_descent'
+                 command = [sys.executable, str(ROOT/'scripts/tools/m20_quiet_supplement.py'),
+                            '--checkpoint', str(checkpoint), '--output', str(supplement)]
+@@ -329,6 +453,105 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
+                 if extra.returncode != 0:
+                     raise RuntimeError('Supplementary evaluator runtime error; inspect quiet_descent.log')
+                 summary['supplementary'] = json.loads((supplement/'results.json').read_text())
++            if selector is not None:
++                selection_kwargs = {}
++                if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
++                    target = evaluation/'entry'
++                    command = [sys.executable, str(ROOT/'scripts/tools/m20_entry_flat_benchmark.py'),
++                        '--checkpoint', str(checkpoint), '--startup', 'z', '--keyboard-profile',
++                        '--keyboard-idle-seconds', '0', '--speeds', '.7', '--output', str(target),
++                        '--no-trajectories']
++                    with (evaluation/'entry.log').open('w') as stream:
++                        extra = run_evaluation(command, env=cpu_env, stdout=stream)
++                    if extra.returncode != 0:
++                        raise RuntimeError('Entry evaluator runtime error; inspect entry.log')
++                    selection_kwargs['entry_results'] = target/'results.json'
++                if task in (TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK) and evaluation_profile == 'full':
++                    traction = evaluation/'traction'
++                    command = [sys.executable, str(ROOT/'scripts/tools/m20_traction_benchmark.py'),
++                               '--checkpoint', str(checkpoint), '--output', str(traction)]
++                    with (evaluation/'traction.log').open('w') as stream:
++                        extra = run_evaluation(command, env=cpu_env, stdout=stream)
++                    if extra.returncode != 0:
++                        raise RuntimeError('Traction evaluator runtime error; inspect traction.log')
++                    selection_kwargs['traction_results'] = traction/'results.json'
++                    summary['traction_results'] = str(traction/'results.json')
++                if flat_repair:
++                    target = evaluation/'flat_start'
++                    command = [sys.executable, str(ROOT/'scripts/tools/m20_flat_command_probe.py'),
++                        '--checkpoint', str(checkpoint), '--output', str(target),
++                        '--benchmark', '--no-trajectories']
++                    with (evaluation/'flat_start.log').open('w') as stream:
++                        extra = run_evaluation(command, env=cpu_env, stdout=stream)
++                    if extra.returncode != 0:
++                        raise RuntimeError('Flat-start evaluator runtime error; inspect flat_start.log')
++                    selection_kwargs['flat_results'] = target/'results.json'
++                    summary['flat_start_cases'] = json.loads((target/'results.json').read_text())
++                    target = evaluation/'production'
++                    command = [sys.executable, str(ROOT/'scripts/tools/m20_production_transition_benchmark.py'),
++                        '--checkpoint', str(checkpoint),
++                        '--output', str(target), '--no-trajectories']
++                    with (evaluation/'production.log').open('w') as stream:
++                        extra = run_evaluation(command, env=cpu_env, stdout=stream)
++                    if extra.returncode != 0:
++                        raise RuntimeError('Production-command evaluator runtime error; inspect production.log')
++                    selection_kwargs['forward_results'] = target/'results.json'
++                    summary['production_cases'] = json.loads((target/'results.json').read_text())
++                selection = selector.consider(checkpoint, report['candidates'][0]['results'], **selection_kwargs)
++                if task == ROUTE_HOLD_TASK:
++                    status['route_hold_passed'] = summary['route_hold_passed'] = selection['route_hold_passed']
++                if 'flat_start_passed' in selection:
++                    status['flat_start_passed'] = summary['flat_start_passed'] = selection['flat_start_passed']
++                    status['production_passed'] = summary['production_passed'] = selection['production_passed']
++                if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
++                    status['entry_passed'] = selection['entry_passed']
++                    summary['entry_passed'] = selection['entry_passed']
++                feedback = runner.alg.behavior_feedback(selection.get('feedback_failures', selection['regressions']))
++                runner.alg.behavior_selection_state = selector.export_state()
++                # Feedback follows evaluation, so it is absent from the
++                # evaluated candidate. Save an atomic continuation checkpoint
++                # without changing that candidate's measured file hash.
++                continuation = log_dir/'resume_after_eval.pt'
++                temporary = log_dir/'resume_after_eval.pt.tmp'
++                runner.save(str(temporary))
++                temporary.replace(continuation)
++                summary.update(behavior_selection=selection, behavior_feedback=feedback)
++                if task in (TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
++                    status.update(traction_passed=selection['traction_passed'],
++                                  traction_repair_passed=selection['traction_repair_passed'])
++                    summary.update(traction_passed=selection['traction_passed'],
++                                   traction_repair_passed=selection['traction_repair_passed'],
++                                   native_repair_passed=bool(report.get('repair_passed')))
++                    summary['repair_passed'] = bool(report.get('repair_passed')) and (
++                        evaluation_profile != 'full' or selection['traction_repair_passed'] is True)
++                    if selection['traction_passed'] is False:
++                        status['retention_failures_seen'] = True
++                        status['last_traction_failures'] = selection['regressions']
++                    else:
++                        status['last_traction_failures'] = []
++                status.update(best_candidate_checkpoint=selection['best_checkpoint'],
++                              best_candidate_manifest=str(output/'best_candidate.json'),
++                              last_resume_checkpoint=str(continuation),
++                              behavior_feedback=feedback)
++                write_json(evaluation/'behavior_selection.json', dict(selection=selection, feedback=feedback))
++            stage_repaired = bool(report.get('repair_passed')) and (
++                evaluation_profile != 'full' or task not in (TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK)
++                or status.get('traction_repair_passed') is True)
++            if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
++                stage_repaired &= status.get('entry_passed') is True
++            if flat_repair:
++                stage_repaired &= status.get('flat_start_passed') is True and status.get('production_passed') is True
++            if task == FLAT_POSTURE_TASK:
++                # This phase targets flat posture; strict stair sequencing is
++                # still reported separately, not relabeled as repaired.
++                stage_repaired = (status.get('flat_start_passed') is True
++                    and status.get('production_passed') is True
++                    and not selection['regressions'])
++            if task == ROUTE_HOLD_TASK:
++                stage_repaired = status.get('route_hold_passed') is True
++            # Persist the complete stage verdict in every output, including
++            # TensorBoard; the native suite alone cannot certify deployment.
++            summary['repair_passed'] = stage_repaired
+             write_evaluation_tensorboard(summary, log_dir)
+             write_json(output/'latest_metrics.json', summary)
+             with (output/'metrics_history.jsonl').open('a') as stream:
+@@ -355,9 +578,9 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
+             else:
+                 status.update(last_retained_checkpoint=str(checkpoint),
+                               last_retention_failures=[], capability_regressions=[], updated=timestamp())
+-            if report.get('repair_passed'):
++            if stage_repaired:
+                 status['last_repair_passed_checkpoint'] = str(checkpoint)
+-            status['repair_passed'] = bool(report.get('repair_passed'))
++            status['repair_passed'] = stage_repaired
+             status['retention_passed'] = bool(report.get('retention_passed'))
+             status['last_checkpoint'] = str(checkpoint)
+             write_json(output / 'status.json', status)
+diff --git a/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/repair_workstation_limits.py b/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/repair_workstation_limits.py
+index e5a765f..08c6aed 100755
+--- a/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/repair_workstation_limits.py
++++ b/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/repair_workstation_limits.py
+@@ -5,7 +5,11 @@ import os
+ from pathlib import Path
+ 
+ TASKS = ('M20-Stair-V11.1-EntryFlatRepair-v0', 'M20-Stair-V11.1-AdjacentRepair-v0',
+-         'M20-Stair-V11.1-AscentRecovery-v0', 'M20-Stair-V11.1-RecoveryRefine-v0')
++         'M20-Stair-V11.1-AscentRecovery-v0', 'M20-Stair-V11.1-RecoveryRefine-v0',
++         'M20-Stair-V11.1-TargetedCorrection-v0', 'M20-Stair-V11.1-TargetedCorrectionV2-v0',
++         'M20-Stair-V11.1-StepSupport-v0', 'M20-Stair-V11.1-StepRetention-v0',
++         'M20-Stair-V11.1-TractionTransition-v0', 'M20-Stair-V11.1-EntryTransfer-v0',
++         'M20-Stair-V11.1-EntrySequenceRepair-v0', 'M20-Stair-V11.1-FlatPosture-v0', 'M20-Stair-V11.1-RouteHold-v0')
+ LEDGER = Path(__file__).resolve().parents[2]/'repair_workstation_limits.json'
+ 
+ 
+diff --git a/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/train.py b/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/train.py
+index 9b45c86..73aa09b 100755
+--- a/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/train.py
++++ b/M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/train.py
+@@ -37,8 +37,14 @@ parser.add_argument("--seed", type=int, default=None, help="Seed used for the en
+ parser.add_argument("--max_iterations", type=int, default=None, help="RL Policy training iterations.")
+ parser.add_argument("--initial-checkpoint", type=str, default=None,
+                     help="EntryFlatRepair: initialize from an exact checkpoint path with fresh Adam state")
++parser.add_argument("--resume-checkpoint", type=str, default=None,
++                    help="Retention/Traction/EntryTransfer: exact continuation checkpoint, including optimizer and behavior protection state")
+ parser.add_argument("--guarded-total-updates", type=int, default=None,
+                     help="Recovery only: total additional updates with periodic behavior reports; valid behavior failures continue")
++parser.add_argument("--guarded-eval-every", type=int, default=None,
++                    help="Recovery only: run physical acceptance every this many additional updates")
++parser.add_argument("--guarded-eval-profile", choices=("full", "entry"), default="full",
++                    help="Recovery only: full checks or EntryTransfer native+entry checks")
+ parser.add_argument("--guard-baseline", type=str, default=None,
+                     help="Results JSON from the original 35300 on this host, including keyboard cases")
+ parser.add_argument("--guard-output", type=str, default=None,
+@@ -61,6 +67,12 @@ if args_cli.guarded_total_updates is not None:
+     from guarded_recovery import validate_session
+     validate_session(args_cli.task, args_cli.guarded_total_updates, args_cli.max_iterations,
+                      args_cli.guard_baseline, args_cli.guard_output)
++    if args_cli.guarded_eval_every is not None:
++        if args_cli.guarded_eval_every < args_cli.max_iterations or args_cli.guarded_eval_every % args_cli.max_iterations:
++            raise ValueError('--guarded-eval-every must be a multiple of the guarded segment size')
++    if args_cli.guarded_eval_profile == 'entry' and args_cli.task not in (
++            'M20-Stair-V11.1-EntryTransfer-v0', 'M20-Stair-V11.1-EntrySequenceRepair-v0', 'M20-Stair-V11.1-FlatPosture-v0', 'M20-Stair-V11.1-RouteHold-v0'):
++        raise ValueError("--guarded-eval-profile entry is restricted to EntryTransfer")
+ 
+ # always enable cameras to record video
+ if args_cli.video:
+@@ -154,6 +166,15 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
+     # override configurations with non-hydra CLI arguments
+     agent_cfg = cli_args.update_rsl_rl_cfg(agent_cfg, args_cli)
+     entry_flat_repair = args_cli.task in REPAIR_TASKS
++    if args_cli.resume_checkpoint is not None:
++        if args_cli.task not in (
++                'M20-Stair-V11.1-StepRetention-v0',
++                'M20-Stair-V11.1-TractionTransition-v0',
++                'M20-Stair-V11.1-EntryTransfer-v0', 'M20-Stair-V11.1-EntrySequenceRepair-v0', 'M20-Stair-V11.1-FlatPosture-v0', 'M20-Stair-V11.1-RouteHold-v0'):
++            raise ValueError('--resume-checkpoint is supported by StepRetention, TractionTransition and EntryTransfer')
++        if args_cli.initial_checkpoint is not None or args_cli.resume:
++            raise ValueError('Choose one of --initial-checkpoint, --resume-checkpoint or --resume')
++        agent_cfg.resume = True
+     if entry_flat_repair and args_cli.num_envs is None:
+         raise ValueError("EntryFlatRepair requires explicit --num_envs; use its workstation-limited launcher")
+     if args_cli.initial_checkpoint is not None and args_cli.resume:
+@@ -228,6 +249,10 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
+             resume_path = os.path.realpath(args_cli.initial_checkpoint)
+             if not os.path.isfile(resume_path):
+                 raise FileNotFoundError(resume_path)
++        elif args_cli.resume_checkpoint is not None:
++            resume_path = os.path.realpath(args_cli.resume_checkpoint)
++            if not os.path.isfile(resume_path):
++                raise FileNotFoundError(resume_path)
+         else:
+             resume_path = get_checkpoint_path(log_root_path, agent_cfg.load_run, agent_cfg.load_checkpoint)
+ 
+@@ -281,18 +306,33 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
+             "M20-Stair-V11.1-AdjacentRepair-v0",
+             "M20-Stair-V11.1-AscentRecovery-v0",
+             "M20-Stair-V11.1-RecoveryRefine-v0",
++            "M20-Stair-V11.1-TargetedCorrection-v0",
++            "M20-Stair-V11.1-TargetedCorrectionV2-v0",
++            "M20-Stair-V11.1-StepSupport-v0",
++            "M20-Stair-V11.1-StepRetention-v0",
++            "M20-Stair-V11.1-TractionTransition-v0",
++            "M20-Stair-V11.1-EntryTransfer-v0",
++            "M20-Stair-V11.1-EntrySequenceRepair-v0",
++            "M20-Stair-V11.1-FlatPosture-v0",
++            "M20-Stair-V11.1-RouteHold-v0",
+         ):
+             # Resume the training schedule too: restarting it would re-enable
+             # early reset/command distributions and soften descent rewards.
+             steps_per_env = int(agent_cfg.num_steps_per_env)
+-            if args_cli.task in ('M20-Stair-V11.1-AscentRecovery-v0', 'M20-Stair-V11.1-RecoveryRefine-v0') and fresh_entry_flat:
++            if args_cli.task in ('M20-Stair-V11.1-AscentRecovery-v0', 'M20-Stair-V11.1-RecoveryRefine-v0',
++                                 'M20-Stair-V11.1-TargetedCorrection-v0', 'M20-Stair-V11.1-TargetedCorrectionV2-v0',
++                                 'M20-Stair-V11.1-StepSupport-v0', 'M20-Stair-V11.1-StepRetention-v0',
++                                 'M20-Stair-V11.1-TractionTransition-v0', 'M20-Stair-V11.1-EntryTransfer-v0') and fresh_entry_flat:
+                 from pathlib import Path
+                 import yaml
+                 source_agent = yaml.safe_load((Path(resume_path).parent/'params/agent.yaml').read_text())
+                 steps_per_env = int(source_agent['num_steps_per_env'])
+             env.unwrapped.common_step_counter = int((checkpoint_infos or {}).get(
+                 'm20_common_step_counter', int(runner.current_learning_iteration)*steps_per_env))
+-            if args_cli.task == 'M20-Stair-V11.1-RecoveryRefine-v0':
++            if args_cli.task in ('M20-Stair-V11.1-RecoveryRefine-v0', 'M20-Stair-V11.1-TargetedCorrection-v0',
++                                 'M20-Stair-V11.1-TargetedCorrectionV2-v0', 'M20-Stair-V11.1-StepSupport-v0',
++                                 'M20-Stair-V11.1-StepRetention-v0', 'M20-Stair-V11.1-TractionTransition-v0', 'M20-Stair-V11.1-EntryTransfer-v0',
++                                 'M20-Stair-V11.1-EntrySequenceRepair-v0', 'M20-Stair-V11.1-FlatPosture-v0', 'M20-Stair-V11.1-RouteHold-v0'):
+                 stage_steps = 0 if fresh_entry_flat else int((checkpoint_infos or {}).get('m20_refine_stage_steps', 0))
+                 env.unwrapped._m20_refine_start_step = env.unwrapped.common_step_counter-stage_steps
+             env.reset()
+@@ -317,7 +357,9 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
+             learn_guarded(runner, total_updates=args_cli.guarded_total_updates,
+                           segment_updates=agent_cfg.max_iterations,
+                           baseline_path=args_cli.guard_baseline,
+-                          output_path=args_cli.guard_output, log_dir=log_dir, task=args_cli.task)
++                          output_path=args_cli.guard_output, log_dir=log_dir, task=args_cli.task,
++                          evaluation_every_updates=args_cli.guarded_eval_every,
++                          evaluation_profile=args_cli.guarded_eval_profile)
+         else:
+             runner.learn(num_learning_iterations=agent_cfg.max_iterations, init_at_random_ep_len=True)
+     except BaseException as error:
+diff --git a/M20_perception_Lidar_rl/scripts/repair_workstation_limits.json b/M20_perception_Lidar_rl/scripts/repair_workstation_limits.json
+index 2ff009e..96a9ffa 100755
+--- a/M20_perception_Lidar_rl/scripts/repair_workstation_limits.json
++++ b/M20_perception_Lidar_rl/scripts/repair_workstation_limits.json
+@@ -3,10 +3,12 @@
+   "max_num_envs": 4096,
+   "default_updates": 100,
+   "max_updates_per_stage": 200,
+-  "max_guarded_total_updates": 30000,
++  "max_guarded_total_updates": 50000,
++  "total_update_authorization": "On 2026-11-20 the user requested 50000 additional updates for the new StepRetention stage initialized from 47900; training remains manually launched by the user.",
+   "default_guard_interval": 100,
+   "max_guard_interval": 100,
+   "minimum_free_disk_gib": 6,
+   "minimum_available_ram_gib": 6,
+-  "basis": "On 2026-11-17 the user requested 4096 environments, a longer behavior-evaluation interval, and then cancellation of automatic stops for behavior-evaluation failures. The default and maximum interval are 100 updates. Valid behavior failures are recorded and training continues; runtime/evaluation-data errors, resource reserves and user interruption still apply. The 4096-environment run completed 100 updates with all eight ascents completed and no falls or stalls; its only retention failure was keyboard-flat speed 0.664365 m/s versus the 0.669547 m/s threshold. This is not proof of long-run hardware stability. Historical files, checkpoints and acceptance thresholds are preserved."
++  "basis": "On 2026-11-17 the user requested 4096 environments, a longer behavior-evaluation interval, and then cancellation of automatic stops for behavior-evaluation failures. The default and maximum interval are 100 updates. Valid behavior failures are recorded and training continues; runtime/evaluation-data errors, resource reserves and user interruption still apply. The 4096-environment run completed 100 updates with all eight ascents completed and no falls or stalls; its only retention failure was keyboard-flat speed 0.664365 m/s versus the 0.669547 m/s threshold. This is not proof of long-run hardware stability. Historical files, checkpoints and acceptance thresholds are preserved.",
++  "traction_transition_authorization": "On 2026-11-20 the user requested a new TractionTransition run initialized from model_48900.pt for 50000 additional PPO updates; provide a validated manual launch command without starting PPO."
+ }
+diff --git a/M20_perception_Lidar_rl/scripts/tools/m20_entry_flat_benchmark.py b/M20_perception_Lidar_rl/scripts/tools/m20_entry_flat_benchmark.py
+index 20cdb49..74d03ec 100755
+--- a/M20_perception_Lidar_rl/scripts/tools/m20_entry_flat_benchmark.py
++++ b/M20_perception_Lidar_rl/scripts/tools/m20_entry_flat_benchmark.py
+@@ -23,6 +23,13 @@ def parse_args():
+     p.add_argument('--perception', choices=('clean', 'noisy'), default='clean')
+     p.add_argument('--stair-seconds', type=float, default=14., help='Motion duration for the complete-flight support sequence')
+     p.add_argument('--keyboard-profile', action='store_true', help='Z, C, two seconds zero command, then held 8 using the production command ramp; requires --startup z --speeds .7')
++    p.add_argument('--forward-contract', action='store_true', help='Test production 1.5m/s^2 forward slew and executed zero-wheel history; default retains historical benchmark protocol')
++    p.add_argument('--forward-acceleration', type=float, default=1.5, help='Diagnostic override for --forward-contract')
++    p.add_argument('--production-profile', action='store_true', help='Z->C->immediate actual joystick commands, at requested speeds; use --keyboard-profile')
++    p.add_argument('--production-direct', action='store_true', help='Production profile of the current unpatched robot: direct joystick, still apply its zero-wheel/history rules')
++    p.add_argument('--keyboard-idle-seconds', type=float, default=2., help='C-to-8 delay; zero reproduces immediate manual drive')
++    p.add_argument('--pre-c-settle-seconds', type=float, default=0., help='Additional standing/zero-command time after Z is ready and before C')
++    p.add_argument('--pre-z-settle-seconds', type=float, default=0., help='Prone settle before Z; production keyboard flow is about 5 seconds')
+     p.add_argument('--no-trajectories', action='store_true', help='Keep manifest and results without NPZ trajectories')
+     p.add_argument('--output', type=Path, required=True)
+     return p.parse_args()
+@@ -106,12 +113,26 @@ def run(a):
+     from acoustic import AcousticRecorder
+     from interaction import Interaction
+     from teleop import TeleopKeyboard
++    from command_filter import forward_slew
+     from unittest.mock import patch
+     torch.set_num_threads(1)
++    if a.production_profile:
++        if not a.keyboard_profile or a.startup != 'z' or a.keyboard_idle_seconds != 0:
++            raise ValueError('Production profile requires immediate Z->C->drive')
++        a.forward_contract = True
++        if any(not 0 < speed <= 1. for speed in a.speeds):
++            raise ValueError('Production forward speeds must match the robot 0..1m/s command limit')
++    if a.production_direct and not a.production_profile:
++        raise ValueError('--production-direct requires --production-profile')
++    if a.keyboard_idle_seconds < 0 or a.pre_c_settle_seconds < 0 or a.pre_z_settle_seconds < 0:
++        raise ValueError('C-to-8 delay must be nonnegative')
+     a.output.mkdir(parents=True, exist_ok=False)
+     saved = SavedPolicy(a.checkpoint, a.config_dir)
+     base = a.validation_root.resolve()/'deploy/mujoco_v135'
+-    manifest = dict(saved.metadata, schema_version=2, profile='z_c_8' if a.keyboard_profile else a.startup,
++    profile = ('z_c_8_immediate' if a.keyboard_idle_seconds == 0 else 'z_c_8') if a.keyboard_profile else a.startup
++    manifest = dict(saved.metadata, schema_version=2, profile=profile,
++                    pre_c_settle_seconds=a.pre_c_settle_seconds,
++                    pre_z_settle_seconds=a.pre_z_settle_seconds,
+                     phase_labels={'0': 'nonpolicy', '1': 'policy_idle', '2': 'moving', '3': 'after_motion'}, speeds=a.speeds, treads=a.treads, height=a.height,
+                     startup=a.startup, perception=a.perception,
+                     physics_dt=.001, finish_support_seconds=.06, finish_min_upright=.8, finish_min_clearance=.30, support_force=15., support_normal_min=.9,
+@@ -120,7 +141,13 @@ def run(a):
+                     first_landing='first top-surface support persisting 3 policy frames per front wheel',
+                     stair_motion_seconds=a.stair_seconds,
+                     sequence_criterion='each front wheel supports every tread in ascending order; later contact cannot erase a gap',
++                    entry_transfer_protocol='entry_transfer_v2',
+                     keyboard_profile=a.keyboard_profile,
++                    keyboard_idle_seconds=a.keyboard_idle_seconds,
++                    forward_contract=a.forward_contract,
++                    forward_acceleration=a.forward_acceleration,
++                    production_profile=a.production_profile,
++                    production_direct=a.production_direct,
+                     seed=42, physics_enabled=True)
+     (a.output/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
+     results = []
+@@ -135,7 +162,7 @@ def run(a):
+             acoustic = AcousticRecorder()
+             keyboard = None
+             if a.keyboard_profile:
+-                if a.startup != 'z' or speed != .7:
++                if a.startup != 'z' or (speed != .7 and not a.production_profile):
+                     raise ValueError('Keyboard profile requires --startup z --speeds .7 (the saved 8 binding)')
+                 class Keys:
+                     held = set()
+@@ -145,31 +172,38 @@ def run(a):
+                 # Exercise production command generation without sending input
+                 # to the desktop or relying on a real focused X11 window.
+                 with patch('teleop.X11WindowKeys.open', return_value=None):
+-                    keyboard = TeleopKeyboard()
++                    # Historical native retention evidence is fixed at .7
++                    # with its original 1s ramp, even if manual 8 changes.
++                    keyboard = TeleopKeyboard(direct=a.production_direct, commands={'8': (speed, 0., 0.)}, forward_contract=a.forward_contract)
+                 keyboard._window_keys = Keys()
+             session = Interaction(r, keyboard=keyboard) if a.startup == 'z' else None
+-            if session:
+-                session.event('z')
+-            scheduled_policy_start = 5.4 if session else 1.
++            z_sent = False
++            if session and a.pre_z_settle_seconds == 0:
++                session.event('z'); z_sent = True
++            scheduled_z = a.pre_z_settle_seconds
++            scheduled_policy_start = (scheduled_z+5.4+a.pre_c_settle_seconds) if session else 1.
+             policy_start = None if session else scheduled_policy_start
+             motion_start = None if session else policy_start
+             hip_ids = [r.model.body(f'{leg}_hipy').id for leg in ('fl', 'fr', 'hl', 'hr')]
+             last, frames, first = np.zeros(16), np.zeros(4, dtype=int), np.zeros(4, dtype=int)
++            filtered_forward = 0.
+             prior = np.zeros(4, dtype=int)
+             top_frames, maximum_top_frames, bypass = 0, 0, False
+-            records = {k: [] for k in ('time', 'position', 'quaternion', 'velocity', 'angular_velocity', 'reach', 'joint_pos', 'joint_vel', 'observation', 'action', 'wheel_position', 'wheel_force', 'torque', 'supported_tread', 'command', 'policy_active', 'phase')}
++            records = {k: [] for k in ('time', 'position', 'quaternion', 'velocity', 'angular_velocity', 'reach', 'joint_pos', 'joint_vel', 'qpos', 'qvel', 'observation', 'action', 'wheel_position', 'wheel_force', 'torque', 'supported_tread', 'command', 'policy_active', 'phase')}
+             fell = False
+             termination = 'duration'
+             motion_seconds = 12. if terrain == 'flat' else a.stair_seconds
+-            duration = scheduled_policy_start+(2. if keyboard else 0.)+motion_seconds+(2. if terrain == 'flat' else 0.)+3.
++            duration = scheduled_policy_start+(a.keyboard_idle_seconds if keyboard else 0.)+motion_seconds+(2. if terrain == 'flat' else 0.)+3.
+             for step in range(round(duration/saved.period)):
+                 t = float(r.data.time)
+                 if session:
+                     session.update()
++                    if not z_sent and t >= scheduled_z and session.mode == 'prone':
++                        session.event('z'); z_sent = True
+                     if t >= scheduled_policy_start and session.mode == 'ready':
+                         session.event('c')
+                         policy_start = t
+-                        motion_start = t+(2. if keyboard else 0.)
++                        motion_start = t+(a.keyboard_idle_seconds if keyboard else 0.)
+                 active = session.mode == 'policy' if session else t >= motion_start
+                 moving_now = active and motion_start is not None and motion_start <= t < motion_start+motion_seconds
+                 if motion_start is not None and t >= motion_start+motion_seconds+(2. if terrain == 'flat' else 0.):
+@@ -179,8 +213,14 @@ def run(a):
+                 if keyboard:
+                     keyboard._window_keys.held = {'8'} if command[0] else set()
+                     command = keyboard.velocity_command()
++                elif a.forward_contract:
++                    filtered_forward = float(forward_slew(filtered_forward, command[0], saved.period,
++                        where=np.where, clip=np.clip, acceleration=a.forward_acceleration))
++                    command[0] = filtered_forward
+                 obs = r.observe(command, last)
+-                action = session.action(obs) if session else saved(obs)
++                action = saved.executed_action(session.action(obs) if session else saved(obs), command)
++                if a.forward_contract and np.linalg.norm(command) < .08:
++                    action = action.copy(); action[12:] = 0.
+                 acoustic.policy_sample(action, active=active, moving=moving_now)
+                 for _ in range(round(saved.period/args.physics_dt)):
+                     if not active:
+@@ -190,7 +230,7 @@ def run(a):
+                     mujoco.mj_step(r.model, r.data)
+                     acoustic.physics_sample(r, active=active, moving=moving_now)
+                 mujoco.mj_forward(r.model, r.data)
+-                last = action if active else np.zeros(16)
++                last = saved.history_action(action) if active else np.zeros(16)
+                 if session:
+                     session.previous = last.copy()
+                 supported = np.full(4, -1, dtype=int)
+@@ -226,7 +266,7 @@ def run(a):
+                 mujoco.mj_objectVelocity(r.model, r.data, mujoco.mjtObj.mjOBJ_BODY, r.base_id, velocity, 1)
+                 for key, value in dict(time=t, position=r.data.xpos[r.base_id].copy(),
+                     quaternion=r.data.xquat[r.base_id].copy(), velocity=velocity[3:].copy(),
+-                    angular_velocity=velocity[:3].copy(), reach=reach, joint_pos=r.data.qpos[r.qids].copy(),
++                    angular_velocity=velocity[:3].copy(), reach=reach, qpos=r.data.qpos.copy(), qvel=r.data.qvel.copy(), joint_pos=r.data.qpos[r.qids].copy(),
+                     joint_vel=r.data.qvel[r.vids].copy(), observation=obs.copy(), action=action.copy(),
+                     wheel_position=r.data.xpos[r.wheels].copy(), wheel_force=wheel_force,
+                     torque=r.data.ctrl[r.aids].copy(),
+@@ -268,7 +308,7 @@ def run(a):
+             motion_index = np.searchsorted(arrays['time'], motion_start).clip(0, len(yaw)-1)
+             lateral = arrays['position'][:, 1]-arrays['position'][motion_index, 1]
+             idle = (arrays['time'] >= policy_start) & (arrays['time'] < motion_start)
+-            result = dict(schema_version=2, profile='z_c_8' if keyboard else a.startup,
++            result = dict(schema_version=2, profile=profile,
+                 policy_start=policy_start if policy_entered else None, motion_start=motion_start if policy_entered else None,
+                 policy_entered=policy_entered, terrain=terrain, tread=tread, command_speed=speed, fell=fell, termination=termination,
+                 observed_bypass=bypass, whole_body_top_supported=termination == 'flight_complete',
+@@ -291,9 +331,20 @@ def run(a):
+                 after_c_idle_yaw_change_deg=float(np.degrees(initial_yaw-idle_start_yaw)),
+                 forward_yaw_max_change_deg=float(np.degrees(np.abs(yaw[moving]-initial_yaw).max())) if moving.any() else None,
+                 mean_yaw_rate=float(arrays['angular_velocity'][window, 2].mean()) if window.any() else None)
++            # Signed route metrics: +left/-right looking along world +x.
++            # Maximum excursions remain distinct from the terminal posture.
++            result.update(
++                forward_yaw_min_change_deg=float(np.degrees((yaw[moving]-initial_yaw).min())) if moving.any() else None,
++                forward_yaw_max_signed_change_deg=float(np.degrees((yaw[moving]-initial_yaw).max())) if moving.any() else None,
++                forward_lateral_min_m=float(lateral[moving].min()) if moving.any() else None,
++                forward_lateral_max_m=float(lateral[moving].max()) if moving.any() else None)
+             result['acoustic_proxies'] = acoustic.report()
+             if tread:
+                 result.update(support_sequence_report(arrays['supported_tread'][:, :2]))
++                from m20_entry_diagnostics import entry_report
++                result['entry_transfer'] = entry_report(arrays,
++                    radius=saved.perception['wheel_radius'], rise=a.height, tread=tread,
++                    start_x=float(r.terrain.parameters['start_x'][0]), motion_start=motion_start)
+                 rear_report = support_sequence_report(arrays['supported_tread'][:, 2:])
+                 result['rear_support_sequences'] = rear_report['front_support_sequences']
+                 result['rear_skipped_treads'] = rear_report['skipped_treads']
+diff --git a/M20_perception_Lidar_rl/scripts/tools/m20_recovery_preflight.py b/M20_perception_Lidar_rl/scripts/tools/m20_recovery_preflight.py
+index 754116e..afa51be 100755
+--- a/M20_perception_Lidar_rl/scripts/tools/m20_recovery_preflight.py
++++ b/M20_perception_Lidar_rl/scripts/tools/m20_recovery_preflight.py
+@@ -10,6 +10,32 @@ import sys
+ ROOT = Path(__file__).resolve().parents[2]
+ 
+ 
++def compatible_observation_contract(saved, teacher):
++    """Accept the equivalent executed-wheel-history deployment term.
++
++    FlatStart's stopped-wheel action stores the postprocessed action under
++    ``executed_last_action``. It has the same 16 values and actor dimension as
++    the native ``last_action`` term; every other observation field must remain
++    byte-for-byte identical.
++    """
++    if set(saved) != set(teacher):
++        return False
++    for key in saved:
++        a, b = saved[key], teacher[key]
++        if key != 'actions':
++            if a != b:
++                return False
++            continue
++        if {a.get('func', '').split(':')[-1], b.get('func', '').split(':')[-1]} \
++                - {'last_action', 'executed_last_action'}:
++            return False
++        aa, bb = dict(a), dict(b)
++        aa.pop('func', None); bb.pop('func', None)
++        if aa != bb:
++            return False
++    return True
++
++
+ def main():
+     p = argparse.ArgumentParser(description=__doc__)
+     p.add_argument('--checkpoint', type=Path, required=True)
+@@ -17,6 +43,7 @@ def main():
+     p.add_argument('--replay', type=Path, required=True)
+     p.add_argument('--validation-root', type=Path, default=ROOT.parent/'mujoco_validation')
+     p.add_argument('--output', type=Path)
++    p.add_argument('--targeted-contract', action='store_true')
+     a = p.parse_args()
+     import numpy as np
+     import torch
+@@ -40,8 +67,16 @@ def main():
+     for field in ('nominal', 'action_scale', 'kp', 'kd', 'effort', 'armature'):
+         if not np.array_equal(getattr(saved, field), getattr(teacher, field)):
+             raise ValueError('Reference/current execution contract mismatch: '+field)
+-    if saved.obs_cfg != teacher.obs_cfg:
++    if not compatible_observation_contract(saved.obs_cfg, teacher.obs_cfg):
+         raise ValueError('Reference/current observation contract mismatch')
++    if a.targeted_contract:
++        spec = importlib.util.spec_from_file_location('m20_targeted_contract',
++            ROOT/'source/rl_training/rl_training/targeted_reference.py')
++        targeted = importlib.util.module_from_spec(spec)
++        spec.loader.exec_module(targeted)
++        scales = {key:value['scale'] for key,value in saved.obs_cfg.items()
++                  if isinstance(value, dict) and 'func' in value}
++        targeted.validate_execution_contract(saved.nominal, saved.action_scale, scales)
+     for path in (a.checkpoint, a.teacher):
+         weights = torch.load(path, weights_only=True, map_location='cpu')
+         critic = weights['critic_state_dict']
+diff --git a/M20_perception_Lidar_rl/scripts/tools/probe_m20_refine_runtime.py b/M20_perception_Lidar_rl/scripts/tools/probe_m20_refine_runtime.py
+index a4e4e77..152a3db 100644
+--- a/M20_perception_Lidar_rl/scripts/tools/probe_m20_refine_runtime.py
++++ b/M20_perception_Lidar_rl/scripts/tools/probe_m20_refine_runtime.py
+@@ -1,5 +1,6 @@
+ """Frozen Isaac rollout of RecoveryRefine; never calls learn or optimizer.step."""
+ import argparse
++import hashlib
+ import json
+ import os
+ from pathlib import Path
+@@ -7,6 +8,11 @@ from isaaclab.app import AppLauncher
+ 
+ p = argparse.ArgumentParser(description=__doc__)
+ p.add_argument('--checkpoint', type=Path, required=True)
++p.add_argument('--task', choices=['M20-Stair-V11.1-RecoveryRefine-v0',
++    'M20-Stair-V11.1-TargetedCorrection-v0',
++    'M20-Stair-V11.1-TargetedCorrectionV2-v0',
++    'M20-Stair-V11.1-StepSupport-v0',
++    'M20-Stair-V11.1-StepRetention-v0', 'M20-Stair-V11.1-TractionTransition-v0'], default='M20-Stair-V11.1-RecoveryRefine-v0')
+ p.add_argument('--num_envs', type=int, default=40)
+ p.add_argument('--steps', type=int, default=180)
+ p.add_argument('--output', type=Path, required=True)
+@@ -21,14 +27,28 @@ from isaaclab_tasks.utils import parse_env_cfg, load_cfg_from_registry
+ from isaaclab_rl.rsl_rl import RslRlVecEnvWrapper
+ from rl_training.v111_recovery_runner import RecoveryRunner
+ from rl_training.tasks.manager_based.locomotion.velocity.mdp import v111_refine as refine
++from rl_training.tasks.manager_based.locomotion.velocity.mdp import v111_targeted as targeted
++from rl_training.tasks.manager_based.locomotion.velocity.mdp import v111_step_support as support
++from rl_training.tasks.manager_based.locomotion.velocity.mdp.v135_terrain_geometry import v135_terrain_geometry
++from rl_training.tasks.manager_based.locomotion.velocity.mdp.v135_terrain_geometry import column_names, ascent_name
+ 
+-TASK = 'M20-Stair-V11.1-RecoveryRefine-v0'
++TASK = a.task
+ cfg = parse_env_cfg(TASK, device=a.device, num_envs=a.num_envs)
+ old = parse_env_cfg('M20-Stair-V11.1-AscentRecovery-v0', device=a.device, num_envs=a.num_envs)
+ for section in ('actions', 'observations', 'terminations'):
+     assert repr(getattr(cfg, section).to_dict()) == repr(getattr(old, section).to_dict())
+ for reward in ('track_lin_vel_xy_exp', 'world_forward_progress', 'world_forward_deficit'):
+     assert repr(getattr(cfg.rewards, reward)) == repr(getattr(old.rewards, reward))
++if TASK.endswith(('StepSupport-v0', 'StepRetention-v0', 'TractionTransition-v0')):
++    terrain = cfg.scene.terrain.terrain_generator
++    columns = column_names(terrain)
++    old_columns = column_names(old.scene.terrain.terrain_generator)
++    assert len(columns) == len(old_columns) == 20
++    assert all(a == b for a, b in zip(columns, old_columns) if not ascent_name(a))
++    focused = [terrain.sub_terrains[n] for n in columns if ascent_name(n)
++               and terrain.sub_terrains[n].step_height_range == (.16, .16)]
++    assert len(focused) == 4
++    assert sorted(t.step_width for t in focused) == [.26, .26, .30, .30]
+ cfg.seed = 42
+ agent = load_cfg_from_registry(TASK, 'rsl_rl_cfg_entry_point')
+ assert agent.algorithm.anchor_physical_ascent
+@@ -47,17 +67,68 @@ assert observations['policy'].shape == (a.num_envs, 63)
+ assert observations['critic'].shape == (a.num_envs, 568)
+ assert raw.action_manager.total_action_dim == 16
+ term = raw.command_manager.get_term('base_velocity')
++if TASK.endswith('TractionTransition-v0'):
++    selected = term.transition_active.nonzero(as_tuple=True)[0]
++    assert len(selected) >= 6
++    # Exercise all six profiles deterministically in this frozen wiring probe.
++    term.transition_profile[selected] = torch.arange(len(selected), device=raw.device) % 6
+ policy = runner.get_inference_policy(device=raw.device)
+ max_noise_cost, contacts, landing_credit = 0., 0, 0.
++max_ascent_speed_credit = 0.
++support_credit = 0.
+ with torch.inference_mode():
+     for i in range(a.steps):
+         observations, rewards, done, info = wrapped.step(policy(observations))
+         assert torch.isfinite(rewards).all()
+         s = refine.state(raw)
++        if hasattr(raw, '_v111_targeted'):
++            assert torch.isfinite(raw._v111_targeted['credit']).all()
++            assert (raw._v111_targeted['credit'] >= 0).all()
+         assert all(torch.isfinite(s[key]).all() for key in ('contact_cost', 'chatter_cost', 'landing_credit', 'route_cost'))
+         max_noise_cost = max(max_noise_cost, float((.15*s['contact_cost']).max()))
+         contacts += int(s['touch_sum'].sum()) if i == a.steps-1 else 0
+-        landing_credit += float(s['landing_credit'].sum())
++        actual_credit = raw._v111_targeted['credit'] if hasattr(raw, '_v111_targeted') else s['landing_credit']
++        landing_credit += float(actual_credit.sum())
++        if TASK.endswith(('TargetedCorrectionV2-v0', 'StepSupport-v0', 'StepRetention-v0', 'TractionTransition-v0')):
++            speed_credit = targeted.ascent_speed_floor(raw)
++            assert torch.isfinite(speed_credit).all() and (speed_credit >= 0).all()
++            assert (speed_credit <= 1).all()
++            inactive = ~v135_terrain_geometry(raw)['ascent'] | raw._v111_first_tread['entry_near']
++            command = raw.command_manager.get_command('base_velocity')
++            inactive |= (command[:, 1].abs() >= .05) | (command[:, 2].abs() >= .03)
++            assert not speed_credit[inactive].any()
++            max_ascent_speed_credit = max(max_ascent_speed_credit, float(speed_credit.max()))
++        if TASK.endswith(('StepSupport-v0', 'StepRetention-v0', 'TractionTransition-v0')):
++            support_state = support.state(raw)
++            assert torch.isfinite(support_state['credit']).all()
++            assert (support_state['credit'] >= 0).all() and (support_state['peak'] <= 1).all()
++            assert not support_state['credit'][~v135_terrain_geometry(raw)['ascent']].any()
++            support_credit += float(support_state['credit'].sum())
++        if TASK.endswith(('StepRetention-v0', 'TractionTransition-v0')):
++            from rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_step_retention import route_reward
++            route = route_reward(raw)
++            assert torch.isfinite(route).all() and (route >= 0).all() and (route <= 1.).all()
++            assert not route[~v135_terrain_geometry(raw)['ascent']].any()
++        if TASK.endswith('TractionTransition-v0'):
++            from rl_training.tasks.manager_based.locomotion.velocity.mdp import v111_traction_transition as traction
++            traction_state = traction.state(raw)
++            for key in ('quality', 'cost', 'pitch_cost', 'flat_quality', 'transition_impulse',
++                        'entry_pitch', 'entry_simultaneous', 'entry_lead'):
++                assert torch.isfinite(traction_state[key]).all()
++                assert (traction_state[key] >= 0).all()
++            assert (traction_state['quality'] <= 1).all() and (traction_state['cost'] <= 1).all()
++            assert (traction_state['entry_simultaneous'] <= 1).all()
++            assert (traction_state['entry_lead'] <= 1).all()
++            assert traction_state['supported'].shape == (a.num_envs, 4)
++            assert not traction_state['quality'][~traction_state['straight']].any()
++            assert cfg.rewards.v111_entry_simultaneous.weight == .80
++            assert cfg.rewards.v111_transition_action_impulse.weight == .35
++            assert cfg.rewards.v111_entry_lead.weight == .10
++            from rl_training.traction_transition import transition_speed
++            selected = term.transition_active
++            expected = transition_speed((term.refine_elapsed[selected]-raw.step_dt).clamp_min(0),
++                                        term.transition_profile[selected])
++            torch.testing.assert_close(term.command[selected, 0], expected)
+         if i < 95:
+             assert (term.command[term.refine_cohort] == 0).all()
+         if i == 135:
+@@ -75,10 +146,73 @@ with torch.inference_mode():
+ assert not runner.alg.optimizer.state
+ assert all(torch.equal(v, weights[k]) for k, v in runner.alg.actor.state_dict().items())
+ assert max_noise_cost <= .15
++if TASK.endswith('TargetedCorrection-v0'):
++    assert runner.alg.__class__.__name__ == 'TargetedPPO'
++    assert runner.alg.symmetry_weight == .05 and runner.alg.idle_mean_weight == .10
++    assert cfg.rewards.v111_adjacent_support.weight == 1.6
++    assert not raw._v111_targeted['pending'].any()
++if TASK.endswith('TargetedCorrectionV2-v0'):
++    assert runner.alg.__class__.__name__ == 'TargetedPPOV2'
++    assert cfg.rewards.v111_adjacent_support.weight == 1.6
++    assert cfg.rewards.v111_refine_landing.func.__name__ == 'landing_reward_load_biased'
++    assert cfg.curriculum.v111_refine_support_credit_sum.func.__name__ == 'credit_metric_load_biased'
++    assert all(p.requires_grad for p in runner.alg.actor.parameters())
++    assert all(not p.requires_grad for p in runner.alg.teacher.parameters())
++    assert torch.all(runner.alg.actor.distribution.log_std_param.exp() >=
++                     torch.tensor([.18] * 12 + [.35] * 4, device=raw.device))
++    assert max_ascent_speed_credit > 0
++if TASK.endswith(('StepSupport-v0', 'StepRetention-v0', 'TractionTransition-v0')):
++    assert runner.alg.__class__.__name__ == ('TractionTransitionPPO' if TASK.endswith('TractionTransition-v0') else 'StepRetentionPPO' if TASK.endswith('StepRetention-v0') else 'TargetedPPOV2')
++    assert all(p.requires_grad for p in runner.alg.actor.parameters())
++    assert all(not p.requires_grad for p in runner.alg.teacher.parameters())
++    assert cfg.rewards.v111_refine_landing.func is support.landing_reward
++    assert cfg.rewards.v111_adjacent_support.weight == 2.4
++    assert runner.alg.lam == .97
++    assert support_credit > 0
++    geometry = v135_terrain_geometry(raw)
++    focus = geometry['ascent'] & ((geometry['step_width'] == .26) | (geometry['step_width'] == .30))
++    assert focus.any()
++    chosen = torch.tensor([.5, .7, 1.], device=raw.device)
++    # The takeover cohort's stored target uses the same benchmark speeds;
++    # its current command may still be idle or partway through the ramp.
++    assert torch.isclose(term.refine_speed[focus & term.refine_cohort, None], chosen).any(1).all()
++    assert not support.state(raw)['pending'].any()
+ result = dict(status='frozen_runtime_passed', task=TASK, envs=a.num_envs, steps=a.steps,
++              checkpoint=str(a.checkpoint.resolve()),
+               actor_input=63, actor_output=16, critic_input=568, maximum_noise_rate_cost=max_noise_cost,
+               touchdown_events=contacts, landing_credit=landing_credit, no_training_started=True,
+               model_weights_unchanged=True)
++if TASK.endswith(('StepSupport-v0', 'StepRetention-v0', 'TractionTransition-v0')):
++    result.update(all_actor_parameters_trainable=True, teacher_parameters_frozen=True,
++                  support_credit=support_credit, gae_lambda=runner.alg.lam,
++                  no_credit_on_non_ascent=True, focused_terrain_columns=4,
++                  focused_step_height=.16, focused_treads=[.26, .30],
++                  focused_speeds=[.5, .7, 1.])
++if TASK.endswith(('StepRetention-v0', 'TractionTransition-v0')):
++    result.update(successful_reference_cases=len(runner.alg.success_members),
++                  reference_sha256=runner.alg.reference_sha256,
++                  all_actor_parameters_trainable=all(p.requires_grad for p in runner.alg.actor.parameters()),
++                  forward_route_weight=cfg.rewards.v111_retention_forward_route.weight,
++                  learning_rate=runner.alg.learning_rate)
++if TASK.endswith('TractionTransition-v0'):
++    training_root = Path(__file__).resolve().parents[2]
++    paths = [
++        'source/rl_training/rl_training/traction_transition.py',
++        'source/rl_training/rl_training/v111_traction_transition_runner.py',
++        'source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_traction_transition.py',
++        'source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_traction_transition_env_cfg.py',
++    ]
++    result.update(traction_contact_samples=int(traction_state['supported'].sum()),
++                  privileged_horizontal_contact_only=True,
++                  no_policy_input_changes=True, fresh_optimizer_required=True,
++                  sampled_transition_environments=int(term.transition_active.sum()),
++                  six_transition_profiles_exercised=True,
++                  source_sha256={p: hashlib.sha256((training_root/p).read_bytes()).hexdigest() for p in paths})
++if TASK.endswith('TargetedCorrectionV2-v0'):
++    result.update(all_actor_parameters_trainable=True, teacher_parameters_frozen=True,
++        maximum_ascent_speed_credit=max_ascent_speed_credit,
++        speed_floor_excludes_b1_and_non_ascent=True, support_credit_metric_matches_reward=True,
++        exploration_floor_leg=runner.alg.std_floor_leg, exploration_floor_wheel=runner.alg.std_floor_wheel)
+ a.output.parent.mkdir(parents=True, exist_ok=True)
+ a.output.write_text(json.dumps(result, indent=2)+'\n')
+ print('[REFINE RUNTIME] '+json.dumps(result), flush=True)
+diff --git a/M20_perception_Lidar_rl/scripts/tools/test_m20_guarded_session.py b/M20_perception_Lidar_rl/scripts/tools/test_m20_guarded_session.py
+index 30257af..72cd64e 100644
+--- a/M20_perception_Lidar_rl/scripts/tools/test_m20_guarded_session.py
++++ b/M20_perception_Lidar_rl/scripts/tools/test_m20_guarded_session.py
+@@ -79,6 +79,74 @@ def test_retention_failure_continues_and_is_recorded(tmp_path, monkeypatch):
+     assert len(history[1]['cases']) == 12
+ 
+ 
++@pytest.mark.parametrize('task', [guard.ENTRY_TRANSFER_TASK, guard.ENTRY_SEQUENCE_TASK])
++def test_flat_stage_evaluates_both_deployment_paths_and_continues_on_failure(tmp_path, monkeypatch, task):
++    """Exercise the new periodic branch with measured rows, without PPO."""
++    runner, calls, baseline, logs, output = fixture(tmp_path, monkeypatch)
++    if task == guard.ENTRY_SEQUENCE_TASK:
++        import hashlib
++        digest = hashlib.sha256((ROOT/'interview_prep/model_49998.pt').read_bytes()).hexdigest()
++        for profile in ('standing', 'keyboard'):
++            (tmp_path/profile/'manifest.json').write_text(json.dumps(dict(checkpoint_sha256=digest)))
++    sys.path.insert(0, str(ROOT/'scripts/reinforcement_learning/rsl_rl'))
++    import flat_start_selection
++    data = ROOT/'artifacts/flat_start_repair_20261123'
++    flat = data/'reference66800_a15/results.json'
++    production = data/'transition66800/results.json'
++    if not production.is_file(): pytest.skip('collect production physics baseline')
++    feedback, tools = [], []
++    runner.alg = SimpleNamespace(entry_reference_results='entry', flat_reference_results=str(flat),
++        flat_reference_checkpoint='teacher', forward_reference_results=str(production),
++        behavior_teacher_checkpoint='teacher', behavior_reference_results='native',
++        behavior_selection_state=None,
++        behavior_feedback=lambda failures: feedback.append(failures) or dict(success_anchor_multiplier=1.))
++    runner.save = lambda target: Path(target).write_bytes(b'offline-resume-fixture')
++    class Selector:
++        def __init__(self, *args, **kwargs):
++            assert kwargs['flat_reference_results'] == str(flat)
++            assert kwargs['forward_reference_results'] == str(production)
++        def export_state(self): return {}
++        def consider(self, checkpoint, results, **kwargs):
++            assert Path(kwargs['flat_results']).is_file() and Path(kwargs['forward_results']).is_file()
++            return dict(promoted=False, regressions=['flat/full: inward'], best_rank=(0,),
++                best_checkpoint='protected.pt', entry_passed=False, flat_start_passed=False,
++                production_passed=False, traction_passed=None, traction_repair_passed=None)
++    monkeypatch.setattr(flat_start_selection, 'FlatEntryBehaviorSelector', Selector)
++    original = guard.run_evaluation
++    def evaluate(command, **kwargs):
++        name = Path(command[1]).name; tools.append(name)
++        if name == 'm20_repair_acceptance.py':
++            result = original(command, **kwargs)
++            target = Path(command[command.index('--output')+1])/'acceptance.json'
++            report = json.loads(target.read_text())
++            report['repair_passed'] = True
++            target.write_text(json.dumps(report))
++            return result
++        target = Path(command[command.index('--output')+1]); target.mkdir()
++        source = flat if name == 'm20_flat_command_probe.py' else production
++        (target/'results.json').write_text(source.read_text())
++        return SimpleNamespace(returncode=0)
++    monkeypatch.setattr(guard, 'run_evaluation', evaluate)
++    guard.learn_guarded(runner, total_updates=201, segment_updates=100,
++        evaluation_every_updates=200, evaluation_profile='entry', task=task,
++        baseline_path=baseline, output_path=output, log_dir=logs)
++    assert len(calls) == 3 and len(feedback) == 2
++    assert tools.count('m20_flat_command_probe.py') == 2
++    assert tools.count('m20_production_transition_benchmark.py') == 2
++    assert 'm20_traction_benchmark.py' not in tools
++    status = json.loads((output/'status.json').read_text())
++    assert status['completed_updates'] == 201 and not status['flat_start_passed']
++    assert not status['production_passed'] and not status['repair_passed']
++    assert status['traction_passed'] is None
++    assert Path(status['last_resume_checkpoint']).is_file()
++    metrics = json.loads((output/'latest_metrics.json').read_text())
++    assert metrics['native_repair_passed'] is True
++    assert metrics['repair_passed'] is False
++    history = [json.loads(line) for line in (output/'metrics_history.jsonl').read_text().splitlines()]
++    assert all(row['native_repair_passed'] and not row['repair_passed'] for row in history)
++    assert guard.evaluation_scalars(metrics)['MuJoCo/repair_passed'] == 0
++
++
+ def test_final_failed_candidate_is_saved_without_promoting_it(tmp_path, monkeypatch):
+     runner, calls, baseline, logs, output = fixture(tmp_path, monkeypatch, fail_at=2)
+     guard.learn_guarded(runner, total_updates=200, segment_updates=100,
+@@ -190,6 +258,7 @@ def test_continuation_finishes_with_cleanup_and_zero_worker_exit(monkeypatch, tm
+     namespace = dict(
+         __name__='__main__', args_cli=SimpleNamespace(
+             headless=True, task=guard.TASK, guarded_total_updates=201,
++            guarded_eval_every=None, guarded_eval_profile='full',
+             guard_baseline=baseline, guard_output=output),
+         REPAIR_TASKS=[guard.TASK], TrainingInterrupted=guard.TrainingInterrupted,
+         runner=runner, agent_cfg=SimpleNamespace(max_iterations=100), log_dir=logs,
+@@ -225,7 +294,7 @@ def test_invalid_baseline_prevents_any_update(tmp_path, monkeypatch):
+     assert not calls
+ 
+ 
+-@pytest.mark.parametrize('total,interval', [(30001,100),(30000,101),(0,100),(30000,0)])
++@pytest.mark.parametrize('total,interval', [(50001,100),(50000,101),(0,100),(50000,0)])
+ def test_session_limits_fail_before_simulator(tmp_path,total,interval):
+     with pytest.raises(ValueError):
+         guard.validate_session(guard.TASK,total,interval,tmp_path/'missing',tmp_path/'session')
+diff --git a/M20_perception_Lidar_rl/scripts/train_m20_v111_guarded.sh b/M20_perception_Lidar_rl/scripts/train_m20_v111_guarded.sh
+index 539a23e..fa02ca3 100755
+--- a/M20_perception_Lidar_rl/scripts/train_m20_v111_guarded.sh
++++ b/M20_perception_Lidar_rl/scripts/train_m20_v111_guarded.sh
+@@ -13,9 +13,14 @@ M20_CHECK_ONLY=0
+ M20_BASELINE=''
+ M20_SESSION=''
+ M20_INITIAL=''
++M20_RESUME=''
++M20_TRACTION=''
++M20_EVAL_EVERY=100
++M20_EVAL_PROFILE='full'
+ M20_TASK='M20-Stair-V11.1-AscentRecovery-v0'
+ M20_RUN_NAME='guarded_30000_from35300'
+ M20_REFINE_INITIAL="$TRAIN_ROOT/logs/rsl_rl/M20-V11.1-AscentRecovery/2026-11-17_14-59-02_063111_guarded_30000_from35300/model_43800.pt"
++M20_TARGETED_V2_INITIAL="$TRAIN_ROOT/logs/rsl_rl/M20-V11.1-RecoveryRefine/2026-11-18_14-59-56_032979_refine_30000_from43800/model_45100.pt"
+ while (($#)); do
+   case "$1" in
+     --check-only) M20_CHECK_ONLY=1; shift ;;
+@@ -25,7 +30,19 @@ while (($#)); do
+     --baseline-results) M20_BASELINE="$2"; shift 2 ;;
+     --output) M20_SESSION="$2"; shift 2 ;;
+     --initial-checkpoint) M20_INITIAL="$2"; shift 2 ;;
++    --resume-checkpoint) M20_RESUME="$2"; shift 2 ;;
++    --traction-results) M20_TRACTION="$2"; shift 2 ;;
++    --evaluation-every) M20_EVAL_EVERY="$2"; shift 2 ;;
++    --evaluation-profile) M20_EVAL_PROFILE="$2"; shift 2 ;;
++    --run-name) M20_RUN_NAME="$2"; shift 2 ;;
+     --refine) M20_TASK='M20-Stair-V11.1-RecoveryRefine-v0'; M20_RUN_NAME='refine_30000_from43800'; shift ;;
++    --targeted) M20_TASK='M20-Stair-V11.1-TargetedCorrection-v0'; M20_RUN_NAME='targeted_30000_from43800'; shift ;;
++    --targeted-v2) M20_TASK='M20-Stair-V11.1-TargetedCorrectionV2-v0'; M20_RUN_NAME='targeted_v2_30000_from45100'; shift ;;
++    --step-support) M20_TASK='M20-Stair-V11.1-StepSupport-v0'; M20_RUN_NAME='step_support'; shift ;;
++    --step-retention) M20_TASK='M20-Stair-V11.1-StepRetention-v0'; M20_RUN_NAME='step_retention_from47900'; shift ;;
++    --traction-transition) M20_TASK='M20-Stair-V11.1-TractionTransition-v0'; M20_RUN_NAME='traction_transition_from47900'; shift ;;
++    --entry-transfer) M20_TASK='M20-Stair-V11.1-EntryTransfer-v0'; M20_RUN_NAME='entry_transfer_from52000'; shift ;;
++    --flat-start) M20_TASK='M20-Stair-V11.1-EntryTransfer-v0'; export M20_FLAT_START_REPAIR=1; M20_RUN_NAME='flat_start_from67700'; shift ;;
+     *) echo "Unknown guarded launch argument: $1" >&2; exit 2 ;;
+   esac
+ done
+@@ -33,10 +50,41 @@ if [[ -z "$M20_BASELINE" || -z "$M20_SESSION" ]]; then
+   echo '--baseline-results and a new --output directory are required.' >&2
+   exit 2
+ fi
++if [[ -n "$M20_RESUME" ]]; then
++  if [[ "$M20_TASK" != 'M20-Stair-V11.1-StepRetention-v0' && \
++        "$M20_TASK" != 'M20-Stair-V11.1-TractionTransition-v0' && \
++        "$M20_TASK" != 'M20-Stair-V11.1-EntryTransfer-v0' || -n "$M20_INITIAL" ]]; then
++    echo '--resume-checkpoint requires StepRetention, TractionTransition or EntryTransfer and excludes --initial-checkpoint.' >&2
++    exit 2
++  fi
++fi
++if [[ "$M20_TASK" == 'M20-Stair-V11.1-StepRetention-v0' || "$M20_TASK" == 'M20-Stair-V11.1-TractionTransition-v0' || "$M20_TASK" == 'M20-Stair-V11.1-EntryTransfer-v0' ]]; then
++  if [[ "$M20_TASK" == 'M20-Stair-V11.1-StepRetention-v0' ]]; then
++    export M20_RECOVERY_TEACHER="$TRAIN_ROOT/logs/rsl_rl/M20-V11.1-StepSupport/2026-11-19_18-47-36_766802_step_support/model_47900.pt"
++    export M20_RECOVERY_REPLAY="$TRAIN_ROOT/data/m20_recovery/reference_47900_20261120.npz"
++  else
++    export M20_RECOVERY_TEACHER="${M20_RECOVERY_TEACHER:-$TRAIN_ROOT/logs/rsl_rl/M20-V11.1-StepSupport/2026-11-19_18-47-36_766802_step_support/model_47900.pt}"
++    export M20_RECOVERY_REPLAY="${M20_RECOVERY_REPLAY:-$TRAIN_ROOT/data/m20_recovery/reference_47900_20261120.npz}"
++  fi
++  export M20_RETENTION_RESULTS="${M20_RETENTION_RESULTS:-$TRAIN_ROOT/artifacts/step_retention_20261120/reference47900/results.json}"
++  M20_INITIAL="${M20_RESUME:-${M20_INITIAL:-$M20_RECOVERY_TEACHER}}"
++fi
++if [[ "$M20_TASK" == 'M20-Stair-V11.1-TractionTransition-v0' || "$M20_TASK" == 'M20-Stair-V11.1-EntryTransfer-v0' ]]; then
++  if [[ -z "$M20_TRACTION" ]]; then
++    echo '--traction-transition requires --traction-results from the same initial checkpoint.' >&2
++    exit 2
++  fi
++  export M20_TRACTION_RESULTS="$M20_TRACTION"
++fi
+ export M20_RECOVERY_TEACHER="$("$M20_PYTHON" source/rl_training/rl_training/recovery_assets.py --teacher)"
+ export M20_RECOVERY_REPLAY="$("$M20_PYTHON" source/rl_training/rl_training/recovery_assets.py --replay)"
+ if [[ -z "$M20_INITIAL" ]]; then
+-  if [[ "$M20_TASK" == 'M20-Stair-V11.1-RecoveryRefine-v0' ]]; then
++  if [[ "$M20_TASK" == 'M20-Stair-V11.1-StepSupport-v0' ]]; then
++    echo '--step-support requires an explicit --initial-checkpoint.' >&2
++    exit 2
++  elif [[ "$M20_TASK" == 'M20-Stair-V11.1-TargetedCorrectionV2-v0' ]]; then
++    M20_INITIAL="$M20_TARGETED_V2_INITIAL"
++  elif [[ "$M20_TASK" == 'M20-Stair-V11.1-RecoveryRefine-v0' || "$M20_TASK" == 'M20-Stair-V11.1-TargetedCorrection-v0' ]]; then
+     M20_INITIAL="$M20_REFINE_INITIAL"
+   else
+     M20_INITIAL="$M20_RECOVERY_TEACHER"
+@@ -44,8 +92,42 @@ if [[ -z "$M20_INITIAL" ]]; then
+ fi
+ "$M20_PYTHON" scripts/reinforcement_learning/rsl_rl/repair_workstation_limits.py \
+   --num_envs "$M20_ENVS" --max_iterations "$M20_INTERVAL"
++M20_PREFLIGHT_FLAGS=()
++if [[ "$M20_TASK" == 'M20-Stair-V11.1-TargetedCorrection-v0' || "$M20_TASK" == 'M20-Stair-V11.1-TargetedCorrectionV2-v0' || "$M20_TASK" == 'M20-Stair-V11.1-StepSupport-v0' || "$M20_TASK" == 'M20-Stair-V11.1-StepRetention-v0' || "$M20_TASK" == 'M20-Stair-V11.1-TractionTransition-v0' || "$M20_TASK" == 'M20-Stair-V11.1-EntryTransfer-v0' ]]; then
++  M20_PREFLIGHT_FLAGS+=(--targeted-contract)
++fi
+ "$M20_PYTHON" scripts/tools/m20_recovery_preflight.py \
+-  --checkpoint "$M20_INITIAL" --teacher "$M20_RECOVERY_TEACHER" --replay "$M20_RECOVERY_REPLAY"
++  --checkpoint "$M20_INITIAL" --teacher "$M20_RECOVERY_TEACHER" --replay "$M20_RECOVERY_REPLAY" "${M20_PREFLIGHT_FLAGS[@]}"
++if [[ "$M20_TASK" == 'M20-Stair-V11.1-StepRetention-v0' || "$M20_TASK" == 'M20-Stair-V11.1-TractionTransition-v0' || "$M20_TASK" == 'M20-Stair-V11.1-EntryTransfer-v0' ]]; then
++  M20_RETENTION_PREFLIGHT_FLAGS=()
++  if [[ -n "$M20_RESUME" ]]; then
++    M20_RETENTION_PREFLIGHT_FLAGS+=(--resume-checkpoint "$M20_RESUME")
++  fi
++  "$M20_PYTHON" scripts/tools/m20_step_retention_preflight.py \
++    --teacher "$M20_RECOVERY_TEACHER" --replay "$M20_RECOVERY_REPLAY" --results "$M20_RETENTION_RESULTS" "${M20_RETENTION_PREFLIGHT_FLAGS[@]}"
++fi
++if [[ "$M20_TASK" == 'M20-Stair-V11.1-TractionTransition-v0' || "$M20_TASK" == 'M20-Stair-V11.1-EntryTransfer-v0' ]]; then
++  M20_TRACTION_PREFLIGHT_FLAGS=()
++  if [[ "${M20_FLAT_START_REPAIR:-0}" == '1' ]]; then
++    M20_TRACTION_PREFLIGHT_FLAGS+=(--allow-initial-refinement)
++  fi
++  if [[ -n "$M20_RESUME" ]]; then
++    M20_TRACTION_PREFLIGHT_FLAGS+=(--resume-checkpoint "$M20_RESUME")
++  fi
++  "$M20_PYTHON" scripts/tools/m20_traction_preflight.py \
++    --checkpoint "$M20_INITIAL" --teacher "$M20_RECOVERY_TEACHER" --replay "$M20_RECOVERY_REPLAY" \
++    --retention-results "$M20_RETENTION_RESULTS" --traction-results "$M20_TRACTION_RESULTS" \
++    "${M20_TRACTION_PREFLIGHT_FLAGS[@]}"
++fi
++if [[ "${M20_FLAT_START_REPAIR:-0}" == '1' ]]; then
++  M20_FLAT_PREFLIGHT_FLAGS=()
++  if [[ -n "$M20_RESUME" ]]; then
++    M20_FLAT_PREFLIGHT_FLAGS+=(--resume-checkpoint "$M20_RESUME")
++  fi
++  "$M20_PYTHON" scripts/tools/m20_flat_start_preflight.py \
++    --results "$M20_FLAT_RESULTS" --teacher "$M20_FLAT_CHECKPOINT" \
++    --forward-results "$M20_FORWARD_RESULTS" "${M20_FLAT_PREFLIGHT_FLAGS[@]}"
++fi
+ "$M20_PYTHON" - "$M20_TOTAL" "$M20_INTERVAL" "$M20_BASELINE" "$M20_SESSION" "$M20_TASK" <<'PY'
+ import sys
+ from pathlib import Path
+@@ -60,8 +142,13 @@ if (( M20_CHECK_ONLY )); then
+   exit 0
+ fi
+ export M20_REPAIR_RUN_RECEIPT="$M20_SESSION/run_dir.txt"
++M20_LOAD_FLAGS=(--initial-checkpoint "$M20_INITIAL")
++if [[ -n "$M20_RESUME" ]]; then
++  M20_LOAD_FLAGS=(--resume-checkpoint "$M20_RESUME")
++fi
+ exec "$M20_PYTHON" scripts/reinforcement_learning/rsl_rl/train.py \
+   --task "$M20_TASK" --headless --device cuda:0 \
+   --num_envs "$M20_ENVS" --max_iterations "$M20_INTERVAL" --seed 42 \
+-  --initial-checkpoint "$M20_INITIAL" --run_name "$M20_RUN_NAME" \
++  "${M20_LOAD_FLAGS[@]}" --run_name "$M20_RUN_NAME" \
++  --guarded-eval-every "$M20_EVAL_EVERY" --guarded-eval-profile "$M20_EVAL_PROFILE" \
+   --guarded-total-updates "$M20_TOTAL" --guard-baseline "$M20_BASELINE" --guard-output "$M20_SESSION"
+diff --git a/M20_perception_Lidar_rl/source/rl_training/rl_training/recovery_reference.py b/M20_perception_Lidar_rl/source/rl_training/rl_training/recovery_reference.py
+index a636f34..854a58f 100644
+--- a/M20_perception_Lidar_rl/source/rl_training/rl_training/recovery_reference.py
++++ b/M20_perception_Lidar_rl/source/rl_training/rl_training/recovery_reference.py
+@@ -74,7 +74,7 @@ def load_labeled_replay(path, source_sha256=None):
+ def reference_anchor_loss(predicted, target, observations, scene, front_weight, weight,
+                           flat_leg_weight=.04, flat_wheel_differential_weight=.08,
+                           ascent_other_weight=.35, tolerance=.05, physical_ascent=False,
+-                          ascent_wheel_differential_weight=1.):
++                          ascent_wheel_differential_weight=1., leg_scale=None, wheel_scale=None):
+     """Keep shared drive but permit scene-specific correction of defective actions."""
+     if predicted.shape != target.shape or predicted.ndim != 2 or predicted.shape[1] != 16:
+         raise ValueError("Recovery reference actions must be matching N x 16 tensors")
+@@ -107,4 +107,8 @@ def reference_anchor_loss(predicted, target, observations, scene, front_weight,
+         ascent_wheel_error = ascent_wheel_error + ascent_wheel_differential_weight * (
+             differential.abs()-tolerance).clamp_min(0).square()
+         wheel_error = torch.where((scene == ASCENT)[:, None], ascent_wheel_error, wheel_error)
++    if leg_scale is not None:
++        leg_error = leg_error * leg_scale
++    if wheel_scale is not None:
++        wheel_error = wheel_error * wheel_scale
+     return weight * (leg_error * weights).sum(1).add(wheel_error.sum(1)).mean() / 16.
+diff --git a/M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/__init__.py b/M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/__init__.py
+index 5923825..eaab3b3 100755
+--- a/M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/__init__.py
++++ b/M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/__init__.py
+@@ -164,6 +164,76 @@ gym.register(
+     },
+ )
+ 
++gym.register(
++    id="M20-Stair-V11.1-TargetedCorrection-v0",
++    entry_point="isaaclab.envs:ManagerBasedRLEnv",
++    disable_env_checker=True,
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.v111_targeted_env_cfg:DeeproboticsM20V111TargetedEnvCfg",
++        "rsl_rl_cfg_entry_point": f"{__name__}.v111_targeted_env_cfg:DeeproboticsM20V111TargetedPPORunnerCfg",
++    },
++)
++
++gym.register(
++    id="M20-Stair-V11.1-TargetedCorrectionV2-v0",
++    entry_point="isaaclab.envs:ManagerBasedRLEnv",
++    disable_env_checker=True,
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.v111_targeted_v2_env_cfg:DeeproboticsM20V111TargetedV2EnvCfg",
++        "rsl_rl_cfg_entry_point": f"{__name__}.v111_targeted_v2_env_cfg:DeeproboticsM20V111TargetedV2PPORunnerCfg",
++    },
++)
++
++gym.register(
++    id="M20-Stair-V11.1-StepSupport-v0",
++    entry_point="isaaclab.envs:ManagerBasedRLEnv",
++    disable_env_checker=True,
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.v111_step_support_env_cfg:DeeproboticsM20V111StepSupportEnvCfg",
++        "rsl_rl_cfg_entry_point": f"{__name__}.v111_step_support_env_cfg:DeeproboticsM20V111StepSupportPPORunnerCfg",
++    },
++)
++
++gym.register(
++    id="M20-Stair-V11.1-StepRetention-v0",
++    entry_point="isaaclab.envs:ManagerBasedRLEnv",
++    disable_env_checker=True,
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.v111_step_retention_env_cfg:DeeproboticsM20V111StepRetentionEnvCfg",
++        "rsl_rl_cfg_entry_point": f"{__name__}.v111_step_retention_env_cfg:DeeproboticsM20V111StepRetentionPPORunnerCfg",
++    },
++)
++
++gym.register(
++    id="M20-Stair-V11.1-TractionTransition-v0",
++    entry_point="isaaclab.envs:ManagerBasedRLEnv",
++    disable_env_checker=True,
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.v111_traction_transition_env_cfg:DeeproboticsM20V111TractionTransitionEnvCfg",
++        "rsl_rl_cfg_entry_point": f"{__name__}.v111_traction_transition_env_cfg:DeeproboticsM20V111TractionTransitionPPORunnerCfg",
++    },
++)
++
++gym.register(
++    id="M20-Stair-V11.1-EntryTransfer-v0",
++    entry_point="isaaclab.envs:ManagerBasedRLEnv",
++    disable_env_checker=True,
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.v111_entry_transfer_env_cfg:DeeproboticsM20V111EntryTransferEnvCfg",
++        "rsl_rl_cfg_entry_point": f"{__name__}.v111_entry_transfer_env_cfg:DeeproboticsM20V111EntryTransferPPORunnerCfg",
++    },
++)
++
++gym.register(
++    id="M20-Stair-V11.1-EntrySequenceRepair-v0",
++    entry_point="isaaclab.envs:ManagerBasedRLEnv",
++    disable_env_checker=True,
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.v111_entry_transfer_env_cfg:DeeproboticsM20V111EntrySequenceEnvCfg",
++        "rsl_rl_cfg_entry_point": f"{__name__}.v111_entry_transfer_env_cfg:DeeproboticsM20V111EntrySequencePPORunnerCfg",
++    },
++)
++
+ gym.register(
+     id="M20-Stair-V11.2-VariableTread-v0",
+     entry_point="isaaclab.envs:ManagerBasedRLEnv",
+@@ -283,3 +353,25 @@ gym.register(
+         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:DeeproboticsM20V12V9Teacher6DPPORunnerCfg",
+     },
+ )
++
++
++gym.register(
++    id="M20-Stair-V11.1-FlatPosture-v0",
++    entry_point="isaaclab.envs:ManagerBasedRLEnv",
++    disable_env_checker=True,
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.v111_flat_posture_env_cfg:DeeproboticsM20V111FlatPostureEnvCfg",
++        "rsl_rl_cfg_entry_point": f"{__name__}.v111_flat_posture_env_cfg:DeeproboticsM20V111FlatPosturePPORunnerCfg",
++    },
++)
++
++# Original-route correction with acquired flat posture and stair motion retained.
++gym.register(
++    id="M20-Stair-V11.1-RouteHold-v0",
++    entry_point="isaaclab.envs:ManagerBasedRLEnv",
++    disable_env_checker=True,
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.v111_route_hold_env_cfg:DeeproboticsM20V111RouteHoldEnvCfg",
++        "rsl_rl_cfg_entry_point": f"{__name__}.v111_route_hold_env_cfg:DeeproboticsM20V111RouteHoldPPORunnerCfg",
++    },
++)
+diff --git a/M20_perception_Lidar_rl/source/rl_training/rl_training/v111_recovery_runner.py b/M20_perception_Lidar_rl/source/rl_training/rl_training/v111_recovery_runner.py
+index bf5ef93..1252119 100755
+--- a/M20_perception_Lidar_rl/source/rl_training/rl_training/v111_recovery_runner.py
++++ b/M20_perception_Lidar_rl/source/rl_training/rl_training/v111_recovery_runner.py
+@@ -38,6 +38,8 @@ class RecoveryPPO(PPO):
+         obs, scene, phase, case_id = load_labeled_replay(replay_path, self.reference_sha256)
+         self.replay = torch.from_numpy(obs).to(self.device)
+         self.replay_scene = torch.from_numpy(scene).to(self.device)
++        self.replay_phase = torch.from_numpy(phase).to(self.device)
++        self.replay_case = torch.from_numpy(case_id).to(self.device)
+         # Balanced physical cases and policy phases prevent long flat rollouts
+         # from drowning out ascent retention or the C-to-motion transition.
+         groups = np.unique(np.stack((case_id, phase), axis=1), axis=0)
+diff --git a/README.md b/README.md
+index c3337be..1795895 100755
+--- a/README.md
++++ b/README.md
+@@ -1,68 +1,107 @@
+ # M20 Perception LiDAR RL
+ 
+-M20 感知运动训练代码与独立 MuJoCo 验证程序。原始基线和冻结参考仍是 **V11.1 `model_35300.pt`**，真实训练配置在 `interview_prep/params/`。本次另发布用户指定的 Recovery 候选 **`model_36500.pt`**，其真实配置、哈希和评测记录放在 `data/m20_recovery/published_36500/`。
++M20 轮足机器人感知运动策略的 Isaac Lab / RSL-RL 训练代码、MuJoCo 验证程序与真机部署工具。本次更新包含 **`M20-Stair-V11.1-FlatPosture-v0`** 的平地姿态修复、关节目标限位和相关训练/验证代码；EntrySequenceRepair 代码及既有发布内容保留。策略接口为 **63 维观测 → 16 维动作**，Critic 为 568 维。
++
++本次 logs 仅新增 `M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt`，连同该 run 的真实 `params/`、TensorBoard 训练与评估事件、观测清单和启动时 Git diff。对应 session 的状态、指标历史与小型评估报告位于 `artifacts/flat_posture_20261124_181441_2759441/`。其他 FlatPosture 权重不上传。
++
++原先已发布的 EntrySequenceRepair `50498`、`50598` 及其日志原样保留，没有追加该旧实验后来产生的 checkpoint。`interview_prep/` 继续完整分发，包含 `35300` 基线和 `49998` 冻结教师。准确上传时间、文件清单与 SHA-256 见 [PUBLISH_MANIFEST.json](PUBLISH_MANIFEST.json)。训练仍在运行，本次上传不会中断它。
+ 
+ ```text
+-M20_perception_Lidar_rl/       训练工程、任务定义、奖励、工具与历史设计文档
+-  interview_prep/             原始 35300、params、来源及 SHA-256
+-  data/m20_recovery/          标签回放、原模型基线、36500 配置与评测
+-  logs/rsl_rl/                仅发布用户指定的 model_36500.pt
+-  docs/                      改进分析与迁移说明
+-  deep_robotics_model/       官方机器人资源子模块
+-mujoco_validation/           验证程序、M20 资源、楼梯和平地地形
+-PUBLISH_MANIFEST.json         首次迁移快照的历史清单
+-PUBLISH_UPDATE_20261117.json  本次更新文件与权重校验记录
++M20_perception_Lidar_rl/
++  source/rl_training/       任务、观测、奖励、PPO 与其继承依赖
++  scripts/                  当前训练入口、预检查、行为评估和测试
++  logs/rsl_rl/M20-V11.1-EntrySequenceRepair/
++                            原先发布的 50498、50598 和日志
++  logs/rsl_rl/M20-V11.1-FlatPosture/
++                            本次指定的 56998、真实配置与训练日志
++  interview_prep/           基线、49998 教师、关联配置与说明
++  data/m20_recovery/         本阶段带标签回放及来源哈希
++  artifacts/entry_49998_repair_20261124/
++                            EntrySequenceRepair 基线证据
++  artifacts/flat_posture_repair_20261124/
++                            FlatPosture 教师行为轨迹与基线证据
++  artifacts/flat_posture_20261124_181441_2759441/
++                            指定 run 的状态、指标与评估日志
++  deep_robotics_model/      官方机器人资源子模块
++  docs/                     当前设计与相关历史说明
++  tools/                    可重复的快照导出脚本和过滤规则
++mujoco_validation/
++  deploy/mujoco_v135/       独立 MuJoCo 验证、M20 资源与地形
++  deploy_real/             真机导出、感知接入和关节保护工具源码
+ ```
+ 
+-`logs` 中只上传 `M20-V11.1-AscentRecovery/2026-11-17_14-59-02_063111_guarded_30000_from35300/model_36500.pt`，其他权重、TensorBoard 事件、运行日志、录像和临时输出继续过滤；本地历史文件保留。训练目录内旧版 README 和 V13.* 报告是历史资料，最新问答及要求见 [本次交接记录](CODEX_SESSION_HANDOFF_20261117.md)。`run_mujoco_v135.sh` 沿用原文件名，默认仍加载 `35300`。
++早期训练 logs、上述目录之外的 checkpoint、旧启动脚本和版本审计工具、无关 AMP 动作数据、重复部署包、虚拟环境、缓存、录像和临时输出不包含在发布中。所有本地历史文件保留。为保持当前任务的继承和导入完整，训练源码中的基础版本模块保留；未随本次分发的旧任务及旧模型路径不能直接使用。部署工具需配合实际 SDK、ROS 和硬件环境，完整机器安装包未包含。
+ 
+ ## 克隆与 MuJoCo 验证
+ 
+ ```bash
+-git clone --recurse-submodules https://github.com/frider635-beep/M20_Perception_Lidar_RL.git
+-cd M20_Perception_Lidar_RL
++git clone --recurse-submodules https://github.com/SkyeFeng110/M20_Perception_Lidar_rl.git
++cd M20_Perception_Lidar_rl
+ python3 -m venv .venv-mujoco
+ source .venv-mujoco/bin/activate
+ python -m pip install -r mujoco_validation/deploy/mujoco_v135/requirements.txt
+-cd mujoco_validation
+-./run_mujoco_v135.sh --viewer --keyboard \
+-  --checkpoint ../M20_perception_Lidar_rl/interview_prep/model_35300.pt \
++bash mujoco_validation/run_mujoco_v135.sh --viewer --keyboard \
++  --checkpoint M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt \
+   --stair-height 0.16 --tread-depth 0.26
+ ```
+ 
+-也可使用已安装这些依赖的环境。脚本默认使用当前环境的 `python3`；通过 `M20_PYTHON=/path/to/python` 显式指定。
++上面的命令明确加载本次发布的 `56998`。未指定 `--checkpoint` 时仍沿用 EntrySequenceRepair 默认模型；切换模型时应显式指定路径。运行配置自动读取该模型旁的 `params/env.yaml`、`params/agent.yaml`；迁移模型时应一同复制实际配置。
++
++按 Z 起立、C 进入运控；8/5 前后、4/6 左右、7/9 转向；R 复位站立、Backspace 复位趴卧、Esc 退出。行为评估是否改善须看真实测量，不能仅根据 checkpoint 编号或训练奖励判断。
+ 
+-Z 起立，C 进入运控，8/5 前进与后退，4/6 左右移动，7/9 转向。R 复位到起立后的静止状态，Backspace 复位到趴卧状态。到顶不会自行退出，Esc 退出。按住 8 的目标速度沿用键盘配置；测试 1 m/s 可使用固定指令 `--command 1 0 0`，此时不加 `--keyboard`。
++## 训练与继续训练
+ 
+-切换模型时指定 `--checkpoint PATH`，并把该模型真实的 `params/env.yaml`、`params/agent.yaml` 放在模型旁边；也可使用 `--config-dir PATH_TO_PARAMS`。不能用另一次训练的配置替代。
++训练环境需要另行安装 Isaac Sim、Isaac Lab 和 RSL-RL 5.x。本机记录的依赖版本见 [environment_versions_20261117.json](M20_perception_Lidar_rl/docs/environment_versions_20261117.json)。两个阶段的入口均保留；默认 2048 环境、追加 50000 更新、每 1000 更新做物理评估。
+ 
+-验证本次发布的 `36500`，从仓库根目录执行：
++FlatPosture 的步态保护教师为已发布的 EntrySequenceRepair `model_50498.pt`。上传版本在原基线目录没有教师副本时自动使用它，权重和 `params/` 均与原教师逐字节一致，不额外上传重复权重。新主机激活已安装好的 Isaac Lab 环境后，从仓库根目录检查：
+ 
+ ```bash
+-cd mujoco_validation
+-./run_mujoco_v135.sh --viewer --keyboard \
+-  --checkpoint ../M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-AscentRecovery/2026-11-17_14-59-02_063111_guarded_30000_from35300/model_36500.pt \
+-  --config-dir ../M20_perception_Lidar_rl/data/m20_recovery/published_36500/params \
+-  --stair-height 0.16 --tread-depth 0.26
++python -m pip install -e M20_perception_Lidar_rl/source/rl_training --no-deps
++cd M20_perception_Lidar_rl
++M20_PYTHON=python bash scripts/train_m20_v111_flat_posture_latest.sh --check-only
+ ```
+ 
+-指定配置保存在 `logs` 之外，因此上述 `--config-dir` 必须保留。该候选在 1200 次追加更新时保存，尚未通过全部保留/最终修复条件，也没有进行降噪训练；发布它不表示行为已修好。
++正式开始新的 FlatPosture 训练阶段：
+ 
+-## 训练工程与改进状态
++```bash
++M20_PYTHON=python M20_NUM_ENVS=2048 M20_TOTAL_UPDATES=50000 M20_EVAL_EVERY=1000 \
++  bash scripts/train_m20_v111_flat_posture_latest.sh
++```
++
++该命令自动选择已发布的 `56998` 初始化 Actor/Critic，并创建新的优化器。`M20_RESUME_CHECKPOINT` 是恢复优化器的精确续训模式，跨主机仍需迁移 checkpoint 内最优候选归档的绝对路径及其证据，不能仅通过 `--check-only` 判断完整恢复可用。设计和历史行为检查见 [FlatPosture 说明](M20_perception_Lidar_rl/docs/m20_flat_posture_latest_20261124.md)。
+ 
+-训练需要单独安装 Isaac Sim / Isaac Lab；它们不包含在仓库内。当前代码使用 RSL-RL 5.x，目标主机需核对实际版本与资源。说明见 [迁移文档](M20_perception_Lidar_rl/docs/MIGRATION.md)和[连续训练说明](M20_perception_Lidar_rl/docs/v111_guarded_training_20261117.md)。
++以下为保留的 EntrySequenceRepair 使用说明，其入口为 `scripts/train_m20_v111_sequence_from49998.sh`。
+ 
+-当前默认 **4096 环境、每 100 次 PPO 更新评测、目标追加 30000 更新**。有效行为验收失败会记录、保存权重并继续训练，同一策略和优化器不会在评测后重置。失败权重不会标为通过；运行异常、无效评测、资源不足和用户中断仍可停止。
++本阶段使用 `interview_prep/model_49998.pt` 作为冻结教师，已随完整 `interview_prep/` 一同上传，SHA-256 为 `ef0fafd826687d8de283b4c56842c7d15f345bbd98e30120ed4af692a1cc6589`。如需使用其他存放路径，可用 `M20_RECOVERY_TEACHER` 指向相同文件，并携带相邻的 `.config.json` 和其引用的执行配置。`interview_prep/params_49998/` 是经哈希关联的历史执行配置，不能称作原始训练配置。
+ 
+-在目标主机安装好训练依赖后，从仓库根目录进行 CPU 预检查，不启动 Isaac 或 PPO：
++激活目标主机的 Isaac Lab 环境后，仅检查依赖和基线：
+ 
+ ```bash
+ cd M20_perception_Lidar_rl
+-export M20_PYTHON=python3  # 使用目标主机已激活的 Isaac Lab 环境
+-bash scripts/train_m20_v111_guarded.sh --check-only \
+-  --total-updates 30000 --segment-updates 100 --num_envs 4096 \
+-  --baseline-results "$PWD/data/m20_recovery/baseline_v2/results.json" \
+-  --output "$PWD/artifacts/recovery_4096_preflight"
++M20_PYTHON=python3 bash scripts/train_m20_v111_sequence_from49998.sh --check-only
++```
++
++从本次已发布的 checkpoint 继续训练，入口会使用随仓库分发的冻结教师：
++
++```bash
++M20_PYTHON=python3 \
++M20_RESUME_CHECKPOINT=/absolute/path/to/M20-V11.1-EntrySequenceRepair/RUN/model_N.pt \
++M20_NUM_ENVS=2048 M20_TOTAL_UPDATES=10000 \
++  bash scripts/train_m20_v111_sequence_from49998.sh
++```
++
++跨机器续训还需迁移 checkpoint 内 `m20_step_retention.best_candidate` 的归档路径及对应证据；它们保留了原机绝对路径，`--check-only` 不会检查这一运行期恢复环节。原机继续训练不受此路径迁移影响。
++
++每次运行保存自己的真实 `params/`；不能用另一次训练的配置替代。具体奖励、样本、评估和未验证边界见 [本阶段说明](M20_perception_Lidar_rl/docs/m20_entry_sequence_flat_from49998_20261124.md)。
++
++## 更新发布快照
++
++在包含原始训练记录的工作仓库根目录执行：
++
++```bash
++python3 M20_perception_Lidar_rl/tools/export_entry_sequence_snapshot.py \
++  --published-root /absolute/path/to/existing_published_checkout \
++  --output /absolute/path/to/new_snapshot
+ ```
+ 
+-正式训练由用户手动启动，命令见连续训练说明。默认初始化/冻结教师仍是原始 `35300`，不会自动换成发布候选 `36500`。行为指标及限制见[下一步分析](M20_perception_Lidar_rl/docs/v111_continuous_learning_20261117.md)，后续声学方向见[降噪调研](M20_perception_Lidar_rl/docs/m20_stair_acoustic_noise_literature_20261117.md)。
++导出脚本复制当前文件，限制权重目录并生成带哈希的清单；不会删除本地文件或停止训练。此前已发布的 EntrySequenceRepair 日志从 `--published-root` 原样保留。官方机器人资源以 `.gitmodules` 所列子模块及清单中的固定提交分发。上传更新继续接在既有 GitHub 提交之后，不携带原训练仓库的 Git 历史。
+diff --git a/mujoco_validation/deploy/mujoco_v135/README.md b/mujoco_validation/deploy/mujoco_v135/README.md
+index 576d46d..15a7225 100755
+--- a/mujoco_validation/deploy/mujoco_v135/README.md
++++ b/mujoco_validation/deploy/mujoco_v135/README.md
+@@ -1,3 +1,5 @@
++> 2026-11-25 发布更新：新增 FlatPosture `model_56998.pt` 和该 run 的真实配置。验证它请显式传 `--checkpoint M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt`（从仓库根目录启动）。默认仍使用 EntrySequenceRepair 模型。以下为历史说明，当前完整命令见 [仓库 README](../../../README.md)。
++
+ # M20 MuJoCo 验证
+ 
+ 本目录只包含 MuJoCo 验证程序、机器人资源、地形和测试。训练源码留在同级 `M20_perception_Lidar_rl/`。程序名沿用 v135，支持符合原生 63D→16D 接口的所选模型。
+@@ -23,6 +25,10 @@ M20_perception_Lidar_rl/interview_prep/model_35300.pt
+ # 键盘操作：Z 起立，C 运控；默认持续运行，Esc 退出。
+ ./run_mujoco_v135.sh --viewer --keyboard
+ 
++# 真机满杆瞬态对照：8 键直接给到 1.0 m/s，松键直接归零。
++./run_mujoco_v135.sh --viewer --keyboard --teleop-direct \
++  --terrain-xml deploy/mujoco_v135/terrains/flat.xml
++
+ # 无窗口运行，未达到终点时返回非零。
+ ./run_mujoco_v135.sh --headless --duration 30 --require-goal
+ 
+@@ -50,7 +56,7 @@ M20_perception_Lidar_rl/interview_prep/model_35300.pt
+ | C | 起立完成后进入运控；起立过程中按 C 会等待起立完成后接管；趴卧时按 C 不直接接管 |
+ | R | 复位至最近一次完成 Z 起立时的位置和站立姿态，清零速度、指令及策略历史，保持静止等待 C；还未完成过起立时，恢复出生位置的默认站立状态 |
+ | Backspace | 回到出生位置、初始趴卧状态，清除运控状态，重新等待 Z |
+-| 8 / 5 | 运控模式下前进 / 后退 |
++| 8 / 5 | 运控模式下前进 1.0 m/s / 后退 0.49 m/s；后退档按当前映射中原始 −0.49 输入未放大的行为设置 |
+ | 4 / 6 | 运控模式下左移 / 右移 |
+ | 7 / 9 | 运控模式下左转 / 右转 |
+ | X | 在当前位置平滑趴下 |
+@@ -58,6 +64,12 @@ M20_perception_Lidar_rl/interview_prep/model_35300.pt
+ 
+ 支持主键盘数字行和数字小键盘；终端输入使用数字小键盘时请开启 NumLock。原 W/S/A/D/Q/E 不再发送移动指令。窗口失去焦点时停止键盘运动指令。未使用 `--keyboard` 时，C 后执行 `--command vx vy wz` 的固定指令。鼠标可旋转、缩放跟随视角。
+ 
++默认 `--control-profile current` 对齐目前真机：8 键直接给 1.0 m/s，侧移限幅 0.5 m/s、偏航限幅 0.6 rad/s，松键归零。**0.7 m/s 是部分推杆测试档，不再代表 8 键满杆。**
++
++`--control-profile flat-start` 显式测试尚未上机的候选补丁：前向普通加速 1.5 m/s²、减速 3.333 m/s²，反向先过零；满杆从 0 到 1.0 m/s 约 0.67 秒。侧移、偏航保持直接给定。真机完成同一补丁的更新后才应将这个模式视为实际部署路径。
++
++`--teleop-direct` 可强制键盘直接给速；`--command-direct` 对非键盘固定命令作同样覆盖。非键盘模式也遵守选择的控制版本。零命令停轮及处理后历史动作与真机一致。启动日志和 `manifest.json` 记录控制版本及命令方式；这些对齐不模拟真实执行延迟与电机误差。
++
+ 到达楼梯顶端仅记录 `[GOAL]`，**不会自动退出**，也不会自动改变当前指令。窗口模式默认无限时；如需限时可显式传入 `--duration 秒数`。跌倒后窗口也保留，可按 R 或 Backspace 恢复。批量评估需要到顶即退出时，显式使用 `--stop-at-goal`；无窗口模式默认按指定时长运行，遇跌倒停止，可用 `--no-stop-on-fall` 更改。
+ 
+ 默认使用本机 `~/miniconda3/envs/isaaclab-5.1/bin/python`。更换解释器：
+diff --git a/mujoco_validation/deploy/mujoco_v135/checkpoint_config.py b/mujoco_validation/deploy/mujoco_v135/checkpoint_config.py
+index f1aa20b..4ecee78 100755
+--- a/mujoco_validation/deploy/mujoco_v135/checkpoint_config.py
++++ b/mujoco_validation/deploy/mujoco_v135/checkpoint_config.py
+@@ -1,6 +1,7 @@
+ """Find saved configuration for original or relocated checkpoints without guessing."""
+ from pathlib import Path
+ import hashlib
++import json
+ 
+ 
+ def digest(path):
+@@ -22,6 +23,16 @@ def resolve_configs(checkpoint, config_dir=None, *, search_roots=None):
+     checkpoint = Path(checkpoint).resolve(strict=True)
+     if config_dir is not None:
+         return require_configs(Path(config_dir).resolve()), "explicit", None
++    association = checkpoint.with_suffix('.config.json')
++    if association.is_file():
++        record = json.loads(association.read_text())
++        if record.get('schema_version') != 1 or record.get('checkpoint_sha256') != digest(checkpoint):
++            raise ValueError('Checkpoint/config association identity mismatch')
++        directory = require_configs((checkpoint.parent / record['config_dir']).resolve())
++        if any(digest(directory / name) != record['config_sha256'].get(name)
++               for name in ('env.yaml', 'agent.yaml')):
++            raise ValueError('Associated execution configuration changed')
++        return directory, 'verified_association', checkpoint
+     adjacent = checkpoint.parent / "params"
+     if adjacent.exists():
+         return require_configs(adjacent), "adjacent", None
+diff --git a/mujoco_validation/deploy/mujoco_v135/key_bindings.py b/mujoco_validation/deploy/mujoco_v135/key_bindings.py
+index b6b575d..e38b89d 100755
+--- a/mujoco_validation/deploy/mujoco_v135/key_bindings.py
++++ b/mujoco_validation/deploy/mujoco_v135/key_bindings.py
+@@ -1,8 +1,9 @@
+ """Shared movement bindings for the viewer, terminal and X11 key polling."""
+ 
+ MOTION_COMMANDS = {
+-    "8": (.7, 0., 0.),
+-    "5": (-.7, 0., 0.),
++    "8": (1., 0., 0.),
++    # MapForwardInput leaves the reverse raw axis unchanged (unlike forward).
++    "5": (-.49, 0., 0.),
+     "4": (0., .5, 0.),
+     "6": (0., -.5, 0.),
+     "7": (0., 0., .6),
+diff --git a/mujoco_validation/deploy/mujoco_v135/policy.py b/mujoco_validation/deploy/mujoco_v135/policy.py
+index 19c507a..18ae807 100755
+--- a/mujoco_validation/deploy/mujoco_v135/policy.py
++++ b/mujoco_validation/deploy/mujoco_v135/policy.py
+@@ -37,12 +37,20 @@ class SavedPolicy:
+         semantics = from_checkpoint(self.path, {"joint_names": JOINT_NAMES}, config_path=self.config_path)
+         self.nominal = np.asarray(semantics["default_joint_pos"], dtype=np.float64)
+         self.action_scale = np.asarray(semantics["action_scale"], dtype=np.float64)
++        limits = semantics["leg_target_limits"]
++        self.leg_target_limits = None if limits is None else np.asarray(limits, dtype=np.float64)
++        self.limited_leg_action = self.cfg["actions"]["joint_pos"]["class_type"].endswith(":LimitedLegPositionAction")
++        if self.limited_leg_action and self.leg_target_limits is None:
++            raise ValueError("LimitedLegPositionAction requires saved per-joint target bounds")
+         self.period = float(self.cfg["sim"]["dt"]) * int(self.cfg["decimation"])
+         self.clip_actions = float(self.agent["clip_actions"])
+         self.perception = self.cfg["v11_perception"]
+         if self.perception["feature_contract"] != "v11_signed_edges_v2":
+             raise ValueError("Expected v11_signed_edges_v2; refusing a guessed perception ABI")
+         self.obs_cfg = self.cfg["observations"]["policy"]
++        if (self.limited_leg_action
++                and self.obs_cfg["actions"]["func"].split(":")[-1] != "executed_last_action"):
++            raise ValueError("Limited leg targets require executed_last_action observations")
+         expected = {"base_ang_vel": "base_ang_vel", "projected_gravity": "projected_gravity",
+                     "velocity_commands": "generated_commands", "joint_pos": "joint_pos_rel_without_wheel",
+                     "joint_vel": "joint_vel_rel", "actions": "last_action", "height_scan": "v11_actor_perception"}
+@@ -51,7 +59,12 @@ class SavedPolicy:
+             raise ValueError(f"Unexpected observation order: {active}")
+         for key, function in expected.items():
+             term = self.obs_cfg[key]
+-            if term["func"].split(":")[-1] != function or term["history_length"] != 0 or term["modifiers"]:
++            functions = {function}
++            if key == "actions":
++                # Deployment supplies history after leg target bounds and
++                # the zero-command wheel stop for this saved convention.
++                functions.add("executed_last_action")
++            if term["func"].split(":")[-1] not in functions or term["history_length"] != 0 or term["modifiers"]:
+                 raise ValueError(f"Unsupported observation term: {key}")
+         if self.obs_cfg["base_lin_vel"] is not None:
+             raise ValueError("Actual base linear velocity must not enter the 63D actor")
+@@ -92,9 +105,35 @@ class SavedPolicy:
+                              feature_contract=self.perception["feature_contract"],
+                              joint_names=JOINT_NAMES, default_joint_pos=self.nominal.tolist(),
+                              action_scale=self.action_scale.tolist(), policy_period=self.period,
++                             leg_target_limits_rad=limits,
++                             action_history_function=self.obs_cfg["actions"]["func"].split(":")[-1],
+                              kp=self.kp.tolist(), kd=self.kd.tolist(), effort_limit=self.effort.tolist(),
+                              armature=self.armature.tolist(), critic_used=False)
+ 
++    def position_target(self, action):
++        target = self.nominal + self.action_scale * action
++        if self.leg_target_limits is not None:
++            target[:12] = np.clip(target[:12], self.leg_target_limits[:, 0], self.leg_target_limits[:, 1])
++        return target
++
++    def executed_action(self, action, command=None):
++        """Normalize bounded leg targets without changing in-range actions."""
++        result = np.array(action, copy=True)
++        if self.leg_target_limits is not None:
++            requested = self.nominal[:12] + self.action_scale[:12] * result[:12]
++            target = np.clip(requested, self.leg_target_limits[:, 0], self.leg_target_limits[:, 1])
++            result[:12] = np.where(requested != target,
++                (target - self.nominal[:12]) / self.action_scale[:12], result[:12])
++        if (self.metadata["action_history_function"] == "executed_last_action"
++                and command is not None and np.linalg.norm(command) < 0.08):
++            result[12:] = 0.
++        return result
++
++    def history_action(self, action):
++        if self.metadata["action_history_function"] == "executed_last_action":
++            return self.executed_action(action)
++        return np.array(action, copy=True)
++
+     def observation(self, omega, gravity, command, qpos, qvel, previous, feature):
+         relative = qpos - self.nominal
+         relative[12:] = 0.
+diff --git a/mujoco_validation/deploy/mujoco_v135/run.py b/mujoco_validation/deploy/mujoco_v135/run.py
+index 9aeb214..e77941d 100755
+--- a/mujoco_validation/deploy/mujoco_v135/run.py
++++ b/mujoco_validation/deploy/mujoco_v135/run.py
+@@ -32,6 +32,10 @@ from interaction import Interaction, PRONE_JOINT_POS
+ from acoustic import AcousticRecorder
+ 
+ def default_checkpoint():
++    selected = REPO.parent / "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair"
++    checkpoints = list(selected.glob("*/model_*.pt"))
++    if checkpoints:
++        return max(checkpoints, key=lambda p: (int(p.stem.removeprefix('model_')), p.parent.name))
+     candidates = [REPO.parent / "M20_perception_Lidar_rl/interview_prep/model_35300.pt",
+                   REPO / "interview_prep/model_35300.pt"]
+     return next((p for p in candidates if p.is_file()), candidates[0])
+@@ -113,7 +117,7 @@ class Robot:
+     def control(self, action, mode="policy"):
+         s, d = self.saved, self.data
+         q, v = d.qpos[self.qids], d.qvel[self.vids]
+-        target = s.nominal + s.action_scale * action
++        target = s.position_target(action)
+         vtarget = np.r_[np.zeros(12), s.action_scale[12:] * action[12:]]
+         torque = s.kp * (target-q) + s.kd * (vtarget-v)
+         if mode == "damping":
+@@ -160,7 +164,12 @@ def parse_args():
+     display.add_argument("--headless", action="store_true", help="No interactive window; can still record --video")
+     display.add_argument("--viewer", action="store_true", help="Open the interactive window (default)")
+     p.add_argument("--keyboard", action="store_true", help="Hold 8/5/4/6 to move, 7/9 to turn; starts at zero command")
++    p.add_argument("--teleop-direct", action="store_true",
++                   help="Force direct keyboard commands, including 8 -> 1.0 m/s; bypass the candidate flat-start command filter")
++    p.add_argument("--control-profile", choices=('current', 'flat-start'), default='current',
++                   help="current: match the currently deployed direct joystick; flat-start: candidate forward slew patch (not yet deployed)")
+     p.add_argument("--command", type=float, nargs=3, default=(.5, 0., 0.), metavar=("VX", "VY", "WZ"))
++    p.add_argument("--command-direct", action="store_true", help="Raw fixed-command stress test; bypass normal forward slew (non-keyboard only)")
+     p.add_argument("--duration", type=float, default=None,
+                    help="Total simulated seconds; viewer default is unlimited (0), headless default is 30")
+     p.add_argument("--settle-seconds", type=float, default=1.)
+@@ -193,6 +202,10 @@ def parse_args():
+         p.error("Headless runs require duration>settle-seconds>=0")
+     if args.headless and args.keyboard:
+         p.error("--keyboard requires the interactive window")
++    if args.teleop_direct and not args.keyboard:
++        p.error("--teleop-direct requires --keyboard")
++    if args.command_direct and args.keyboard:
++        p.error("--command-direct is for non-keyboard tests; use --teleop-direct for keyboard")
+     return args
+ 
+ 
+@@ -203,7 +216,7 @@ def open_displays(args, model, data):
+     camera.azimuth, camera.elevation, camera.distance = 135., -25., 4.
+     try:
+         if not args.headless:
+-            keyboard = teleop.TeleopKeyboard()
++            keyboard = teleop.TeleopKeyboard(direct=args.teleop_direct or args.control_profile == 'current')
+             resources.callback(keyboard.close)
+             viewer, threads = teleop.launch_viewer(model, data, keyboard.on_keycode)
+             resources.callback(teleop.close_viewer, viewer, threads)
+@@ -260,6 +273,12 @@ def run(args, *, event_source=None):
+                 "proprioception_noise": False, "actuator_delay_steps": 0,
+                 "simulator": f"MuJoCo {mujoco.__version__}", "seed": args.seed,
+                 "command": list(args.command), "keyboard": args.keyboard,
++                "control_profile": args.control_profile,
++                "teleop_command_mode": ("direct" if args.teleop_direct or args.control_profile == 'current' else "forward_slew") if args.keyboard else None,
++                "forward_acceleration_m_s2": 1.5, "forward_deceleration_m_s2": 10./3.,
++                "fixed_command_mode": "direct" if args.command_direct or args.control_profile == 'current' else "forward_slew",
++                "zero_command_wheel_stop": True,
++                "keyboard_commands": teleop.TELEOP_VELOCITIES if args.keyboard else None,
+                 "wall_alpha": args.wall_alpha, "duration": args.duration, "settle_seconds": args.settle_seconds,
+                 "interactive": session.interactive, "stop_at_goal": args.stop_at_goal,
+                 "stop_on_fall": args.stop_on_fall,
+@@ -274,6 +293,10 @@ def run(args, *, event_source=None):
+     print("[OUTPUT] " + str(output), flush=True)
+     if viewer:
+         print("[KEYS] Z stand, C policy, R reset to stationary stand, Backspace reset prone; 8/5 forward/back, 4/6 lateral, 7/9 yaw (--keyboard); X lie, Esc quit", flush=True)
++        if args.keyboard:
++            mode = "direct (current robot)" if args.teleop_direct or args.control_profile == 'current' else "candidate patch: forward acceleration 1.5 m/s^2, deceleration 3.333 m/s^2; side/yaw direct"
++            print(f"[TELEOP] 8 forward=1.0 m/s, 5 backward=-0.49 m/s; {mode}", flush=True)
++    filtered_forward = 0.
+     try:
+         for step in count():
+             if args.duration > 0 and step >= math.ceil(args.duration / saved.period):
+@@ -299,8 +322,16 @@ def run(args, *, event_source=None):
+             active = session.mode == "policy"
+             if not active:
+                 command = np.zeros(3, dtype=np.float32)
++                filtered_forward = 0.
++            elif not args.keyboard and not args.command_direct and args.control_profile == 'flat-start':
++                filtered_forward = float(teleop.forward_slew(filtered_forward, command[0], saved.period,
++                    where=np.where, clip=np.clip))
++                command = command.copy(); command[0] = filtered_forward
+             obs = robot.observe(command, session.previous)
+-            action = session.action(obs)
++            action = saved.executed_action(session.action(obs), command)
++            if active and np.linalg.norm(command) < .08:
++                action = action.copy()
++                action[12:] = 0.
+             acoustic.policy_sample(action, active=active, moving=bool(np.linalg.norm(command) > .1))
+             target = session.pose_target()
+             support, other_contact = robot.contacts()
+@@ -320,7 +351,7 @@ def run(args, *, event_source=None):
+                 if not np.isfinite(d.qpos).all() or not np.isfinite(d.qvel).all():
+                     raise RuntimeError("MuJoCo produced a nonfinite physical state")
+             mujoco.mj_forward(m, d)
+-            session.previous = action.copy()
++            session.previous = saved.history_action(action) if active else np.zeros(16)
+             steps_done += 1
+             pos = d.xpos[robot.base_id]
+             max_x, max_height = max(max_x, float(pos[0])), max(max_height, float(pos[2]))
+diff --git a/mujoco_validation/deploy/mujoco_v135/saved_config.py b/mujoco_validation/deploy/mujoco_v135/saved_config.py
+index 49c979d..f0a03f1 100755
+--- a/mujoco_validation/deploy/mujoco_v135/saved_config.py
++++ b/mujoco_validation/deploy/mujoco_v135/saved_config.py
+@@ -24,6 +24,19 @@ def resolve(value,names,label):
+     if not all(math.isfinite(v) for v in result):raise ValueError(f'{label}: nonfinite')
+     return result
+ 
++def resolve_ranges(value,names,label):
++    if value is None:return None
++    if not isinstance(value,dict):raise ValueError(f'{label}: unsupported mapping')
++    result=[]
++    for name in names:
++        matches=[v for pattern,v in value.items() if re.fullmatch(pattern,name)]
++        if len(matches)!=1:raise ValueError(f'{label}: {name} must match exactly one rule, got {matches}')
++        bounds=[float(x) for x in matches[0]]
++        if len(bounds)!=2 or not all(math.isfinite(x) for x in bounds) or bounds[0]>=bounds[1]:
++            raise ValueError(f'{label}: invalid range for {name}: {bounds}')
++        result.append(bounds)
++    return result
++
+ def from_checkpoint(checkpoint,base,*,config_path=None):
+     path=Path(config_path) if config_path is not None else Path(checkpoint).resolve().parent/'params/env.yaml'
+     if not path.is_file():raise ValueError(f'M20 export requires saved training config: {path}; refusing guessed joint semantics')
+@@ -40,6 +53,7 @@ def from_checkpoint(checkpoint,base,*,config_path=None):
+     result=dict(base)
+     result['default_joint_pos']=resolve(cfg['scene']['robot']['init_state']['joint_pos'],names,'default_joint_pos')
+     result['action_scale']=resolve(pos['scale'],pos['joint_names'],'position scale')+resolve(vel['scale'],vel['joint_names'],'velocity scale')
++    result['leg_target_limits']=resolve_ranges(pos.get('clip'),names[:12],'leg position clip')
+     if any(x<=0 for x in result['action_scale']):raise ValueError('Action scales must be positive')
+     if any(result['default_joint_pos'][12:]):raise ValueError('Wheel position observation must have zero nominal')
+     result['contract_metadata']={'m20_joint_contract':'m20_saved_joint_semantics_v1','m20_training_config_sha256':hashlib.sha256(raw).hexdigest(),'m20_training_config_path':str(path)}
+diff --git a/mujoco_validation/deploy/mujoco_v135/teleop.py b/mujoco_validation/deploy/mujoco_v135/teleop.py
+index 2784cbf..b14f2f1 100755
+--- a/mujoco_validation/deploy/mujoco_v135/teleop.py
++++ b/mujoco_validation/deploy/mujoco_v135/teleop.py
+@@ -11,6 +11,7 @@ import numpy as np
+ import mujoco
+ from keyboard_input import X11WindowKeys
+ from key_bindings import MOTION_COMMANDS, glfw_motion_key
++from command_filter import forward_slew
+ POLICY_DT = .02
+ TELEOP_KEY_TIMEOUT = .5
+ TELEOP_VELOCITIES = MOTION_COMMANDS
+@@ -21,8 +22,12 @@ TELEOP_STOP_TIME = .3
+ class TeleopKeyboard:
+     """Share MuJoCo window and terminal key presses with the physics loop."""
+ 
+-    def __init__(self) -> None:
++    def __init__(self, *, direct: bool = False, commands=None, forward_contract: bool = True) -> None:
+         self._lock = threading.Lock()
++        self._direct = direct
++        self._velocities = dict(TELEOP_VELOCITIES if commands is None else commands)
++        self._limits = np.max(np.abs(list(self._velocities.values())), axis=0)
++        self._forward_contract = forward_contract
+         self._events: deque[str] = deque()
+         self._last_motion_press: dict[str, float] = {}
+         self._window_keys = X11WindowKeys.open()
+@@ -50,7 +55,7 @@ class TeleopKeyboard:
+     def on_char(self, key: str) -> None:
+         key = "escape" if key == "\x1b" else "reset" if key in {"\x7f", "\x08"} else key.lower()
+         with self._lock:
+-            if key in TELEOP_VELOCITIES:
++            if key in self._velocities:
+                 if not self._terminal_physical:
+                     self._last_motion_press[key] = time.monotonic()
+             elif key in {"z", "c", "x", "r", "h", "escape", "reset"}:
+@@ -102,14 +107,25 @@ class TeleopKeyboard:
+                 pressed = set(self._last_motion_press)
+             target = np.zeros(3, dtype=np.float64)
+             for key in pressed:
+-                target += TELEOP_VELOCITIES[key]
+-            target = np.clip(target, -TELEOP_LIMITS, TELEOP_LIMITS)
++                target += self._velocities[key]
++            target = np.clip(target, -self._limits, self._limits)
++            if self._direct:
++                # Match unsmoothed joystick commands for transient diagnostics.
++                self._command[:] = target
++                return self._command.astype(np.float32)
+             # Reverse through zero first. Each call is one policy tick, so a
+             # paused viewer or slow render cannot jump straight to full speed.
+             braking = (target * self._command < 0) | (target == 0)
+             goal = np.where(braking, 0., target)
+-            rate = TELEOP_LIMITS / np.where(braking, TELEOP_STOP_TIME, TELEOP_RISE_TIME)
++            rate = self._limits / np.where(braking, TELEOP_STOP_TIME, TELEOP_RISE_TIME)
++            forward = forward_slew(self._command[0], target[0], POLICY_DT,
++                                   where=np.where, clip=np.clip)
+             self._command += np.clip(goal - self._command, -rate * POLICY_DT, rate * POLICY_DT)
++            if self._forward_contract:
++                self._command[0] = forward
++                # Current robot maps lateral/yaw requests directly. Only the
++                # normal forward channel has the new acceleration limiter.
++                self._command[1:] = target[1:]
+             return self._command.astype(np.float32)
+ 
+ class TerminalInput:
+diff --git a/mujoco_validation/deploy/mujoco_v135/test_contract.py b/mujoco_validation/deploy/mujoco_v135/test_contract.py
+index 27e9369..0844020 100755
+--- a/mujoco_validation/deploy/mujoco_v135/test_contract.py
++++ b/mujoco_validation/deploy/mujoco_v135/test_contract.py
+@@ -116,8 +116,7 @@ def test_real_relocated_v111_policy_uses_original_semantics(policy, tmp_path):
+     import yaml
+     import shutil
+     from saved_config import ConfigLoader
+-    workspace = HERE.parents[2]
+-    copied = workspace / "M20_perception_Lidar_rl/interview_prep/model_35300.pt"
++    copied = default_checkpoint()
+     params = copied.parent / "params"
+     moved = tmp_path / "model_35300.pt"
+     shutil.copy2(copied, moved)
+@@ -125,7 +124,7 @@ def test_real_relocated_v111_policy_uses_original_semantics(policy, tmp_path):
+     explicit = SavedPolicy(moved, params)
+     assert relocated.metadata["config_source_checkpoint"] is None
+     assert relocated.metadata["config_resolution"] == "adjacent"
+-    assert relocated.iteration == explicit.iteration == 35300
++    assert relocated.iteration == explicit.iteration == policy.iteration
+     # Read the selected YAML independently; ensure the semantics helper uses
+     # that file too, rather than still looking beside the moved checkpoint.
+     cfg = yaml.load((params / "env.yaml").read_text(), Loader=ConfigLoader)
+@@ -138,6 +137,45 @@ def test_real_relocated_v111_policy_uses_original_semantics(policy, tmp_path):
+     np.testing.assert_array_equal(explicit(obs), policy(obs))
+ 
+ 
++def test_saved_named_leg_target_limits_match_training_and_mujoCo_execution(policy, tmp_path):
++    import shutil
++    import yaml
++    from saved_config import ConfigLoader
++
++    checkpoint = tmp_path / "limited" / "model.pt"
++    params = checkpoint.parent / "params"
++    params.mkdir(parents=True)
++    shutil.copy2(policy.path, checkpoint)
++    for name in ("env.yaml", "agent.yaml"):
++        shutil.copy2(policy.path.parent / "params" / name, params / name)
++    env_path = params / "env.yaml"
++    config = yaml.load(env_path.read_text(), Loader=ConfigLoader)
++    pos = config["actions"]["joint_pos"]
++    pos["class_type"] = "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_joint_limits:LimitedLegPositionAction"
++    names = pos["joint_names"]
++    lower = [-.406, -2.236, -2.729, -.581, -2.236, -2.729,
++             -.406, -2.533, -2.712, -.581, -2.533, -2.712]
++    upper = [.581, 2.533, 2.712, .406, 2.533, 2.712,
++             .581, 2.236, 2.729, .406, 2.236, 2.729]
++    pos["clip"] = {name: [lo, hi] for name, lo, hi in zip(names, lower, upper)}
++    config['observations']['policy']['actions']['func'] = (
++        'rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_joint_limits:executed_last_action')
++
++    class Dumper(yaml.SafeDumper):
++        pass
++
++    Dumper.add_representer(tuple, lambda dumper, value: dumper.represent_list(value))
++    env_path.write_text(yaml.dump(config, Dumper=Dumper, sort_keys=False))
++    loaded = SavedPolicy(checkpoint)
++    raw = np.full(16, 20., dtype=np.float64)
++    executed = loaded.executed_action(raw)
++    target = loaded.position_target(executed)
++    np.testing.assert_allclose(target[:12], upper, atol=1e-9)
++    np.testing.assert_array_equal(target[12:], loaded.nominal[12:] + loaded.action_scale[12:] * raw[12:])
++    assert loaded.limited_leg_action
++    assert loaded.metadata["leg_target_limits_rad"] == [[lo, hi] for lo, hi in zip(lower, upper)]
++
++
+ def test_incompatible_actor_is_rejected(policy, tmp_path):
+     import shutil
+     params = tmp_path / "params"
+@@ -165,6 +203,31 @@ def test_observation_order_scaling_and_wheel_mask(policy):
+     np.testing.assert_allclose(obs[57:], [1., -.16, .5, 1., -.16, .8])
+ 
+ 
++@pytest.mark.parametrize("function,accepted", [("executed_last_action", True), ("unknown_history", False)])
++def test_executed_action_history_checkpoint_contract(policy, tmp_path, function, accepted):
++    import shutil
++    params = tmp_path / "params"
++    params.mkdir()
++    for name in ("env.yaml", "agent.yaml"):
++        shutil.copy2(policy.config_path.parent / name, params / name)
++    config = params / "env.yaml"
++    history = "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_flat_start:" + function
++    config.write_text(config.read_text().replace(policy.obs_cfg["actions"]["func"], history))
++    target = tmp_path / "model.pt"
++    shutil.copy2(policy.path, target)
++    if not accepted:
++        with pytest.raises(ValueError, match="Unsupported observation term: actions"):
++            SavedPolicy(target)
++        return
++    loaded = SavedPolicy(target)
++    previous = np.r_[np.linspace(-.2, .2, 12), np.zeros(4)]
++    obs = loaded.observation(np.zeros(3), np.array([0., 0., -1.]), np.zeros(3),
++        loaded.nominal.copy(), np.zeros(16), previous, np.zeros(6))
++    assert obs.shape == (63,) and loaded.metadata["action_history_function"] == function
++    np.testing.assert_allclose(obs[41:57], previous, atol=1.e-7)
++    np.testing.assert_array_equal(loaded(obs), policy(obs))
++
++
+ def test_promotion_and_command_gate(policy):
+     r = dict(valid=np.array([True, True]), riser_height=np.array([.16, .16]), riser_distance=np.array([-.1, .2]))
+     np.testing.assert_allclose(actor_feature(r, .5, policy.perception), [1., .16, .2, 0., 0., 0.])

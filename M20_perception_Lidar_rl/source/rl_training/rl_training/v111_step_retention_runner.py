@@ -7,7 +7,7 @@ import torch
 from tensordict import TensorDict
 
 from .step_retention import successful_support_loss, local_mean_drift, moving_common_drive_loss
-from .targeted_reference import mirror_action, mirror_observation, straight_mask, equivariance_loss
+from .targeted_reference import mirror_action, mirror_observation, straight_mask, masked_equivariance_loss
 from .v111_targeted_v2_runner import TargetedPPOV2
 
 
@@ -49,6 +49,13 @@ class StepRetentionPPO(TargetedPPOV2):
         self.success_members = [mask.nonzero(as_tuple=True)[0] for mask in groups if mask.any()]
         if not self.success_members:
             raise ValueError('Step retention needs successful moving ascent trajectories')
+        member_sizes = [len(members) for members in self.success_members]
+        max_members = max(member_sizes)
+        self.success_member_table = torch.stack([
+            torch.cat((members, members[:1].expand(max_members-len(members))))
+            for members in self.success_members
+        ])
+        self.success_member_sizes = torch.tensor(member_sizes, device=self.device)
         self.success_anchor_weight = float(success_anchor_weight)
         self.local_anchor_weight = float(local_anchor_weight)
         self.behavior_anchor_multiplier = 1.
@@ -76,10 +83,9 @@ class StepRetentionPPO(TargetedPPOV2):
     def extra_anchor_loss(self):
         # Preserve each successful physical case equally, regardless of duration.
         choices = torch.randint(len(self.success_members), (self.anchor_batch_size,), device=self.device)
-        indices = torch.empty_like(choices)
-        for case, members in enumerate(self.success_members):
-            mask = choices == case
-            indices[mask] = members[torch.randint(len(members), (int(mask.sum()),), device=self.device)]
+        offsets = (torch.rand(self.anchor_batch_size, device=self.device)
+                   *self.success_member_sizes[choices]).long()
+        indices = self.success_member_table[choices, offsets]
         obs = TensorDict({'policy': self.replay[indices]}, batch_size=[len(indices)])
         with torch.no_grad():
             target = self.teacher(obs)
@@ -97,13 +103,11 @@ class StepRetentionPPO(TargetedPPOV2):
                 self.actor(self._local_obs), self._local_target, self._local_std)
             x = self._local_obs['policy']
             straight = straight_mask(x)
-            if straight.any():
-                direct = self.actor(TensorDict({'policy': x[straight]}, batch_size=[int(straight.sum())]))
-                reflected = self.actor(TensorDict({'policy': mirror_observation(x[straight])},
-                                                  batch_size=[int(straight.sum())]))
-                local = local+self.symmetry_weight*equivariance_loss(direct, reflected)
-        self.success_losses.append(float(success.detach()))
-        self.local_losses.append(float(local.detach()))
+            direct = self.actor(self._local_obs)
+            reflected = self.actor(TensorDict({'policy': mirror_observation(x)}, batch_size=[len(x)]))
+            local = local+self.symmetry_weight*masked_equivariance_loss(direct, reflected, straight)
+        self.success_losses.append(success.detach())
+        self.local_losses.append(local.detach())
         return super().extra_anchor_loss()+success+local
 
     def update(self):
@@ -120,12 +124,12 @@ class StepRetentionPPO(TargetedPPOV2):
         try:
             losses = super().update()
             with torch.no_grad():
-                losses['local_mean_kl_after_update'] = float(local_mean_drift(
-                    self.actor(self._local_obs), self._local_target, self._local_std))
+                losses['local_mean_kl_after_update'] = local_mean_drift(
+                    self.actor(self._local_obs), self._local_target, self._local_std).detach()
         finally:
             self._local_obs = None
-        losses['successful_support_anchor'] = sum(self.success_losses)/max(1, len(self.success_losses))
-        losses['local_mean_anchor'] = sum(self.local_losses)/max(1, len(self.local_losses))
+        losses['successful_support_anchor'] = torch.stack(self.success_losses).mean() if self.success_losses else torch.zeros((), device=self.device)
+        losses['local_mean_anchor'] = torch.stack(self.local_losses).mean() if self.local_losses else torch.zeros((), device=self.device)
         losses['behavior_anchor_multiplier'] = self.behavior_anchor_multiplier
         return losses
 

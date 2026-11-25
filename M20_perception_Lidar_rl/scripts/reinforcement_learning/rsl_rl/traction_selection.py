@@ -31,6 +31,12 @@ def validated_results(path, checkpoint=None):
         for key in ('rear_slip_p95', 'rear_slip_mean', 'steady_tracking_ratio'):
             if row.get(key) is not None and not math.isfinite(row[key]):
                 raise ValueError('Nonfinite traction metric: '+key)
+        if row['terrain'] == 'ascent' and row.get('early_ascent_slip_p95') is not None:
+            for key in ('early_ascent_slip_p95', 'early_ascent_slip_mean'):
+                if not isinstance(row.get(key), (int, float)) or not math.isfinite(row[key]):
+                    raise ValueError('Invalid early-tread traction metric: '+key)
+            if row.get('early_loaded_contact_samples', 0) < 1:
+                raise ValueError('No loaded contact samples on the first three treads')
     return rows, manifest
 
 
@@ -62,6 +68,11 @@ def regressions(rows, reference):
             a, b = row[key], old[key]
             if b is not None and (a is None or a > b*(1+relative)+absolute):
                 reasons.append(key)
+        if row['terrain'] == 'ascent' and row.get('early_ascent_slip_p95') is not None \
+                and old.get('early_ascent_slip_p95') is not None:
+            value, old_value = row['early_ascent_slip_p95'], old['early_ascent_slip_p95']
+            if value > old_value*1.15+.03:
+                reasons.append('early-tread slip regression')
         if row['terrain'] == 'flat':
             for key, margin in (('pitch_peak_deg', 2.), ('pitch_rate_peak_deg_s', 10.)):
                 if row[key] > old[key]+margin:
@@ -75,14 +86,20 @@ def repair_improved(rows, reference):
     """Provisional simulator targets; physical deployment still needs retest."""
     import statistics
     flat = [r for r in rows if r['terrain'] == 'flat']
-    partial = [r for r in rows if r['terrain'] == 'ascent' and r['speed'] < .85]
-    old_partial = [r for r in reference if r['terrain'] == 'ascent' and r['speed'] < .85]
-    if any(r['rear_slip_p95'] is None for r in partial+old_partial):
-        return False
+    early = [r for r in rows if r['terrain'] == 'ascent' and r['speed'] >= .85 and r['friction'] == .6]
+    old_early = [r for r in reference if r['terrain'] == 'ascent' and r['speed'] >= .85 and r['friction'] == .6]
+    early_available = bool(early) and len(early) == len(old_early) and all(
+        r.get('early_ascent_slip_p95') is not None for r in early+old_early)
+    if not early_available:
+        early = [r for r in rows if r['terrain'] == 'ascent' and r['speed'] < .85]
+        old_early = [r for r in reference if r['terrain'] == 'ascent' and r['speed'] < .85]
+        if any(r['rear_slip_p95'] is None for r in early+old_early):
+            return False
     return (not regressions(rows, reference)
         and all(r['pitch_peak_deg'] <= 8. and r['pitch_rate_peak_deg_s'] <= 45. for r in flat)
-        and statistics.median(r['rear_slip_p95'] for r in partial)
-            <= .85*statistics.median(r['rear_slip_p95'] for r in old_partial))
+        and statistics.median(r['early_ascent_slip_p95'] if early_available else r['rear_slip_p95'] for r in early)
+            <= .85*statistics.median(r['early_ascent_slip_p95'] if early_available else r['rear_slip_p95']
+                                     for r in old_early))
 
 
 class TractionBehaviorSelector(BehaviorSelector):

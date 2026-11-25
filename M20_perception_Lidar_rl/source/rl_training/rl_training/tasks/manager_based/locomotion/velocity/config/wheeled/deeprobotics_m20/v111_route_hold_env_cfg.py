@@ -22,6 +22,10 @@ class DeeproboticsM20V111RouteHoldEnvCfg(DeeproboticsM20V111FlatPostureEnvCfg):
                 term.func = route.outside_focus_reward
         self.rewards.v111_route_hold_cost = RewTerm(func=route.cost, weight=1.)
         self.rewards.v111_route_hold_quality = RewTerm(func=route.quality, weight=1.5)
+        self.rewards.v111_route_early_traction_quality = RewTerm(
+            func=route.early_traction_quality, weight=.60)
+        self.rewards.v111_route_early_traction_cost = RewTerm(
+            func=route.early_traction_cost, weight=.13)
         self.rewards.v111_flat_posture_cost.func = route.flat_posture_cost
         self.rewards.v111_flat_posture_quality.func = route.flat_posture_quality
         self.events.v111_refine_reset.func = route.reset
@@ -32,18 +36,23 @@ class DeeproboticsM20V111RouteHoldEnvCfg(DeeproboticsM20V111FlatPostureEnvCfg):
                 name = terrain+'_'+key
                 setattr(self.curriculum, 'v111_route_hold_'+name,
                     CurrTerm(func=route.metric, params={'key': name}))
+        for key in ('slip_mean', 'slip_samples', 'support_fraction',
+                    'quality_mean', 'eligible_steps'):
+            setattr(self.curriculum, 'v111_route_early_traction_'+key,
+                CurrTerm(func=route.early_traction_metric, params={'key': key}))
 
 
 @configclass
 class M20RouteHoldPPOCfg(M20FlatPosturePPOCfg):
     class_name: str = 'rl_training.v111_route_hold_runner:RouteHoldPPO'
     route_flat_replay: str = ''
+    traction_reference_results: str = ''
     route_steering_weight: float = .15
 
 
 @configclass
 class DeeproboticsM20V111RouteHoldPPORunnerCfg(DeeproboticsM20V111FlatPosturePPORunnerCfg):
-    experiment_name = 'M20-V11.1-RouteHold'
+    experiment_name = 'M20-V11.1-EarlyTraction'
     algorithm = M20RouteHoldPPOCfg()
 
     def __post_init__(self):
@@ -52,4 +61,8 @@ class DeeproboticsM20V111RouteHoldPPORunnerCfg(DeeproboticsM20V111FlatPosturePPO
         if not path.is_file():
             raise ValueError('RouteHold requires measured M20_ROUTE_FLAT_REPLAY')
         self.algorithm.route_flat_replay = str(path.resolve())
-        self.algorithm.learning_rate = 8.e-6
+        traction_path = Path(os.environ.get('M20_ROUTE_TRACTION_RESULTS', ''))
+        if not traction_path.is_file():
+            raise ValueError('RouteHold requires measured M20_ROUTE_TRACTION_RESULTS')
+        self.algorithm.traction_reference_results = str(traction_path.resolve())
+        self.algorithm.learning_rate = 3.e-6

@@ -58,6 +58,21 @@ def traction_terms(residual, supported, speed, command):
     return reward, cost, slip
 
 
+def early_tread_traction_terms(slip, supported, early_window, speed, command):
+    """Reward loaded rolling traction only on the first three stair treads.
+
+    The fixed denominator and reward/cost weights make unloading lose net
+    credit, including when a loaded wheel is slipping badly.
+    """
+    weights = slip.new_tensor([.5, .5, 1., 1.])
+    quality = 1./(1.+(slip/.25).square())
+    progress = (speed/command.clamp_min(.1)).clamp(0, 1)*(command > .1)
+    selected = supported & early_window
+    reward = progress*((.25+.75*quality)*selected*weights).sum(1)/weights.sum()
+    cost = progress*((1.-quality)*selected*weights).sum(1)/weights.sum()
+    return reward, cost, selected, quality
+
+
 def flat_pitch_cost(gravity, pitch_rate):
     pitch = torch.atan2(gravity[:, 0], torch.linalg.vector_norm(gravity[:, 1:], dim=1))
     tilt = ((pitch.abs()-math.radians(8)).clamp_min(0)/math.radians(12)).square()
