@@ -58,3 +58,11 @@ logs/rsl_rl/*
 
 # Explicitly requested baseline and teacher assets.
 !interview_prep/**
+
+# FlatPosture publication: one requested checkpoint plus logs and params.
+!logs/rsl_rl/M20-V11.1-FlatPosture/
+logs/rsl_rl/M20-V11.1-FlatPosture/*
+!logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/
+!logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/**
+logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/*.pt
+!logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt

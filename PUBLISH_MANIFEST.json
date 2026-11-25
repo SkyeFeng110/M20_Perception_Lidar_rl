@@ -1,11 +1,11 @@
 {
   "format_version": 2,
-  "snapshot_time": "2026-11-24T15:41:08+08:00",
+  "snapshot_time": "2026-11-25T11:19:31+08:00",
   "source_head": "e096dbae25a527beacb4ff9b896d5a41ba22f551",
   "source_has_uncommitted_changes": true,
   "contains_original_git_history": false,
   "local_source_files_deleted": 0,
-  "training_snapshot_note": "Point-in-time copy; ongoing training is not stopped. Later checkpoints require a new export.",
+  "training_snapshot_note": "Only the explicitly selected FlatPosture checkpoint and its run logs are added; previously published EntrySequenceRepair logs are preserved. Ongoing training is not stopped.",
   "robot_submodule_commit": "18192847e16ab85c056440072fcc5844cef43856",
   "policy": {
     "training_run_root": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair",
@@ -30,11 +30,144 @@
       "M20_perception_Lidar_rl/data/m20_recovery/reference_49998_sequence_20261124.json",
       "M20_perception_Lidar_rl/data/m20_recovery/reference_49998_sequence_20261124.npz",
       "M20_perception_Lidar_rl/artifacts/entry_49998_repair_20261124",
-      "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair",
       "mujoco_validation/deploy/mujoco_v135",
       "mujoco_validation/deploy_real",
       "mujoco_validation/run_mujoco_v135.sh",
-      "M20_perception_Lidar_rl/interview_prep"
+      "M20_perception_Lidar_rl/interview_prep",
+      "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest",
+      "M20_perception_Lidar_rl/data/m20_recovery/flat_posture_20261124",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/best_candidate.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/behavior_selection.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/entry/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/entry/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/entry.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/flat_start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/flat_start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/flat_start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/keyboard/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/keyboard/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/keyboard.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/current/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/current/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/current.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/flat-start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/flat-start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/flat-start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/standing/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/standing/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/standing.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/behavior_selection.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/entry/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/entry/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/entry.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/flat_start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/flat_start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/flat_start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/keyboard/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/keyboard/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/keyboard.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/current/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/current/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/current.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/flat-start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/flat-start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/flat-start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/standing/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/standing/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/standing.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/behavior_selection.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/entry/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/entry/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/entry.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/flat_start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/flat_start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/flat_start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/keyboard/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/keyboard/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/keyboard.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/current/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/current/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/current.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/flat-start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/flat-start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/flat-start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/standing/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/standing/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/standing.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/behavior_selection.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/entry/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/entry/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/entry.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/flat_start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/flat_start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/flat_start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/keyboard/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/keyboard/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/keyboard.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/current/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/current/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/current.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/flat-start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/flat-start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/flat-start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/standing/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/standing/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/standing.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/behavior_selection.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/entry/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/entry/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/entry.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/flat_start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/flat_start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/flat_start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/keyboard/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/keyboard/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/keyboard.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/current/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/current/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/current.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/flat-start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/flat-start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/flat-start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/standing/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/standing/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/standing.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/latest_acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/latest_metrics.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/metrics_history.jsonl",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/run_dir.txt",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/status.json"
     ],
     "excluded_directory_names": [
       ".git",
@@ -97,7 +230,153 @@
       "mujoco_validation/deploy_real/flat_start_*/*"
     ],
     "maximum_file_bytes": 94371840,
-    "notes": "Export current files including uncommitted work. Only EntrySequenceRepair checkpoints and logs are published. Preserve all local files and original Git history. Retain source inheritance/import dependencies; omit old launchers, unrelated AMP data, historical audit tools, deployment bundles and generated outputs. Keep the selected EntrySequence launcher. User explicitly requested the entire interview_prep directory, including its baseline and frozen teacher checkpoints."
+    "notes": "Update current source and complete interview_prep. Preserve previous EntrySequenceRepair logs byte-for-byte from --published-root. Add only FlatPosture model_56998.pt plus its run event logs, params and small session evaluation reports. Exclude other weights, old logs, duplicate deployments, caches and unrelated historical tools. Reuse the already published model_50498.pt as frozen teacher.",
+    "selected_run_root": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest",
+    "preserved_log_roots": [
+      "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair"
+    ],
+    "checkpoint_allowlist": [
+      "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair/2026-11-24_13-27-41_476901_sequence_flat_from49998/model_50498.pt",
+      "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair/2026-11-24_13-27-41_476901_sequence_flat_from49998/model_50598.pt",
+      "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt"
+    ],
+    "allowed_launchers": [
+      "M20_perception_Lidar_rl/scripts/train_m20_v111_sequence_from49998.sh",
+      "M20_perception_Lidar_rl/scripts/train_m20_v111_flat_posture_latest.sh"
+    ],
+    "log_report_paths": [
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/best_candidate.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/behavior_selection.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/entry/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/entry/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/entry.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/flat_start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/flat_start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/flat_start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/keyboard/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/keyboard/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/keyboard.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/current/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/current/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/current.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/flat-start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/flat-start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/flat-start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/standing/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/standing/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/standing.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/behavior_selection.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/entry/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/entry/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/entry.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/flat_start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/flat_start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/flat_start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/keyboard/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/keyboard/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/keyboard.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/current/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/current/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/current.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/flat-start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/flat-start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/flat-start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/standing/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/standing/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/standing.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/behavior_selection.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/entry/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/entry/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/entry.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/flat_start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/flat_start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/flat_start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/keyboard/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/keyboard/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/keyboard.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/current/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/current/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/current.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/flat-start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/flat-start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/flat-start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/standing/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/standing/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/standing.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/behavior_selection.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/entry/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/entry/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/entry.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/flat_start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/flat_start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/flat_start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/keyboard/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/keyboard/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/keyboard.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/current/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/current/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/current.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/flat-start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/flat-start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/flat-start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/standing/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/standing/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/standing.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/behavior_selection.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/entry/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/entry/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/entry.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/flat_start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/flat_start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/flat_start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/keyboard/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/keyboard/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/keyboard.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/current/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/current/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/current.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/flat-start/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/flat-start/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/flat-start.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/standing/manifest.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/standing/results.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/standing.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000.log",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/latest_acceptance.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/latest_metrics.json",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/metrics_history.jsonl",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/run_dir.txt",
+      "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/status.json"
+    ]
   },
   "checkpoint_files": [
     {
@@ -119,6 +398,11 @@
       "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair/2026-11-24_13-27-41_476901_sequence_flat_from49998/model_50598.pt",
       "bytes": 7879807,
       "sha256": "f33a65864f0f954bdd9b0056d9661f3e3e71fc717973b8eed17cdf399ebb8b96"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt",
+      "bytes": 7880831,
+      "sha256": "2467b187c1bbffc96e654e5244c0e165d16ac7907c090556ac3c19f34dd45a4a"
     }
   ],
   "files": [
@@ -129,8 +413,8 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 751,
-      "sha256": "8f8bea3bdc0a888b83a64076fd5f16a09b27ad057d9ffb694fccc28cd78d4eaf"
+      "bytes": 1393,
+      "sha256": "45df9a205bcaeccb2463fc68df17bde19a5f2efca4a0799b7db3982f7985badc"
     },
     {
       "path": ".gitmodules",
@@ -149,8 +433,8 @@
     },
     {
       "path": "M20_perception_Lidar_rl/.gitignore",
-      "bytes": 833,
-      "sha256": "ae2ac45b5b080a75c0ece479de174e28a443cbe27972796035e77b96b962e96a"
+      "bytes": 1331,
+      "sha256": "1d14664f3eb0c9b48d7b8e0179642d113aedb3737d71c882d5d9e5c16a05ff85"
     },
     {
       "path": "M20_perception_Lidar_rl/CONTRIBUTORS.md",
@@ -169,8 +453,8 @@
     },
     {
       "path": "M20_perception_Lidar_rl/README.md",
-      "bytes": 807,
-      "sha256": "0fe606e61eaefb740a411a0bf2ff0b4b8bff2102d0540d9b9621b2a742951ea6"
+      "bytes": 942,
+      "sha256": "f95a352dcc38f27cf8950676577541f0aa5151d764f9e7347560e704f78bda5f"
     },
     {
       "path": "M20_perception_Lidar_rl/artifacts/entry_49998_repair_20261124/deployment_contract.json",
@@ -513,6 +797,936 @@
       "sha256": "7f8de8046a0dcdb821549e7f1110aa7b91b48fee64dc21c7fcf0290600205858"
     },
     {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/best_candidate.json",
+      "bytes": 1852,
+      "sha256": "33766652dbb62e34587a79d521889ae723980a57b019c105db14f1441347c180"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000.log",
+      "bytes": 266,
+      "sha256": "73b1a9506bac9780b232ad36a8fb739e65d097aaf9ece15d1cabcdec5d952907"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/acceptance.json",
+      "bytes": 5748,
+      "sha256": "d53ba67223a4ca897ca018143df36b65065f89e8dde62cffb11656afa6997e81"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/behavior_selection.json",
+      "bytes": 2188,
+      "sha256": "2277eac36e9d78f0051679c9359c471270c2fed76f0f16987185175c7305407f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/entry.log",
+      "bytes": 12082,
+      "sha256": "bcaffc1f5409a6baae9b725277925fa2592d130754522ca7e2e0bfa1cf8fc057"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/entry/manifest.json",
+      "bytes": 4310,
+      "sha256": "5fb5134a23b8e24a25c6297970db6dba67ed73eb2fd56ff9fa3f796bcc177140"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/entry/results.json",
+      "bytes": 16142,
+      "sha256": "1ed4a0b0b93c5c943213d4b69f4f2cf3484451ab35cee7bc26869794ea8a1c24"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/flat_start.log",
+      "bytes": 5501,
+      "sha256": "beb18904977694894f98ad7f28ef3a92fa5dc5e31882fbd20768b35d7a1a9ddb"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/flat_start/manifest.json",
+      "bytes": 3568,
+      "sha256": "6f17705ea3d0800893d366a0476bb5e47aba11f42f262be6cf1e6ec314b9ba50"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/flat_start/results.json",
+      "bytes": 6578,
+      "sha256": "39bd25da5e4e84fbeee552c22edcee7fbc8992c1b5a9596d47ad73e2f91120a2"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/keyboard.log",
+      "bytes": 13244,
+      "sha256": "ffa4d04f6458b59885da1354b27e7e133adeecede9fce179099d43dc449ae9a0"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/keyboard/manifest.json",
+      "bytes": 4300,
+      "sha256": "6901d8cbea96992038cb4a05f0e3efa567662e7b427802c82be99de312492837"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/keyboard/results.json",
+      "bytes": 17620,
+      "sha256": "6d15443db8ecfd69b81acf16851dc9c301cd8cdc191e2370e638d8311683d14c"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production.log",
+      "bytes": 65,
+      "sha256": "97e9ab35f9fee90edf9076932e49aaa66fb6f3727cae39570e232dc6d17c3445"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/current.log",
+      "bytes": 12005,
+      "sha256": "0218d88d6f2c8ebaf8239f7c72f74c9b36bc1403156080f6969ba3d92258791c"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/current/manifest.json",
+      "bytes": 4307,
+      "sha256": "b387e6a2fb9a5f7b0c390e33e0e1f627c0f5edcab891154199f0ff2ce5013578"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/current/results.json",
+      "bytes": 16065,
+      "sha256": "5309ea557d5f397ea29e1a8fc6d7da7cdff233a96a7f0cc04d1f1ba9e23b8837"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/flat-start.log",
+      "bytes": 24048,
+      "sha256": "0b5dc4dbdcba82e014f9d7205729a77195556c9a9705b17e2eb8279b044d498b"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/flat-start/manifest.json",
+      "bytes": 4317,
+      "sha256": "bb73aec89bf7bdaac6ae4e9ffcc8237d480522209071e53912db9f08e1a2bc75"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/flat-start/results.json",
+      "bytes": 32165,
+      "sha256": "43aa809b745e6720430d9b64c5f32c8e9e46e3780998da64d62a0d7b2d4e642e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/manifest.json",
+      "bytes": 12248,
+      "sha256": "7e1eee179d1ea008d448fad796537eaa02a9676bff6e44bfc30cc7eb59f5ebe6"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/production/results.json",
+      "bytes": 48227,
+      "sha256": "411c3cc3b558b71d7de0e9bcf224bc9dfad8e0a0a01f18f5e0da5b05d93fa541"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/results.json",
+      "bytes": 65598,
+      "sha256": "6d49987a32d3bdc967ac86ddde8ea2f8c53965222d8a3666a74587b2f2e9a227"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/standing.log",
+      "bytes": 34943,
+      "sha256": "bd7c49688586361bccbacceff7ab42ce3922f05c9c7c52c6732de15cda30d00b"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/standing/manifest.json",
+      "bytes": 4329,
+      "sha256": "18a1a480f1ef00d5eadfbec1c48bddebe64987bcf6a2907ce045c2dbabac064c"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_001000/standing/results.json",
+      "bytes": 47981,
+      "sha256": "3498abcbb37c2cdc1bb940dc54dee230b28aea66bfd2a21a4e60547399ff1225"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000.log",
+      "bytes": 266,
+      "sha256": "e8264497bb26a5f92cbd3b449c8fe8910c5ba269bd03340f8550f85b973d0149"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/acceptance.json",
+      "bytes": 5348,
+      "sha256": "78098b6da638fd06841a836a98f8b1be59ac990b6c3d5d85c5363bf57dd7877a"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/behavior_selection.json",
+      "bytes": 2317,
+      "sha256": "9f1d8285e2fecaf5cc199ec3186abc916487d755aee1f34c7e47b18c8be26f16"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/entry.log",
+      "bytes": 12041,
+      "sha256": "574aceb356c19018ffbef5eb54163c38b5b2db65ce52db25bbb1be25099fc5bf"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/entry/manifest.json",
+      "bytes": 4310,
+      "sha256": "c314331585dab310febd1007edc740a3118a4e5b7e59ec426bf7cde4e335e2e6"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/entry/results.json",
+      "bytes": 16101,
+      "sha256": "1bf5f03a6168c57af1b87183fd5ae70abd343462756428f69d5fc35535f44a23"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/flat_start.log",
+      "bytes": 5519,
+      "sha256": "0f49a4291c9648dc6ada61b9a955f7643196ef3abaabdf4646c9ad60a1359bde"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/flat_start/manifest.json",
+      "bytes": 3568,
+      "sha256": "3dd1ebdc29c7f8f9966d6a5787a046b57589671ded8e3d69efde377d80ed964e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/flat_start/results.json",
+      "bytes": 6596,
+      "sha256": "6157ca6c6d52ff979c740740cc2e8a2a5a6bcc62d9a77af509167db70d54a392"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/keyboard.log",
+      "bytes": 13261,
+      "sha256": "95f92ad4ae880f3a2e6df023d1d98f96c97068915a8d4ecbd4eb2c5ee6c05e19"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/keyboard/manifest.json",
+      "bytes": 4300,
+      "sha256": "49902866ec606432e8a0e8c7b92a1227160b9147d49962997be8ec7bb64f6699"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/keyboard/results.json",
+      "bytes": 17637,
+      "sha256": "e29a93909953d3a94cdabec49986d4c1221314de4b0077e8f39baebe16be16f6"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production.log",
+      "bytes": 65,
+      "sha256": "97e9ab35f9fee90edf9076932e49aaa66fb6f3727cae39570e232dc6d17c3445"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/current.log",
+      "bytes": 11972,
+      "sha256": "edd590208be54cd6181cf614ab12da596d96e5b204e1b54e9902a398ae19639d"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/current/manifest.json",
+      "bytes": 4307,
+      "sha256": "d86226f65b3194bc1faaa1e2806b2c58c3a46f5c47e4822f6783770382de7d92"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/current/results.json",
+      "bytes": 16032,
+      "sha256": "a58ddf8168c2af071d0c631b161a0f6872116a736afa34defd1b9869f011f4aa"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/flat-start.log",
+      "bytes": 24083,
+      "sha256": "58f64db4eba67237592b3dec92ed4b78348daeb27c1e5fecafdbd14995aac699"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/flat-start/manifest.json",
+      "bytes": 4317,
+      "sha256": "91f7c1e3473f4adb1ce8e8f67a0d4ce70f2862bd025fc6335ae377d41b1130c2"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/flat-start/results.json",
+      "bytes": 32200,
+      "sha256": "3d0dc3db33cca5b45d4690fc36e1921793cfc553976a7ad73b40499404936dc9"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/manifest.json",
+      "bytes": 12248,
+      "sha256": "b2a1a9c24c2dc1406b1b492b1f9c049c16376b5b9b8e7a22b1d90d7075970a4f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/production/results.json",
+      "bytes": 48229,
+      "sha256": "d4dcd17eb1d3f5594172f7583a9202d1ac593b49136e209fed903719cfcf3873"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/results.json",
+      "bytes": 65600,
+      "sha256": "e45716d6d02234549a35ca948f21dd3a982e39ac46e5e98ba9dab634af55aeb4"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/standing.log",
+      "bytes": 34928,
+      "sha256": "444d2d0944fb2b431dc21cf466617a04baf5b73b8bada96346cc959bb9b27f61"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/standing/manifest.json",
+      "bytes": 4329,
+      "sha256": "46b4a9f9f0bf18e2d25ad69d137c39f7ed00db5ce8a252b54d6c5ea914d36f01"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_002000/standing/results.json",
+      "bytes": 47966,
+      "sha256": "abc6dbf86a0904e2c4bbc30c890c64f4b6abc6f33d9f71f7dcde3deccbcf6fcf"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000.log",
+      "bytes": 266,
+      "sha256": "0f8b2e54f500123ac131a1837b1bde881583f2a6c360e5f562906b0089ec032a"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/acceptance.json",
+      "bytes": 6288,
+      "sha256": "0cb0445cffd399a00b4e4aad82d45c8a1f454ab0912f21d55b4f83986fd18956"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/behavior_selection.json",
+      "bytes": 2904,
+      "sha256": "56e71bc37dd7b9167455daaec802c9328722ada403b75b02e1d24ea53f8a2157"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/entry.log",
+      "bytes": 12052,
+      "sha256": "be49d7cadea085dc88016368af2c54e5e9d684c7a6fcbed70a94f320f0719303"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/entry/manifest.json",
+      "bytes": 4310,
+      "sha256": "2daf33566d72066573bd9e05f6130c0f1d3db2e8df7b00be738581c877476674"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/entry/results.json",
+      "bytes": 16112,
+      "sha256": "291e2bc855bb8c2c4e90557505ebeff59bd75824192a77c8002115400df254af"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/flat_start.log",
+      "bytes": 5516,
+      "sha256": "1e7c10eee9056ac71b68d11c9280d26696d747f146b9e9b2acafd8cdf139d6d8"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/flat_start/manifest.json",
+      "bytes": 3568,
+      "sha256": "0db3e865f1351baad0598f2d9cee1872f05c611c22c53c91d7e5dab6b726afc1"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/flat_start/results.json",
+      "bytes": 6593,
+      "sha256": "e32718d6940211e520b2109ab9a9a57d0b0ee492e3231e1792f25eca7254c5f6"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/keyboard.log",
+      "bytes": 13268,
+      "sha256": "f164dafbc00238d0b6b7dca7a1ec80f6b497e414e99239bec8e81644eb525bad"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/keyboard/manifest.json",
+      "bytes": 4300,
+      "sha256": "1b578d90092fdb13029a6396288a8e3fec00999209dcc0356c6221210fbbe2f5"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/keyboard/results.json",
+      "bytes": 17644,
+      "sha256": "aaf4454c4fb178316bef3e3ab5b26d1a9376d4b2cb91af4c7d9257021ae4d444"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production.log",
+      "bytes": 65,
+      "sha256": "97e9ab35f9fee90edf9076932e49aaa66fb6f3727cae39570e232dc6d17c3445"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/current.log",
+      "bytes": 12034,
+      "sha256": "4074aa4c980db02d86ba77b9168c25288cfe01ec7a09c36418f3b010dd75fb19"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/current/manifest.json",
+      "bytes": 4307,
+      "sha256": "e7d387370e48238cab076a98ce09445a3b5ef4abc511cc0b2a6a78492de3eef2"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/current/results.json",
+      "bytes": 16094,
+      "sha256": "68a3abecc6730363a16ea1ad5bd7773860ba3fd7a87d8e1d42de051301462f46"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/flat-start.log",
+      "bytes": 24125,
+      "sha256": "6499c745f424675fc920de943593f3dd2dc33f9a4de802c3ec58aaa812daa671"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/flat-start/manifest.json",
+      "bytes": 4317,
+      "sha256": "919af2459b67eba7cb65ed7a4c042076dcb2efde1079b108bdfb762961ab655e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/flat-start/results.json",
+      "bytes": 32242,
+      "sha256": "a496b092fc0ed709473df0df8e0c929fb143a3b13d9909e4a3951eadc0af68bd"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/manifest.json",
+      "bytes": 12248,
+      "sha256": "99ea55ae084139f6e67f826a62e7574fe41a90cd37d4a3ed2d55d28211cb6b5e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/production/results.json",
+      "bytes": 48333,
+      "sha256": "04d95cde86f6fa5dc1df8e4b032afef5f94c502c161faaa66d8054d4ef92558e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/results.json",
+      "bytes": 65586,
+      "sha256": "e736d4fe95a4721917786ff84822e47bc76769d6c9ac35d7717e331683473fc8"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/standing.log",
+      "bytes": 34907,
+      "sha256": "cbd0885164a48ac36e173d0250a44f9efc795986bef650776f7c3fbb5989419d"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/standing/manifest.json",
+      "bytes": 4329,
+      "sha256": "1af952848eba6eb8312c2d01c7d8e6b987d1087304f7d08e025d3e83dab834d5"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_003000/standing/results.json",
+      "bytes": 47945,
+      "sha256": "557f9fb42d93369ee1b7b2d947b88a195b6fc728db832e537a21c93395003952"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000.log",
+      "bytes": 266,
+      "sha256": "4a00f7bb3d8062df63a3e7ec37e1272d6072be648a8ecf377090644739e5dc6b"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/acceptance.json",
+      "bytes": 4764,
+      "sha256": "198e595c24d84d5152d27f96bf59cdaaf86929660ca13c0d510ea87f0235d1d5"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/behavior_selection.json",
+      "bytes": 2317,
+      "sha256": "587716d65a5a4c684acf78f3f8b65eb351d052d7d2ce9f852b1bf710d2a2c3fd"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/entry.log",
+      "bytes": 12049,
+      "sha256": "702d71ccf419fc10ac66f04cf7460c6267dbebee5e4395c1fc4497672e8dfb10"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/entry/manifest.json",
+      "bytes": 4310,
+      "sha256": "fa3e4b1cb85515c5bb3c726ab3a341ac15682f0d5c8a3f0477f73ddb9513e1e3"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/entry/results.json",
+      "bytes": 16109,
+      "sha256": "cbea3b0cbab7eb88bd6749005a63346af2c4dddf6841989ef4de948a11b61303"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/flat_start.log",
+      "bytes": 5526,
+      "sha256": "0877d38a5cc04a04ac54379501b0309ac610e91465d2d6e5c176362da46f4a61"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/flat_start/manifest.json",
+      "bytes": 3568,
+      "sha256": "850de3df1606d1b7631230218499e74ebe56daa73ea8f562735a051a8f4f1f41"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/flat_start/results.json",
+      "bytes": 6603,
+      "sha256": "dea411712dcfac3d08a350d86c9593771e6d53de2d4cb01609d3872db31af1f9"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/keyboard.log",
+      "bytes": 13281,
+      "sha256": "0e8635748f2e5baf7f8a2afff959f7dfbadcbc282d628b829aa8bcd8d78d92f3"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/keyboard/manifest.json",
+      "bytes": 4300,
+      "sha256": "8f0b52b284d05ad2ebccc7095bcdfdf34938cfb16a7010459e645102cc1c19e6"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/keyboard/results.json",
+      "bytes": 17657,
+      "sha256": "1cd43095f9f138fbf36c3b3c83d3a900c2f0e70b6535071eea2b2c7161a4de1b"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production.log",
+      "bytes": 65,
+      "sha256": "97e9ab35f9fee90edf9076932e49aaa66fb6f3727cae39570e232dc6d17c3445"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/current.log",
+      "bytes": 12000,
+      "sha256": "ccca9600b417876283b9f39ea8f73081f40265846fad242a5d8d9042706cbff9"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/current/manifest.json",
+      "bytes": 4307,
+      "sha256": "00f0904aa322ee18ff1d3cc795f47031f800b1f4fb4bb9f8713653e52d346c59"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/current/results.json",
+      "bytes": 16060,
+      "sha256": "850c42e0c2b8d0c68d9327d264b183f687a39ed54cf3575b682d77773737e4a5"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/flat-start.log",
+      "bytes": 24120,
+      "sha256": "e2b3a94d10ec44e85cf9489ef20a525704afe384212e5fd4953aeeb3631e4420"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/flat-start/manifest.json",
+      "bytes": 4317,
+      "sha256": "4ed3cc38466ee352c40c89d728a26d3a791cc20ca6d9fd367f422702fc62cfec"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/flat-start/results.json",
+      "bytes": 32237,
+      "sha256": "7a2612063e0d85bfac9499e734234d4a27005a338305d8001cc15c3acbbf1cac"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/manifest.json",
+      "bytes": 12248,
+      "sha256": "db9b547a0e06ec9acad7910d0f501e954430fbded8a40ef80a195378a894c583"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/production/results.json",
+      "bytes": 48294,
+      "sha256": "341ba173c9f964b9b896095fb34331670b39c5e7ed2864a8d588f8b68961654e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/results.json",
+      "bytes": 65731,
+      "sha256": "bb6d97f191f1e844f93f1428dd9bf154e30cfb329051344555fe59b7072017b7"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/standing.log",
+      "bytes": 35063,
+      "sha256": "894d7e3ca4ccc7cd14d7a7da5871da48959fed23e40950c98d03d3e5be5b7671"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/standing/manifest.json",
+      "bytes": 4329,
+      "sha256": "eeb9dcc629bb538c9a2678a1d246880b644f79188038b84889122eaae884e621"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_004000/standing/results.json",
+      "bytes": 48077,
+      "sha256": "226ed36292006aaad4c05befc240fb66d7a557b03f04e01aa1d92f0ccf194dda"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000.log",
+      "bytes": 266,
+      "sha256": "7e20e0986679e2cd2425de992d502dfa6e952f2b40a9b62e76897763872ca8c3"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/acceptance.json",
+      "bytes": 5810,
+      "sha256": "650e5d159104f1148fe0a5f53e376e9c2cbf3fe5defe76dcd6d997261cb2c9a5"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/behavior_selection.json",
+      "bytes": 3151,
+      "sha256": "fefa1444bf3bfdb7b01ee9b405fc4ce7acaa02308866cd568459f69ec2199464"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/entry.log",
+      "bytes": 12079,
+      "sha256": "ae033c1617835f73e5176b20495aa3ef2e54d92148db51631de06de4523702a3"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/entry/manifest.json",
+      "bytes": 4310,
+      "sha256": "e39bee46483d7d341c1cbf15591a21c019e042a22f24178ea08ed883c14feead"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/entry/results.json",
+      "bytes": 16139,
+      "sha256": "bfd0364eedd8e16610e9d3ee09e3a8bc9c093313bd93f8499b67aeb98e6f29a0"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/flat_start.log",
+      "bytes": 5513,
+      "sha256": "61a6753e0740a31ea8ece75fc28be15f51f50a0e43e4e5f2c855782813b43181"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/flat_start/manifest.json",
+      "bytes": 3568,
+      "sha256": "0bfa5295ea6a7ae82768deb660cd5cc57b426ac1a3f8644cbd602fd6640bd900"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/flat_start/results.json",
+      "bytes": 6590,
+      "sha256": "0f3b0140f9014b6413458f806d3fdb5af6adcfb1e7e0b755bd24332ed2948e91"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/keyboard.log",
+      "bytes": 13358,
+      "sha256": "cbc7b44b88276d1b1ce2d75d558beeebb735634f90543994ee6dd525868fab30"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/keyboard/manifest.json",
+      "bytes": 4300,
+      "sha256": "375683091e272e02458d0ef6ba5b20e0ef66cc31bca64944aba5151633b15320"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/keyboard/results.json",
+      "bytes": 17718,
+      "sha256": "3311786f85bc23062fd81e717d7788175bb924eb71c059b0f5bad70dc488fc5f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production.log",
+      "bytes": 65,
+      "sha256": "97e9ab35f9fee90edf9076932e49aaa66fb6f3727cae39570e232dc6d17c3445"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/current.log",
+      "bytes": 12014,
+      "sha256": "1969921c265ef41a03377ad174a5f0fd5d28b54068daadf83a791d22462a5023"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/current/manifest.json",
+      "bytes": 4307,
+      "sha256": "10ca015f02cf22dcf6c731c073f7d7fef72d6b3b138ad58d68ee4ac73e80de3c"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/current/results.json",
+      "bytes": 16074,
+      "sha256": "2a80091ffe54ae490807170fdf9f37ad18d1d795e11705c96f725b792d45b170"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/flat-start.log",
+      "bytes": 24046,
+      "sha256": "a0589366ba6d3f43c9dcbf4f5a69d9d339c9bf884099f6d67b76c13456a85874"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/flat-start/manifest.json",
+      "bytes": 4317,
+      "sha256": "99b476ac3add824f5a5b62da0453f2af186a3a920d579102fdbc28f7fc6d8a73"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/flat-start/results.json",
+      "bytes": 32171,
+      "sha256": "d98eafdbc026908fb940a7442e3b2fad36b0a54db6b3f2323be217d9c1d83dc8"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/manifest.json",
+      "bytes": 12248,
+      "sha256": "54e07d8c3f58bb8ebec6ba94bb71a6d79535e5615134680078a09639af17c381"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/production/results.json",
+      "bytes": 48242,
+      "sha256": "b468c9f0b9a7578f72eed1c65d2865963132083dd5aee7a86d62cc118b23a7d4"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/results.json",
+      "bytes": 65832,
+      "sha256": "93223b6200fd22fec8beb6c566bd9d2a078a282bc2955778e3a3ec3553beba08"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/standing.log",
+      "bytes": 35119,
+      "sha256": "3b909c63c705afbd2e7ba3fa08427f274cb0dd9393a1226912c3402fc318bd2c"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/standing/manifest.json",
+      "bytes": 4329,
+      "sha256": "646e34c3f12d3ae8486491a932c6f42145020bee59ead8ff813423aec039237f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/eval_005000/standing/results.json",
+      "bytes": 48117,
+      "sha256": "5f78366a1c640b678c21c03f080f515befba5f1b27b684627ae49e5052e68ab6"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/latest_acceptance.json",
+      "bytes": 5810,
+      "sha256": "650e5d159104f1148fe0a5f53e376e9c2cbf3fe5defe76dcd6d997261cb2c9a5"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/latest_metrics.json",
+      "bytes": 93210,
+      "sha256": "bd66654c98b9e994aa40357ee50d086d6cbb6ae6b0ada7f6ac553557dd4218a1"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/metrics_history.jsonl",
+      "bytes": 333186,
+      "sha256": "aa9f7adb1339a92f2299a0cc8706ae228c568344a2cbc1a0fe5c78b73eccf9ab"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/run_dir.txt",
+      "bytes": 161,
+      "sha256": "5f6265f0046541aa63e7da95fbb8d9023929fc1ec59865f23d3537c5194cd3e1"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/status.json",
+      "bytes": 7052,
+      "sha256": "3e5b9e14d7a9034de918427cc264d991915de51533a8cb968d316a602ce47357"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/implementation_manifest.json",
+      "bytes": 2105,
+      "sha256": "e8db05b539058f76e953f4c7e0497e482bac54663f9f35904360c6e34b0950fb"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/entry/ascent_0.26_0.7.npz",
+      "bytes": 923882,
+      "sha256": "6c72ce2e65d6ca915f24e829a7c2acc99bbd11a5c21395747ffebba3ba41204c"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/entry/ascent_0.3_0.7.npz",
+      "bytes": 881610,
+      "sha256": "69b699d251353a9bf6b74d8d6a6d13c182da17a04f6b059a0b85db221d224792"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/entry/flat_None_0.7.npz",
+      "bytes": 1188267,
+      "sha256": "7fa3d428d90bb789e5f388c6cc1b50186bb326cc2fe6f11f89409966e2e73cd3"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/entry/manifest.json",
+      "bytes": 3860,
+      "sha256": "ba19a7a901a800b7d78e6364d9927d34248a9391db75671d63e30ccb078146e7"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/entry/results.json",
+      "bytes": 16131,
+      "sha256": "5b91a4f9e8ba817dbb85f29bfe82341ef91482adf854142c6ef704909f367e43"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/flat_start/filtered_full.npz",
+      "bytes": 173480,
+      "sha256": "54b4dd9c4aa1ac382eb437e6b137e377e149796ac973a67aacd75c0c9725f380"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/flat_start/filtered_light.npz",
+      "bytes": 171948,
+      "sha256": "1f97b26ce38ed9a0a45672f2f1c1cc0d1be46a715b54bbfdb81ecdc3c0721870"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/flat_start/filtered_partial_full.npz",
+      "bytes": 173566,
+      "sha256": "a1da0600c6dab0f22266d2bca1ca3e9a9dea8f852bd558a8daf16c5c32b38fad"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/flat_start/manifest.json",
+      "bytes": 3118,
+      "sha256": "5a3755c3aeda043e8f14798755f44df121c0a4967400da35f0461e0c684d3b80"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/flat_start/raw_full.npz",
+      "bytes": 173627,
+      "sha256": "c6172565bf7728925011394536411d521db254464146d98b24dd3a7e8974dcdc"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/flat_start/raw_light.npz",
+      "bytes": 172145,
+      "sha256": "de55a8f917767439c17085b97354b83b00eb5f17f1d59160f5a116322e93e03f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/flat_start/raw_partial_full.npz",
+      "bytes": 173465,
+      "sha256": "66fce5dbd03decb2267c02b8b046fba8da0160fb59bb6cc6032db1e376cc7863"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/flat_start/results.json",
+      "bytes": 6577,
+      "sha256": "d0c7b69ac513af20b5379850d55aec2ff562a89bf0dfe961e29d5384f1752c60"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/acceptance.json",
+      "bytes": 5882,
+      "sha256": "85e4be6582ececd4466143c4ad15968c5c1c20f3d4fdacc421e59edb683474dc"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/keyboard/ascent_0.26_0.7.npz",
+      "bytes": 976232,
+      "sha256": "0515ed6de081e7cb16abec6b2fc1089283c64b6f824ca73e1ad6f4d5317f199b"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/keyboard/ascent_0.3_0.7.npz",
+      "bytes": 992835,
+      "sha256": "ef74a01cae8a81bd727eea6df231f17d9f3609416ddceabd17643e8124ecefc7"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/keyboard/flat_None_0.7.npz",
+      "bytes": 1317874,
+      "sha256": "74a265a188a2e9addf31f8a4a12574985b84bfd43df280c14125e90e592cf18a"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/keyboard/manifest.json",
+      "bytes": 3850,
+      "sha256": "8e22b555e26c6f1740aa5923c2da952168947d25015e5972b7ae4a22dd4a1650"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/keyboard/results.json",
+      "bytes": 17645,
+      "sha256": "1a6dcfd252fbe99bd13a69afa7acf192503b7e2ea18f8bf5ad460cb71af31a74"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/results.json",
+      "bytes": 65420,
+      "sha256": "58ebb47bdcdeca401dd91343d35140229a565cf3efe53856713fe8a3dd8004c2"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/standing/ascent_0.26_0.5.npz",
+      "bytes": 756994,
+      "sha256": "d4725980cd0f2593bbe40c4d67998f731ab5cceaed4ed3318c3ab07922a5f44a"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/standing/ascent_0.26_0.7.npz",
+      "bytes": 589289,
+      "sha256": "8bf17f3e8e43334815813dd95a4207c5ed52e9aa022b7ce004189fd87d69c14d"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/standing/ascent_0.26_1.0.npz",
+      "bytes": 452813,
+      "sha256": "9ad8cb2ee7e3868416a9eaf24ef65ac7cba5ba08770f9ef1a5ea5f757e2be902"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/standing/ascent_0.3_0.5.npz",
+      "bytes": 780126,
+      "sha256": "c28762a708c9e2e429537c94d7cdbf4216c8681ec51a88b8f13704bf0fde90f5"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/standing/ascent_0.3_0.7.npz",
+      "bytes": 594086,
+      "sha256": "d78f0fb8e10e7b66da868ec0940cfd183e3b1ba70b619440111f5b9613c1d6ec"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/standing/ascent_0.3_1.0.npz",
+      "bytes": 444454,
+      "sha256": "06fbff014f8389e26cb1c4da04b3e7bedaf36b68b738f525c3f261529af435c4"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/standing/flat_None_0.5.npz",
+      "bytes": 951197,
+      "sha256": "d34c6e75d62c226292c01f1434fd105df5cbd2e71beb16ea1d35bcf8a98d2f11"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/standing/flat_None_0.7.npz",
+      "bytes": 951671,
+      "sha256": "a743f9aa0c7a17adc0d39e6c2408d5f96ed26866fce3df421580df106bfae596"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/standing/flat_None_1.0.npz",
+      "bytes": 953329,
+      "sha256": "c3169786c17bdeeb47a20b950b26826b676a59cba9dd1f156d574f9b648c70dc"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/standing/manifest.json",
+      "bytes": 3879,
+      "sha256": "9a7532522f010968abe7f8971fae83f7829363fd75d1df907173439835ee4b6f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/native/standing/results.json",
+      "bytes": 47778,
+      "sha256": "3e03d4eac5fb7a286abc811acfff80c3dff25cc9bc3346a1403b499efdd1288e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/current/ascent_0.26_1.0.npz",
+      "bytes": 720443,
+      "sha256": "3b685b77130d8bffabb72ad99cb5a11076d68e1fe01ab46865f54030cad77110"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/current/ascent_0.3_1.0.npz",
+      "bytes": 711347,
+      "sha256": "656544f86a1b8f6fdd10c2e199b34848ad5337f04ba4aed12bcd3545035fe2df"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/current/flat_None_1.0.npz",
+      "bytes": 1188697,
+      "sha256": "9316206ef2c8fdb53ec19142b17969bc7fa303800d156d683a24451ad1a80992"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/current/manifest.json",
+      "bytes": 3857,
+      "sha256": "fdee21511982bff369ed741d9192c0654e1d9891c7a9907569b379aec0b74cce"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/current/results.json",
+      "bytes": 16009,
+      "sha256": "ceb44899a7f8be5025ac5f991c660af79f21746d2d3d32ad7bc7c88e6d79ef81"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/flat-start/ascent_0.26_0.7.npz",
+      "bytes": 884477,
+      "sha256": "c7f82b212ce67ca4bd6640871b433b847622732fd3eaf587f341ecea70755ed9"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/flat-start/ascent_0.26_1.0.npz",
+      "bytes": 741749,
+      "sha256": "551458cbd039e5abb341c4b13e227c415d7d3daabc7e12b279c1828499f5dcda"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/flat-start/ascent_0.3_0.7.npz",
+      "bytes": 863772,
+      "sha256": "3f273e3567ae12d79fc2c6bdb40ea319decdeaed89dae965ad16715d6ad55010"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/flat-start/ascent_0.3_1.0.npz",
+      "bytes": 722091,
+      "sha256": "b2c5408cd79105adf3f8c94404dde3580647f074e2793b917714eebf701a7d4f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/flat-start/flat_None_0.7.npz",
+      "bytes": 1191028,
+      "sha256": "082dcb8d5fd8f91f3f364d563fba82f42a3c7ae479d06180efb0dc669be6ae3e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/flat-start/flat_None_1.0.npz",
+      "bytes": 1188176,
+      "sha256": "af0c052e294e8d727cbada21fbc5744853d77a874e6f0c08561569770606d060"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/flat-start/manifest.json",
+      "bytes": 3867,
+      "sha256": "16454d8c7c9b50d0a2d3246dbe6dfe5968207c57a797d0c40359eacbe8b326b7"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/flat-start/results.json",
+      "bytes": 32068,
+      "sha256": "4851df6f5e9d505c08acc04422961e72890e288e67daa269a1c955e58468c8be"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/manifest.json",
+      "bytes": 10748,
+      "sha256": "1e6408e2e9b51e5617591d260fe871ccf1e464cb7d12e737bedd5d9f843958d0"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/results.json",
+      "bytes": 48074,
+      "sha256": "2de32664f77228ae5bf15a38b2058df6c5692488f5dd301d7b78469102aea84d"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/teacher/params/agent.yaml",
+      "bytes": 2748,
+      "sha256": "efd02efe4ab8682d75687ec7ce1aebd39e3416a4211279f1b0f8fb5996e7cae6"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/teacher/params/env.yaml",
+      "bytes": 120032,
+      "sha256": "4992970233becbfaca691d1787e5bf8ae7aa9132528b6b8f5fc95969f3f3372d"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/data/m20_recovery/flat_posture_20261124/compact_flat.json",
+      "bytes": 1030,
+      "sha256": "9c5ca3d92ab1d0bcb515358fa34536cfb91683a42d9e8d7ec433020721d7be82"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/data/m20_recovery/flat_posture_20261124/compact_flat.npz",
+      "bytes": 143494,
+      "sha256": "53a4d088cb6ffa115b443187cca674cbd4dd087d73668ab1be1d3ba9e32614c3"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/data/m20_recovery/flat_posture_20261124/current_gait.json",
+      "bytes": 9741,
+      "sha256": "d819a7f10c4f9565a6be278da4a72298c10c357392ea1027fa430c0716e3d86e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/data/m20_recovery/flat_posture_20261124/current_gait.npz",
+      "bytes": 1253511,
+      "sha256": "6609cd1e4fa0ffe443737ec21764a5336723ae2d4592a135a497b3bb12aa508b"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/data/m20_recovery/flat_posture_20261124/deployed_stairs.json",
+      "bytes": 1417,
+      "sha256": "cdedf4689d5501b5b1888406a17ccf994857750f0c03df75e2ede52fcedf64e7"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/data/m20_recovery/flat_posture_20261124/deployed_stairs.npz",
+      "bytes": 142020,
+      "sha256": "1270e8859f24f4bb67c970ad8d04ddd49d855109f78644c5855b454515061919"
+    },
+    {
       "path": "M20_perception_Lidar_rl/data/m20_recovery/reference_49998_sequence_20261124.json",
       "bytes": 9880,
       "sha256": "cd1f39f26c8d05717fd78446078b8ec0a04c8f3987eb83230f39fc68bcc25eec"
@@ -566,6 +1780,11 @@
       "path": "M20_perception_Lidar_rl/docs/m20_flat_command_67100_20261123.md",
       "bytes": 7895,
       "sha256": "aee286877d1b337de98b3f7226ca74b091eff6c1c69314a4ed08ee609478d48b"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/docs/m20_flat_posture_latest_20261124.md",
+      "bytes": 12048,
+      "sha256": "1f38b00fc3a22e1cb4e3b8638fd43bf7d23b1ba8187dac1247735758872b0f0f"
     },
     {
       "path": "M20_perception_Lidar_rl/docs/m20_flat_start_repair_20261123.md",
@@ -813,6 +2032,341 @@
       "sha256": "4992970233becbfaca691d1787e5bf8ae7aa9132528b6b8f5fc95969f3f3372d"
     },
     {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/actor_observation_manifest.txt",
+      "bytes": 227,
+      "sha256": "656654578f7e519bd0124280155595ee32eb6f25d6f7466fac28d357b742a877"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795515309.arcus.2759441.0",
+      "bytes": 1671366,
+      "sha256": "91740d705d22a5f99a60dc00a0dd15f1810ff3c97af54e5f6b39ba0558116b0c"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795516423.arcus.2759441.1",
+      "bytes": 1671388,
+      "sha256": "dce7c48eef3d8ae05f1d0a38e256d6641dd8bafaec5fb8c68633cc8f20230937"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795517502.arcus.2759441.2",
+      "bytes": 1671388,
+      "sha256": "2c0b03a7124ff3e54d89035c66a637bfc2c0babd533edbb8a38991252a19e1bc"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795518587.arcus.2759441.3",
+      "bytes": 1671388,
+      "sha256": "9ebe62a070707fcbca5febcb29105cc0bb3d2131e61f2958b90de11cef069e8f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795519682.arcus.2759441.4",
+      "bytes": 1671388,
+      "sha256": "3fba98b8ac5fb5e37aa7d6d81fe440a0bb506c63d1336c5fbb9841262ca62883"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795520766.arcus.2759441.5",
+      "bytes": 1671388,
+      "sha256": "2fe7bf06e3dd44243d1d712f6a168d76477459ba66ba32d2491d41bf3c6c0ad2"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795521834.arcus.2759441.6",
+      "bytes": 1671388,
+      "sha256": "8ef6d7ca0fe35c2d8dac4d69b704493df41cc851f23213a0cc46c7e0962e5c5a"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795522900.arcus.2759441.7",
+      "bytes": 1671388,
+      "sha256": "5619a41046c985521b5acd444d4f21419c2d24e606817a75f44c21fa9e53b994"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795523968.arcus.2759441.8",
+      "bytes": 1671388,
+      "sha256": "4677d4d61cca535aadd47f3277361fcc962589fd85122b16b2506db429524b52"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795525035.arcus.2759441.9",
+      "bytes": 1671388,
+      "sha256": "da6c7273fe219b97f361660740feb03f9fda91da16dd7595d903928ff37d0606"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795526246.arcus.2759441.11",
+      "bytes": 1671388,
+      "sha256": "3927463a163038766caa47fb3ea0b45719ea878909014867ea04bbbc831bcfef"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795527316.arcus.2759441.12",
+      "bytes": 1671388,
+      "sha256": "b3f815793163d0842ca1a9f3481ef4022d53b50e2902d977af1db3a65dddeafa"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795528385.arcus.2759441.13",
+      "bytes": 1671388,
+      "sha256": "99603c5b791f3a00342c31b345e9ecd9629ee3691ae337a83f3505fc08d32b27"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795529452.arcus.2759441.14",
+      "bytes": 1671388,
+      "sha256": "c0b87a2ac94f6b17dcc7f4a64ccc7a68eae68be8e02fcb5c5d9faa74eb36f35d"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795530521.arcus.2759441.15",
+      "bytes": 1671388,
+      "sha256": "167b22864608891044e62db5ee31b7c86bcff877dcc8a568aece5a78d18859f7"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795531591.arcus.2759441.16",
+      "bytes": 1671444,
+      "sha256": "ea65903c32ab97603bfb89a677e4f4473743a05beb3ca945b7877c48e90f164d"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795532662.arcus.2759441.17",
+      "bytes": 1671588,
+      "sha256": "7f5f9c7fee1e831df69fe9234179566e7678ba3a0292e35647eda396533d27dd"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795533731.arcus.2759441.18",
+      "bytes": 1671588,
+      "sha256": "ae2b4d029f813f065026f72aabee6d85902a2b7c396410b92b1f7c2da4281474"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795534797.arcus.2759441.19",
+      "bytes": 1671588,
+      "sha256": "a3fe49bbe57534956f2d0a89f38d6191031d89f92d31bde5bea95e1ce148fbee"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795535866.arcus.2759441.20",
+      "bytes": 1671588,
+      "sha256": "472502ed8e37af4b39b4a787ce5a7d908c2393c24c795f196f10635d1848383f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795537077.arcus.2759441.22",
+      "bytes": 1671588,
+      "sha256": "229453496794078c4b6db72066019c219502d54f2fe5f528d169f85ee8bb4c55"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795538143.arcus.2759441.23",
+      "bytes": 1671588,
+      "sha256": "3eee8dcfaab559e16cbcc24dd6f6ccd6c5849cd9b76785594bf4d2658c243aab"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795539212.arcus.2759441.24",
+      "bytes": 1671588,
+      "sha256": "82dc4e9c30c63c9f35345f19d703b3f6266540c324243c2b71240cfa1b141496"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795540280.arcus.2759441.25",
+      "bytes": 1671588,
+      "sha256": "c4d0bea3fb4053906108973dfc33e627d6269d0a97429e3e35a22725a6bf1167"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795541347.arcus.2759441.26",
+      "bytes": 1671588,
+      "sha256": "706e409725fd35b6e41e7164d7ee060b43d80eb6981fabd3593c6b78b53d316e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795542416.arcus.2759441.27",
+      "bytes": 1671588,
+      "sha256": "d5de3a268d8fd080528166ec22426b4cce7d3ab3afaa0d27108556e3b4a19497"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795543483.arcus.2759441.28",
+      "bytes": 1671588,
+      "sha256": "5bd00de1423a23042447773c55b35a289bce3c99973bcc821f912d8b9478ac92"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795544547.arcus.2759441.29",
+      "bytes": 1671588,
+      "sha256": "3c7759167125833359360a8f9c74a87c419abefc16f775318178dfd8ae5e6f91"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795545613.arcus.2759441.30",
+      "bytes": 1671588,
+      "sha256": "3b3f9fb1d2535d50dc043db19f1910908543646fd173ea0ce8564fded17c3f3f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795546680.arcus.2759441.31",
+      "bytes": 1671588,
+      "sha256": "9929b22355ecf4938a0f71642784cc13569fc1d78f6bd8dc883faa7411764515"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795547889.arcus.2759441.33",
+      "bytes": 1671588,
+      "sha256": "4bcf5558c7498e7e895e868b247952d5fe2f9e039f083b23617733837222f462"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795548958.arcus.2759441.34",
+      "bytes": 1671588,
+      "sha256": "cc92f329ccc8c1fbefca900ffecb94b8a648e6e91f2f863df43cbb270bc93e98"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795550025.arcus.2759441.35",
+      "bytes": 1671588,
+      "sha256": "a11df1678cce8d827d664d06b97b6c13d954903525b200fc3a87c9ba89ab4425"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795551090.arcus.2759441.36",
+      "bytes": 1671588,
+      "sha256": "4ee82ee96ef0d0ebd09c83a381e499e3cf612fc19f31eb6bd139b5bd5f15494f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795552156.arcus.2759441.37",
+      "bytes": 1671588,
+      "sha256": "697d818b2da09d4945190362321c51f7e469e9d1d432c3df639b58c3e81ce047"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795553223.arcus.2759441.38",
+      "bytes": 1671588,
+      "sha256": "b28b0ca97e819d59eca2d87d94414207bf504ed5001b5bf526bcf82cdadaac66"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795554290.arcus.2759441.39",
+      "bytes": 1671588,
+      "sha256": "e7135939d3e29e07d68c6bc814cb41b6e9a2c95365e4b812ee5654b1a47e8df5"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795555356.arcus.2759441.40",
+      "bytes": 1671588,
+      "sha256": "5c7f17950553fada61bb2682a79fbe2e0e7e16bc7bf4c55adcbf3c541b8ce5df"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795556424.arcus.2759441.41",
+      "bytes": 1671588,
+      "sha256": "2ec4406c503b3d1dc73716f7df64924ed8df285807c532b72938c5e12e55d06f"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795557494.arcus.2759441.42",
+      "bytes": 1671588,
+      "sha256": "25ede185da638cd6e5f2398c067b77ca690f017f66f852547cacc234fa159100"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795558705.arcus.2759441.44",
+      "bytes": 1671588,
+      "sha256": "68957bbd76b92c96ef0d6e1c5084f0953fa053caebd9ea9f65f419e62e55722e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795559773.arcus.2759441.45",
+      "bytes": 1671588,
+      "sha256": "0be7c2cb622e2e2e5e1775604fb21521e1e1a523c87b731065dbc43e6f86208c"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795560840.arcus.2759441.46",
+      "bytes": 1671588,
+      "sha256": "7c820007cd60e08721febb641dfe007b52237940e8b1bbe6511da1b198a36d2d"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795561910.arcus.2759441.47",
+      "bytes": 1671588,
+      "sha256": "6e01c06ac91a90bf21e263c8e5d6364867bde98b0c1944022814044d4d2abead"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795562978.arcus.2759441.48",
+      "bytes": 1671588,
+      "sha256": "c99d7a17e3d0a7e60e6d32f891f44b60be051e6286a678843ff685c976eee1eb"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795564043.arcus.2759441.49",
+      "bytes": 1671588,
+      "sha256": "17b656b43ec3c2d6e1dd727915789c526a81fccabe6de20a97cd3a04e2d7c5d7"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795565110.arcus.2759441.50",
+      "bytes": 1671588,
+      "sha256": "ef460c71d57ef58f9a45737b19a1028b861af29cf258679cc98e6aca26a0e63a"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795566174.arcus.2759441.51",
+      "bytes": 1671588,
+      "sha256": "5df1fa90d647e40634e4b5026797f7c0f4f7c7c3eb3a9f95c7d4abfe938cb691"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795567239.arcus.2759441.52",
+      "bytes": 1671588,
+      "sha256": "ea707c914fc3515d0b13b1e5f017923b409cbc30cd4e69807c9988ddcd24e3a7"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795568303.arcus.2759441.53",
+      "bytes": 1671588,
+      "sha256": "3a28462e45ce70ce2efe7dd4c5e4325b9a3053d5dd2efcc22abc7dd976cc5223"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795569512.arcus.2759441.55",
+      "bytes": 1671588,
+      "sha256": "dee35114706084eace3a93c3328b54eb6952e2a58bb9347fc55d8afbf6ecaa62"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795570579.arcus.2759441.56",
+      "bytes": 1671588,
+      "sha256": "e0fa1585856075b9b7693fa4d4a749c4391654bd5a4c75957677b59a8903ba4e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795571648.arcus.2759441.57",
+      "bytes": 1671588,
+      "sha256": "e7c8fbc265919ca8b740663521ff205695c8063863b93074e9b9db30bca089f1"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795572711.arcus.2759441.58",
+      "bytes": 1671588,
+      "sha256": "468e536475f216ebdac1221ec2a66ab276ffba56d28e3a3b3865b95897f6b5b2"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795573777.arcus.2759441.59",
+      "bytes": 1671588,
+      "sha256": "ce36960183be8178fb4eded09301a05a89c6fabab532948e4fde1971c66c97b1"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795574843.arcus.2759441.60",
+      "bytes": 1671588,
+      "sha256": "93533bec1961b72bbdc6b77162c0c5fac314f9a836fe0be0906e7e08d2ef46fd"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/events.out.tfevents.1795575943.arcus.2759441.61",
+      "bytes": 1236998,
+      "sha256": "3343d1b476daab49f997aceac703bd6c92873df7a00c093bf24a0440c0be6c7c"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/git/M20_Perception_Lidar_RL.diff",
+      "bytes": 169156,
+      "sha256": "d9ba612da296b8d5607317ab41c916f8469376e4b6cca49896a199f7c67d844a"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt",
+      "bytes": 7880831,
+      "sha256": "2467b187c1bbffc96e654e5244c0e165d16ac7907c090556ac3c19f34dd45a4a"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/mujoco_eval/events.out.tfevents.1795526246.arcus.2759441.10",
+      "bytes": 59803,
+      "sha256": "4a0aec990aae8a91aefad3dccc66fba3eac0d8dfcaa00353f880a95d1a80583a"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/mujoco_eval/events.out.tfevents.1795537077.arcus.2759441.21",
+      "bytes": 61546,
+      "sha256": "ca886af53cfa0839dc1d6b92e0942c05fcf87cf87c2e3d5cafae98feffc5131b"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/mujoco_eval/events.out.tfevents.1795547889.arcus.2759441.32",
+      "bytes": 61661,
+      "sha256": "02bfbe13dee80d58cdb331d31dc9cb7d0273ce8357f7cca1f8602048dbad69a8"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/mujoco_eval/events.out.tfevents.1795558705.arcus.2759441.43",
+      "bytes": 61035,
+      "sha256": "05b4c95402201d0c4b74267f938a458306170d739c633ea35556965ff93c5c08"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/mujoco_eval/events.out.tfevents.1795569512.arcus.2759441.54",
+      "bytes": 62893,
+      "sha256": "3c1460491ac298b7c6ecd31814d8190430686734b6c293f0739e3d7a8e76dae9"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/params/agent.yaml",
+      "bytes": 3845,
+      "sha256": "01837740f85af20736908b038a9261430efc4940d229ad2a994d1726683f16e5"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/params/env.yaml",
+      "bytes": 122837,
+      "sha256": "3b202be1c48174c6d688b477cac3af983a36e5db15d847786b75fb7e58cf4ce7"
+    },
+    {
       "path": "M20_perception_Lidar_rl/pyproject.toml",
       "bytes": 1777,
       "sha256": "486414f85e447c01e5a78f8c170a8095e486c753453e72254926552f03103969"
@@ -838,14 +2392,19 @@
       "sha256": "0d3a4836339b3c2b9814ac99499f1e17e86bd5958cb21f616c2440040733066c"
     },
     {
+      "path": "M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/flat_posture_selection.py",
+      "bytes": 8299,
+      "sha256": "9b8d804ee9fc960af58819fdd2efe794457c1de4df5bcc403a8f21e89995d853"
+    },
+    {
       "path": "M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/flat_start_selection.py",
       "bytes": 12147,
       "sha256": "0f5b795d72f828d11bc6c58014e60197f6c74c629c27ca7f206ac943ab40c329"
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/guarded_recovery.py",
-      "bytes": 36239,
-      "sha256": "f31913a335a9ef9b8aadf48344a3d5f2fa0a4eb1ed4e66b8c0a6352542ae63c3"
+      "bytes": 38193,
+      "sha256": "c99ed4e9621c91a1b15de736f23c541e4d1a45cc8e56199aed6035fb92a3c591"
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/play.py",
@@ -854,8 +2413,13 @@
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/repair_workstation_limits.py",
-      "bytes": 2280,
-      "sha256": "3dbfaf6cfc9315b636c4bea77ad7cabc13be78c367765892a4487d5617d6f2d5"
+      "bytes": 2346,
+      "sha256": "64531e2d52190235f4eaf112e26045ef2d9a8657666c6ffebb1392e00b8ce8c1"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/route_hold_selection.py",
+      "bytes": 5715,
+      "sha256": "b33b80a084f73fa658a3d3bf9c3c192aafe242ef602e671a66a221aabb200912"
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/traction_selection.py",
@@ -864,8 +2428,8 @@
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/reinforcement_learning/rsl_rl/train.py",
-      "bytes": 21099,
-      "sha256": "db796d66140e59750244a7f7acfaef3a4979afd5d73acf0f2035b5ccf9950745"
+      "bytes": 21387,
+      "sha256": "0d6d7e6af29fbfe8d6271009ac8d3fc0a5ea390f09d2a9202b594106591e37b0"
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/repair_acceptance.json",
@@ -938,9 +2502,19 @@
       "sha256": "64cf20f763d1ceb4de3f17bf15b2084bda0f243343eb46d90b6007b2b9db1b15"
     },
     {
+      "path": "M20_perception_Lidar_rl/scripts/tools/m20_build_flat_posture_replay.py",
+      "bytes": 5402,
+      "sha256": "dfbacbb43a7e718abca4c284f00d237ec3bf936faa960bd9a1edc07b4caa68c7"
+    },
+    {
       "path": "M20_perception_Lidar_rl/scripts/tools/m20_build_recovery_replay.py",
       "bytes": 5626,
       "sha256": "ac08bc081d6c339e201ca3f859f78e622de7491335637cc09b0fe0dbb57545bd"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/scripts/tools/m20_build_route_flat_replay.py",
+      "bytes": 2418,
+      "sha256": "7f8365ac72140e61210675557c8d004a8d29a1a7b6f627762d9b451a2a0468f5"
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/tools/m20_drive_head_recovery.py",
@@ -954,8 +2528,8 @@
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/tools/m20_entry_flat_benchmark.py",
-      "bytes": 24353,
-      "sha256": "2850c54f926b97cdc559814ab56c94de53bbf1454f1f685772a641c8e77ae3d6"
+      "bytes": 24407,
+      "sha256": "e69443dbfc3d74512eca4d24633d15abbfd11c9a786c9d1002e16e3dc1253e1d"
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/tools/m20_entry_sequence_preflight.py",
@@ -969,13 +2543,23 @@
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/tools/m20_flat_command_probe.py",
-      "bytes": 9599,
-      "sha256": "de99b849c47c3df15e2162ed023af75d6e992cd0b3f38bdf517c6cbf1007c74d"
+      "bytes": 9625,
+      "sha256": "79a64e3f0bff5d1e8ffbc54dc5a449efbb1d3615cc9b139612828a31d163e787"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/scripts/tools/m20_flat_posture_preflight.py",
+      "bytes": 7030,
+      "sha256": "993fdf55cd98735588b64d8c5a647e31d2539b4347dc8ec4c85556d4132d79e6"
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/tools/m20_flat_start_preflight.py",
       "bytes": 1769,
       "sha256": "91babcc9cb768db2e8dbafa6df4ca84219513d13a61d4ff496e66f68780d9fcf"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/scripts/tools/m20_joint_limits_preflight.py",
+      "bytes": 2530,
+      "sha256": "dffdfdc709c27f591d7bc09dd5c57118dae4d23bb96d2bb199efc6c9069734e7"
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/tools/m20_production_transition_benchmark.py",
@@ -998,14 +2582,19 @@
       "sha256": "150a456efd0544496d0db78ac00d6478b57c1d4df58b756c0f61e6509f37ccbb"
     },
     {
+      "path": "M20_perception_Lidar_rl/scripts/tools/m20_route_hold_preflight.py",
+      "bytes": 3156,
+      "sha256": "6391e02c4d598d3c91167cb9941cb20080b622ed3db3fb183c96a85092e4f604"
+    },
+    {
       "path": "M20_perception_Lidar_rl/scripts/tools/m20_step_retention_preflight.py",
       "bytes": 3236,
       "sha256": "2501a8dd639277e9857a869c804fd542134b58725992547edeb26a2052fc76bc"
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/tools/m20_traction_benchmark.py",
-      "bytes": 12462,
-      "sha256": "da2a4fc2cf3ec1c321dc355c93a946835e650f649c06989a410f8ac8d6f23ebb"
+      "bytes": 12538,
+      "sha256": "66e60ad8cc201d34702bbda041b74255839814db2a2740884e6814fa59b75963"
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/tools/m20_traction_preflight.py",
@@ -1078,6 +2667,11 @@
       "sha256": "10499e29fe9c89be22b1e56c73e4abf1519fb59ff9dc5dfc5c5191523931aa74"
     },
     {
+      "path": "M20_perception_Lidar_rl/scripts/tools/test_m20_flat_posture.py",
+      "bytes": 16365,
+      "sha256": "be3a4288d19f17b574db6c7b7668cc16929359821536c2d13f56ae92ccad6b44"
+    },
+    {
       "path": "M20_perception_Lidar_rl/scripts/tools/test_m20_flat_start.py",
       "bytes": 11012,
       "sha256": "e0d64415d5bc982ca7b62a0a5c360cc57c7b36efe52f65c2bd22b50471ec421f"
@@ -1086,6 +2680,11 @@
       "path": "M20_perception_Lidar_rl/scripts/tools/test_m20_guarded_session.py",
       "bytes": 20557,
       "sha256": "6603f1147c7dc145a2760dd1c4b8dca6895cee2a47b9b9bd2c294443798367fc"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/scripts/tools/test_m20_joint_limits.py",
+      "bytes": 6288,
+      "sha256": "dc804c2fd0884d840a3240f4d5677e622e476e45a0aa696f08b4d8b4c5351c87"
     },
     {
       "path": "M20_perception_Lidar_rl/scripts/tools/test_m20_official_high_terrain_relaxation.py",
@@ -1258,6 +2857,11 @@
       "sha256": "2c6ac254b30aae9fcd9b492aa80c742b6921804d2de443c6925c922b9ad3e533"
     },
     {
+      "path": "M20_perception_Lidar_rl/scripts/train_m20_v111_flat_posture_latest.sh",
+      "bytes": 4497,
+      "sha256": "350d76ccb84cc51f35bf31a31b093d821e9a0a43599fa9f846f21f635cabb0f0"
+    },
+    {
       "path": "M20_perception_Lidar_rl/scripts/train_m20_v111_sequence_from49998.sh",
       "bytes": 3674,
       "sha256": "d59ea4f7a5d46e05444f454d545f4cf186e5dc0c90621293ee0816c61bff766c"
@@ -1333,6 +2937,11 @@
       "sha256": "6340f809576b1e273d11cd1aece20d00e0dab441c5a8801e3a130ca9ad5c970a"
     },
     {
+      "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/joint_target_limits.py",
+      "bytes": 2058,
+      "sha256": "bb0669351f167fc24a656d93f42cfaacecb886a64c4e12e463780d6e743127c6"
+    },
+    {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/managers/__init__.py",
       "bytes": 63,
       "sha256": "b1d03f699c4bc0fb8e61ad1309bd22faf97888ccd2281dcac9a8aaf0a208a4a9"
@@ -1351,6 +2960,11 @@
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/recovery_reference.py",
       "bytes": 6189,
       "sha256": "cf7e32a8694a896cbe67fcf5c981d6d1be46e51aa93415b582cf5b028ec65b2e"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/route_hold.py",
+      "bytes": 2416,
+      "sha256": "2d90ea03327fbd7c2f1835612f328e10212a0c2c97a0731e9f019a20132665ed"
     },
     {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/rsl_rl/__init__.py",
@@ -1604,8 +3218,8 @@
     },
     {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/__init__.py",
-      "bytes": 13586,
-      "sha256": "bbdfed2268224e3435cecababc11fe6ae51ca5bf1219e0562b69b0d95f94b679"
+      "bytes": 14431,
+      "sha256": "091db55d49df470c24c8feb4e6b69ad70284d66c9c995a8cdd5549f60947f924"
     },
     {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/agents/__init__.py",
@@ -1683,6 +3297,11 @@
       "sha256": "239c87bfb76f7b3c73b440b3a22e9e2191cacc77b7f8b17ce88d349835ab5b4c"
     },
     {
+      "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_flat_posture_env_cfg.py",
+      "bytes": 4097,
+      "sha256": "7e1713bc42581e8388f4cafcb82ef3d0e1f8c5de4dd522fef6382e23c643f753"
+    },
+    {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_recovery_env_cfg.py",
       "bytes": 5163,
       "sha256": "c5032c0f0952cc4d858bfa93342714dc8e92c0b2fafef3a05322519e2ac628df"
@@ -1691,6 +3310,11 @@
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_refine_env_cfg.py",
       "bytes": 2964,
       "sha256": "e2ad404db170a373ffe2be60032ee3524165bfb8897d1615ef414c1e7bfeaf3d"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_route_hold_env_cfg.py",
+      "bytes": 2846,
+      "sha256": "edc2e551798c063eb1d4ef0b756929a6d3b8ecdeab50f1064780f425b7f719c6"
     },
     {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_step_retention_env_cfg.py",
@@ -1874,13 +3498,18 @@
     },
     {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_flat_posture.py",
-      "bytes": 7184,
-      "sha256": "9502ce0a04b45974ede11bcaab5ab9970076165d36adfddcfaed0292905235b3"
+      "bytes": 7471,
+      "sha256": "77b5673146b6b573645d7e0ebd5f537965ae1773949f2ec2018e66d62f7ed728"
     },
     {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_flat_start.py",
       "bytes": 6030,
       "sha256": "73d34e6e41693e9eb10d2612ab53e18bd54d435db5417964d43289d99ed85ad2"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_joint_limits.py",
+      "bytes": 3362,
+      "sha256": "8ed9bc7a4c9345fbc5df45504c61b104ce9d28b0695b455469c76e127d3b85b8"
     },
     {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_rear_posture.py",
@@ -1901,6 +3530,11 @@
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_refine_commands.py",
       "bytes": 2650,
       "sha256": "0b91aa8f339d28822c6ea3b8b418af85b657f448e3116c9e3ac45fce68608368"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_route_hold.py",
+      "bytes": 5061,
+      "sha256": "7b952055984e9b1143df152da0b59500b321d7313a4025a3e04ba0b6075a6ab5"
     },
     {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_step_retention.py",
@@ -2113,6 +3747,11 @@
       "sha256": "01b3f867af3301bcc4b76a08cef4d8ad1bf55076fa857a8c551c25547c350bab"
     },
     {
+      "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/v111_flat_posture_runner.py",
+      "bytes": 9045,
+      "sha256": "6663be228c89810d5b34259c052a373a03265b4bb1153d90fdedc744b65f1f8d"
+    },
+    {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/v111_flat_start_runner.py",
       "bytes": 2467,
       "sha256": "f7ec67f3ef61c2027150f075e543519920bd6da0caa87bbe142c72611c0bb62f"
@@ -2121,6 +3760,11 @@
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/v111_recovery_runner.py",
       "bytes": 8106,
       "sha256": "29ea66df32a10d017691c60fda2df2b33cc5e0063e420fd85e935ebdd0ff6da7"
+    },
+    {
+      "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/v111_route_hold_runner.py",
+      "bytes": 6335,
+      "sha256": "2baa0660b94a1c2bb0ae7cfbe3ca2decf1c3dcfdea9b4cfd45ba36bb71fbbc64"
     },
     {
       "path": "M20_perception_Lidar_rl/source/rl_training/rl_training/v111_step_retention_runner.py",
@@ -2244,23 +3888,23 @@
     },
     {
       "path": "M20_perception_Lidar_rl/tools/entry_sequence_export_policy.json",
-      "bytes": 3101,
-      "sha256": "7a32f6d21c3dfd6a466490e8f3a9e2adbe6212e70a987b3ff919a6fe750be59d"
+      "bytes": 33087,
+      "sha256": "666dfbb0ae716cb1491b96df2d00e45fc4ee91a1ca42eb7c17de85f1419143be"
     },
     {
       "path": "M20_perception_Lidar_rl/tools/export_entry_sequence_snapshot.py",
-      "bytes": 6297,
-      "sha256": "3fb0665d607f636bbdf6a34e43b3a4f0a3ff93c411b88b00fe6c2bc0fc7c9bc9"
+      "bytes": 7274,
+      "sha256": "08ba5833a5f90e0dd7e4fa2d73b4bf555ec73336f10786358e121731419b5c92"
     },
     {
       "path": "README.md",
-      "bytes": 5517,
-      "sha256": "4e9e5771bad20f6f377860ce9c50c1ed7c9436b2deb9ff20ddd219f6294b2ad3"
+      "bytes": 7723,
+      "sha256": "e98a4286edf56d5f59b1655ed652f8b202cc831beb2e00604a22c8bf60e6bdf1"
     },
     {
       "path": "VALIDATION_REPORT.json",
-      "bytes": 1157,
-      "sha256": "785d630313728060b7e99bc0a1d76d082b8fc9f120cc812f9a2562b3434cf3d3"
+      "bytes": 2074,
+      "sha256": "c93d139f56da53ae164654fddbc2c087e6f72c86f72c48446472ee99e8716c80"
     },
     {
       "path": "mujoco_validation/deploy/mujoco_v135/.gitattributes",
@@ -2279,8 +3923,8 @@
     },
     {
       "path": "mujoco_validation/deploy/mujoco_v135/README.md",
-      "bytes": 8568,
-      "sha256": "27e8d489a9575c7e6c4a3a3d3fe91a6a7147be470c96910a22ab7f3b68cb34f3"
+      "bytes": 8668,
+      "sha256": "b4921fcff83f7518a39036e7a657a848f1ff6ab16ab1dde69385f55a454c9eff"
     },
     {
       "path": "mujoco_validation/deploy/mujoco_v135/VALIDATION.md",
@@ -2419,8 +4063,8 @@
     },
     {
       "path": "mujoco_validation/deploy/mujoco_v135/policy.py",
-      "bytes": 7316,
-      "sha256": "0cae34498ffee49e1896103253deb188c6109490c77c6941b184f4b25df29946"
+      "bytes": 9189,
+      "sha256": "797f45542718884a3a6f07926863d7f2ed9ed319a457842e21bba03ebe42abd0"
     },
     {
       "path": "mujoco_validation/deploy/mujoco_v135/reference_risers.py",
@@ -2439,13 +4083,13 @@
     },
     {
       "path": "mujoco_validation/deploy/mujoco_v135/run.py",
-      "bytes": 24638,
-      "sha256": "18fad6304cc079e458da356391b73cde743baeacd9df6acdae717d5bf0ea36d4"
+      "bytes": 24624,
+      "sha256": "2dd8557531c2579bba8088f890877de50aa490bbaa42164ff4556219541b40fb"
     },
     {
       "path": "mujoco_validation/deploy/mujoco_v135/saved_config.py",
-      "bytes": 3085,
-      "sha256": "785ca80f9cd95d0e5c8f9503e578938fd5364de72846d3dbeb8167c80f9bda0d"
+      "bytes": 3829,
+      "sha256": "a1834f5b42745209f11b2b2b9afbfa14a6e335d68a99b6f53dc5fe2064cfdf7b"
     },
     {
       "path": "mujoco_validation/deploy/mujoco_v135/teleop.py",
@@ -2474,8 +4118,8 @@
     },
     {
       "path": "mujoco_validation/deploy/mujoco_v135/test_contract.py",
-      "bytes": 15249,
-      "sha256": "e7f74df50a11b68677e0edb76752c9344633da88e38bcead284915bb05d517fb"
+      "bytes": 17159,
+      "sha256": "599962e3de00d955ad16e2736f469928344b50de4302983a6175f3bcdbacb16e"
     },
     {
       "path": "mujoco_validation/deploy_real/.gitignore",
@@ -3049,10 +4693,13 @@
     }
   ],
   "filtered": {
-    "cache, environment or local settings": 15773,
-    "historical or unrelated content": 5212,
-    "generated artifact": 9
+    "cache, environment or local settings": 15801,
+    "historical or unrelated content": 5213,
+    "generated artifact": 15,
+    "checkpoint outside selected training": 8
   },
-  "total_bytes": 93542882,
+  "total_bytes": 223424835,
+  "previous_published_commit": "05be7f2ad70015cac1a7f8581482d1533b041880",
+  "new_training_checkpoint": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt",
   "validation_report": "VALIDATION_REPORT.json"
 }

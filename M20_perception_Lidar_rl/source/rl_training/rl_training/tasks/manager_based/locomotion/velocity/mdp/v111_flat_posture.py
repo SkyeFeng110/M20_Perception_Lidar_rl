@@ -49,7 +49,7 @@ def reset(env, env_ids):
 
 def state(env):
     from .v111_entry_transfer import state as entry_state
-    from .v135_terrain_geometry import column_names
+    from .v135_terrain_geometry import column_names, v135_terrain_geometry
     entry_state(env)
     robot, term = env.scene['robot'], env.command_manager.get_term('base_velocity')
     if not hasattr(env, '_m20_flat_posture'):
@@ -76,9 +76,11 @@ def state(env):
     # before the first riser: neither B1 transfer nor later gait is reshaped.
     entry = env._v111_first_tread
     forward_x = ((wheels[..., :2]-entry['anchor'][:, None])*entry['forward'][:, None]).sum(-1)
-    far_approach = (entry['height_valid'] & (forward_x[:, :2].amax(1) < -.50)
+    # The verified inverted-pyramid mesh origin is its bottom platform. Use
+    # that physical plane even before the first riser enters scanner range.
+    far_approach = (v135_terrain_geometry(env)['ascent'] & (forward_x[:, :2].amax(1) < -.50)
                     & ((wheels[..., 2]-env.cfg.v11_perception.wheel_radius
-                        -entry['lower'][:, None]).abs().amax(1) < .12))
+                        -env.scene.env_origins[:, None, 2]).abs().amax(1) < .12))
     straight = ((term.vel_command_b[:, 1].abs() < .05)
                 & (term.vel_command_b[:, 2].abs() < .03) & ~term.is_heading_env)
     physical = s['columns'][env.scene.terrain.terrain_types] | far_approach
@@ -133,6 +135,8 @@ def metric(env, env_ids, key):
     if key == 'onset_event_cost':
         return s['onset_sum'][ids].sum()/(s['samples'][ids] > 0).sum().clamp_min(1)
     keys = ('reach', 'pitch', 'pitch_rate', 'speed', 'yaw', 'lateral')
+    if key.endswith('_sum'):
+        return s['sums'][ids, keys.index(key[:-4])].sum()
     if key.endswith('_peak'):
         return s['maxima'][ids, keys.index(key[:-5])].max() if len(ids) else s['samples'].new_zeros(())
     return s['sums'][ids, keys.index(key)].sum()/s['samples'][ids].sum().clamp_min(1)

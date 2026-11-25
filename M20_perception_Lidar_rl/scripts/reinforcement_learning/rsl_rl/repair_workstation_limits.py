@@ -9,7 +9,7 @@ TASKS = ('M20-Stair-V11.1-EntryFlatRepair-v0', 'M20-Stair-V11.1-AdjacentRepair-v
          'M20-Stair-V11.1-TargetedCorrection-v0', 'M20-Stair-V11.1-TargetedCorrectionV2-v0',
          'M20-Stair-V11.1-StepSupport-v0', 'M20-Stair-V11.1-StepRetention-v0',
          'M20-Stair-V11.1-TractionTransition-v0', 'M20-Stair-V11.1-EntryTransfer-v0',
-         'M20-Stair-V11.1-EntrySequenceRepair-v0')
+         'M20-Stair-V11.1-EntrySequenceRepair-v0', 'M20-Stair-V11.1-FlatPosture-v0', 'M20-Stair-V11.1-RouteHold-v0')
 LEDGER = Path(__file__).resolve().parents[2]/'repair_workstation_limits.json'
 
 

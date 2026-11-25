@@ -1,4 +1,4 @@
-> 当前发布说明：默认 checkpoint 已改为 `M20-V11.1-EntrySequenceRepair` 中编号最大的模型，其真实配置位于同一 run 的 `params/`。以下旧模型示例仅用于解释历史行为；本次发布不包含其中的旧权重。当前运行命令见 [仓库 README](../../../README.md)。
+> 2026-11-25 发布更新：新增 FlatPosture `model_56998.pt` 和该 run 的真实配置。验证它请显式传 `--checkpoint M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt`（从仓库根目录启动）。默认仍使用 EntrySequenceRepair 模型。以下为历史说明，当前完整命令见 [仓库 README](../../../README.md)。
 
 # M20 MuJoCo 验证
 

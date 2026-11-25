@@ -1,0 +1,1 @@
+/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL/M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest

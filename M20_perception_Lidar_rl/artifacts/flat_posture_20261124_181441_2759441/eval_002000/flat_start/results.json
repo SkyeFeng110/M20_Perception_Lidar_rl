@@ -1,0 +1,220 @@
+[
+  {
+    "case": {
+      "name": "raw_light",
+      "forward_filter": false,
+      "idle_wheel_stop": true,
+      "speed": 0.3
+    },
+    "pitch_peak_deg": 1.4109545748626258,
+    "transient_pitch_peak_deg": 1.3036865440027476,
+    "pitch_rate_peak_deg_s": 2.6378331255616447,
+    "front_hipx_angle_peak_deg": [
+      3.3571962490196556,
+      2.7818285262545004
+    ],
+    "front_hipx_target_peak_deg": [
+      4.144224109094407,
+      4.147588831034284
+    ],
+    "fr_inward_y_change_m": 0.003816555987583986,
+    "front_wheel_action_step": [
+      -0.44779884815216064,
+      -0.7164943814277649
+    ],
+    "front_hipx_target_step_deg": [
+      2.892847328731505,
+      -2.3846371784180684
+    ],
+    "lateral_peak_m": 0.01098645277253895,
+    "yaw_peak_deg": 0.43014667890350666,
+    "final_speed_m_s": 0.30480470471022647,
+    "base_min_height_m": 0.5498978915285068,
+    "front_width_min_m": 0.46426003971308616,
+    "hipx_target_jump_peak_deg": 2.892847328731505,
+    "sagittal_target_jump_peak_deg": 13.824511360958056,
+    "wheel_target_jump_peak_rad_s": 4.3251243233680725
+  },
+  {
+    "case": {
+      "name": "raw_full",
+      "forward_filter": false,
+      "idle_wheel_stop": true,
+      "speed": 1.0
+    },
+    "pitch_peak_deg": 1.4980132751764554,
+    "transient_pitch_peak_deg": 1.4980132751764554,
+    "pitch_rate_peak_deg_s": 29.902760776036413,
+    "front_hipx_angle_peak_deg": [
+      1.8903308655602882,
+      1.8426795934200981
+    ],
+    "front_hipx_target_peak_deg": [
+      7.86764880116079,
+      6.5087152176686995
+    ],
+    "fr_inward_y_change_m": 0.021610820389452612,
+    "front_wheel_action_step": [
+      -0.8137772083282471,
+      -1.497663974761963
+    ],
+    "front_hipx_target_step_deg": [
+      4.936849739749521,
+      -4.300204712283165
+    ],
+    "lateral_peak_m": 0.00572392454149311,
+    "yaw_peak_deg": 0.40554472224607807,
+    "final_speed_m_s": 0.8829928700189457,
+    "base_min_height_m": 0.557220421034094,
+    "front_width_min_m": 0.43616019567708425,
+    "hipx_target_jump_peak_deg": 4.936849739749521,
+    "sagittal_target_jump_peak_deg": 32.932266092392204,
+    "wheel_target_jump_peak_rad_s": 8.230972290039062
+  },
+  {
+    "case": {
+      "name": "raw_partial_full",
+      "forward_filter": false,
+      "idle_wheel_stop": true,
+      "speed": 1.0,
+      "partial_full": true
+    },
+    "pitch_peak_deg": 1.465737753242512,
+    "transient_pitch_peak_deg": 1.3036865440027476,
+    "pitch_rate_peak_deg_s": 3.757735992326133,
+    "front_hipx_angle_peak_deg": [
+      2.97526968823087,
+      2.6706158118925387
+    ],
+    "front_hipx_target_peak_deg": [
+      4.144224109094407,
+      4.147588831034284
+    ],
+    "fr_inward_y_change_m": 0.003816555987583986,
+    "front_wheel_action_step": [
+      -0.44779884815216064,
+      -0.7164943814277649
+    ],
+    "front_hipx_target_step_deg": [
+      2.892847328731505,
+      -2.3846371784180684
+    ],
+    "lateral_peak_m": 0.02908706619497116,
+    "yaw_peak_deg": 0.7735250360293249,
+    "final_speed_m_s": 0.8768074458143476,
+    "base_min_height_m": 0.5512630883663256,
+    "front_width_min_m": 0.46426003971308616,
+    "hipx_target_jump_peak_deg": 2.892847328731505,
+    "sagittal_target_jump_peak_deg": 13.824511360958056,
+    "wheel_target_jump_peak_rad_s": 4.3251243233680725
+  },
+  {
+    "case": {
+      "name": "filtered_light",
+      "forward_filter": true,
+      "idle_wheel_stop": true,
+      "speed": 0.3
+    },
+    "pitch_peak_deg": 1.4081306069497168,
+    "transient_pitch_peak_deg": 1.293662824185654,
+    "pitch_rate_peak_deg_s": 2.228112746731496,
+    "front_hipx_angle_peak_deg": [
+      3.3449333647784485,
+      2.769471879408237
+    ],
+    "front_hipx_target_peak_deg": [
+      2.7990123756448715,
+      3.363579804182258
+    ],
+    "fr_inward_y_change_m": 0.003730064485856721,
+    "front_wheel_action_step": [
+      -0.03996273875236511,
+      -0.049252212047576904
+    ],
+    "front_hipx_target_step_deg": [
+      0.1515766252779808,
+      -0.14583841260152383
+    ],
+    "lateral_peak_m": 0.011160207255694514,
+    "yaw_peak_deg": 0.44192672181963777,
+    "final_speed_m_s": 0.3047129093972296,
+    "base_min_height_m": 0.5499228643194946,
+    "front_width_min_m": 0.46460451134429176,
+    "hipx_target_jump_peak_deg": 0.4026638773994641,
+    "sagittal_target_jump_peak_deg": 1.7255241369552496,
+    "wheel_target_jump_peak_rad_s": 2.411259710788727
+  },
+  {
+    "case": {
+      "name": "filtered_full",
+      "forward_filter": true,
+      "idle_wheel_stop": true,
+      "speed": 1.0
+    },
+    "pitch_peak_deg": 0.9490548108154647,
+    "transient_pitch_peak_deg": 0.7272445478566267,
+    "pitch_rate_peak_deg_s": 2.228112746731496,
+    "front_hipx_angle_peak_deg": [
+      2.9394799150063293,
+      2.6000828064770483
+    ],
+    "front_hipx_target_peak_deg": [
+      2.873591211192241,
+      3.363579804182258
+    ],
+    "fr_inward_y_change_m": 0.004262640337928197,
+    "front_wheel_action_step": [
+      -0.03996273875236511,
+      -0.049252212047576904
+    ],
+    "front_hipx_target_step_deg": [
+      0.1515766252779808,
+      -0.14583841260152383
+    ],
+    "lateral_peak_m": 0.03245076134089565,
+    "yaw_peak_deg": 0.7092385432984775,
+    "final_speed_m_s": 0.8788649365458733,
+    "base_min_height_m": 0.5561283934532424,
+    "front_width_min_m": 0.46460451134429176,
+    "hipx_target_jump_peak_deg": 0.4026638773994641,
+    "sagittal_target_jump_peak_deg": 1.7255241369552496,
+    "wheel_target_jump_peak_rad_s": 2.411259710788727
+  },
+  {
+    "case": {
+      "name": "filtered_partial_full",
+      "forward_filter": true,
+      "idle_wheel_stop": true,
+      "speed": 1.0,
+      "partial_full": true
+    },
+    "pitch_peak_deg": 1.3762608819555646,
+    "transient_pitch_peak_deg": 1.293662824185654,
+    "pitch_rate_peak_deg_s": 2.228112746731496,
+    "front_hipx_angle_peak_deg": [
+      2.987778168968185,
+      2.6924515383642365
+    ],
+    "front_hipx_target_peak_deg": [
+      3.031123121096238,
+      3.363579804182258
+    ],
+    "fr_inward_y_change_m": 0.003730064485856721,
+    "front_wheel_action_step": [
+      -0.03996273875236511,
+      -0.049252212047576904
+    ],
+    "front_hipx_target_step_deg": [
+      0.1515766252779808,
+      -0.14583841260152383
+    ],
+    "lateral_peak_m": 0.028323239303782114,
+    "yaw_peak_deg": 0.7891236563437924,
+    "final_speed_m_s": 0.8759970051134931,
+    "base_min_height_m": 0.5536593275127584,
+    "front_width_min_m": 0.46460451134429176,
+    "hipx_target_jump_peak_deg": 0.4026638773994641,
+    "sagittal_target_jump_peak_deg": 1.7255241369552496,
+    "wheel_target_jump_peak_rad_s": 2.411259710788727
+  }
+]

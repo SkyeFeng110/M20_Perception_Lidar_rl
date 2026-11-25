@@ -37,12 +37,20 @@ class SavedPolicy:
         semantics = from_checkpoint(self.path, {"joint_names": JOINT_NAMES}, config_path=self.config_path)
         self.nominal = np.asarray(semantics["default_joint_pos"], dtype=np.float64)
         self.action_scale = np.asarray(semantics["action_scale"], dtype=np.float64)
+        limits = semantics["leg_target_limits"]
+        self.leg_target_limits = None if limits is None else np.asarray(limits, dtype=np.float64)
+        self.limited_leg_action = self.cfg["actions"]["joint_pos"]["class_type"].endswith(":LimitedLegPositionAction")
+        if self.limited_leg_action and self.leg_target_limits is None:
+            raise ValueError("LimitedLegPositionAction requires saved per-joint target bounds")
         self.period = float(self.cfg["sim"]["dt"]) * int(self.cfg["decimation"])
         self.clip_actions = float(self.agent["clip_actions"])
         self.perception = self.cfg["v11_perception"]
         if self.perception["feature_contract"] != "v11_signed_edges_v2":
             raise ValueError("Expected v11_signed_edges_v2; refusing a guessed perception ABI")
         self.obs_cfg = self.cfg["observations"]["policy"]
+        if (self.limited_leg_action
+                and self.obs_cfg["actions"]["func"].split(":")[-1] != "executed_last_action"):
+            raise ValueError("Limited leg targets require executed_last_action observations")
         expected = {"base_ang_vel": "base_ang_vel", "projected_gravity": "projected_gravity",
                     "velocity_commands": "generated_commands", "joint_pos": "joint_pos_rel_without_wheel",
                     "joint_vel": "joint_vel_rel", "actions": "last_action", "height_scan": "v11_actor_perception"}
@@ -53,9 +61,8 @@ class SavedPolicy:
             term = self.obs_cfg[key]
             functions = {function}
             if key == "actions":
-                # FlatStart stores the previous executed action after its
-                # zero-command wheel stop. The deployment loop supplies that
-                # same 16D history through observation(..., previous, ...).
+                # Deployment supplies history after leg target bounds and
+                # the zero-command wheel stop for this saved convention.
                 functions.add("executed_last_action")
             if term["func"].split(":")[-1] not in functions or term["history_length"] != 0 or term["modifiers"]:
                 raise ValueError(f"Unsupported observation term: {key}")
@@ -98,9 +105,34 @@ class SavedPolicy:
                              feature_contract=self.perception["feature_contract"],
                              joint_names=JOINT_NAMES, default_joint_pos=self.nominal.tolist(),
                              action_scale=self.action_scale.tolist(), policy_period=self.period,
+                             leg_target_limits_rad=limits,
                              action_history_function=self.obs_cfg["actions"]["func"].split(":")[-1],
                              kp=self.kp.tolist(), kd=self.kd.tolist(), effort_limit=self.effort.tolist(),
                              armature=self.armature.tolist(), critic_used=False)
+
+    def position_target(self, action):
+        target = self.nominal + self.action_scale * action
+        if self.leg_target_limits is not None:
+            target[:12] = np.clip(target[:12], self.leg_target_limits[:, 0], self.leg_target_limits[:, 1])
+        return target
+
+    def executed_action(self, action, command=None):
+        """Normalize bounded leg targets without changing in-range actions."""
+        result = np.array(action, copy=True)
+        if self.leg_target_limits is not None:
+            requested = self.nominal[:12] + self.action_scale[:12] * result[:12]
+            target = np.clip(requested, self.leg_target_limits[:, 0], self.leg_target_limits[:, 1])
+            result[:12] = np.where(requested != target,
+                (target - self.nominal[:12]) / self.action_scale[:12], result[:12])
+        if (self.metadata["action_history_function"] == "executed_last_action"
+                and command is not None and np.linalg.norm(command) < 0.08):
+            result[12:] = 0.
+        return result
+
+    def history_action(self, action):
+        if self.metadata["action_history_function"] == "executed_last_action":
+            return self.executed_action(action)
+        return np.array(action, copy=True)
 
     def observation(self, omega, gravity, command, qpos, qvel, previous, feature):
         relative = qpos - self.nominal

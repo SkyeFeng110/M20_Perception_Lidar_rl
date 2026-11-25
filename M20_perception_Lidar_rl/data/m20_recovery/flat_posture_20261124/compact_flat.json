@@ -1,0 +1,12 @@
+{
+  "protocol": "flat_posture_current_stairs_compact_flat_v1",
+  "sha256": "53a4d088cb6ffa115b443187cca674cbd4dd087d73668ab1be1d3ba9e32614c3",
+  "source_checkpoint": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL/M20_perception_Lidar_rl/interview_prep/model_49998.pt",
+  "source_sha256": "ef0fafd826687d8de283b4c56842c7d15f345bbd98e30120ed4af692a1cc6589",
+  "trajectory": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL/M20_perception_Lidar_rl/artifacts/entry_49998_repair_20261124/reference/production/current/flat_None_1.0.npz",
+  "trajectory_sha256": "3acd4d04c18694bf5e0777aff217dab74d2da369e6d6c7c3ff9b46e58720f61e",
+  "manifest": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL/M20_perception_Lidar_rl/artifacts/entry_49998_repair_20261124/reference/production/current/manifest.json",
+  "manifest_sha256": "49d2dc2d3d2b6cd749e3da46e28363c2761b92951db01cb9e78d6d9895eb51c8",
+  "samples": 501,
+  "scope": "Measured compact sagittal moving posture only; startup impulse and steering are excluded"
+}

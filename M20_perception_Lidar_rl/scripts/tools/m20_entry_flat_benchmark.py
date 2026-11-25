@@ -218,7 +218,7 @@ def run(a):
                         where=np.where, clip=np.clip, acceleration=a.forward_acceleration))
                     command[0] = filtered_forward
                 obs = r.observe(command, last)
-                action = session.action(obs) if session else saved(obs)
+                action = saved.executed_action(session.action(obs) if session else saved(obs), command)
                 if a.forward_contract and np.linalg.norm(command) < .08:
                     action = action.copy(); action[12:] = 0.
                 acoustic.policy_sample(action, active=active, moving=moving_now)
@@ -230,7 +230,7 @@ def run(a):
                     mujoco.mj_step(r.model, r.data)
                     acoustic.physics_sample(r, active=active, moving=moving_now)
                 mujoco.mj_forward(r.model, r.data)
-                last = action if active else np.zeros(16)
+                last = saved.history_action(action) if active else np.zeros(16)
                 if session:
                     session.previous = last.copy()
                 supported = np.full(4, -1, dtype=int)

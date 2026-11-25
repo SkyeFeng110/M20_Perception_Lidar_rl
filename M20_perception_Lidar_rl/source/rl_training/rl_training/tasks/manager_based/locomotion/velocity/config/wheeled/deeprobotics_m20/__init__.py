@@ -353,3 +353,25 @@ gym.register(
         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:DeeproboticsM20V12V9Teacher6DPPORunnerCfg",
     },
 )
+
+
+gym.register(
+    id="M20-Stair-V11.1-FlatPosture-v0",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    disable_env_checker=True,
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.v111_flat_posture_env_cfg:DeeproboticsM20V111FlatPostureEnvCfg",
+        "rsl_rl_cfg_entry_point": f"{__name__}.v111_flat_posture_env_cfg:DeeproboticsM20V111FlatPosturePPORunnerCfg",
+    },
+)
+
+# Original-route correction with acquired flat posture and stair motion retained.
+gym.register(
+    id="M20-Stair-V11.1-RouteHold-v0",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    disable_env_checker=True,
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.v111_route_hold_env_cfg:DeeproboticsM20V111RouteHoldEnvCfg",
+        "rsl_rl_cfg_entry_point": f"{__name__}.v111_route_hold_env_cfg:DeeproboticsM20V111RouteHoldPPORunnerCfg",
+    },
+)

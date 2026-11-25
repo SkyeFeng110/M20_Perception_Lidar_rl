@@ -171,12 +171,13 @@ def run(a):
                 t = float(r.data.time)
                 active = t >= 1.
                 command = command_speed(t, profile, speed)
-                action = saved(r.observe(np.array([command, 0., 0.]), last))
+                cmd = np.array([command, 0., 0.])
+                action = saved.executed_action(saved(r.observe(cmd, last)), cmd)
                 for _ in range(round(saved.period/.001)):
                     r.control(action) if active else r.control_pose(saved.nominal)
                     mujoco.mj_step(r.model, r.data)
                 mujoco.mj_forward(r.model, r.data)
-                last = action if active else np.zeros(16)
+                last = saved.history_action(action) if active else np.zeros(16)
                 rotation = r.data.xmat[r.base_id].reshape(3, 3)
                 gravity = rotation.T@np.array([0., 0., -1.])
                 vel = np.zeros(6)

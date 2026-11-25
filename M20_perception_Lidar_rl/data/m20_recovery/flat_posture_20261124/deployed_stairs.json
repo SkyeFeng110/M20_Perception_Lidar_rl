@@ -1,0 +1,19 @@
+{
+  "protocol": "flat_posture_current_stairs_compact_flat_v1",
+  "sha256": "1270e8859f24f4bb67c970ad8d04ddd49d855109f78644c5855b454515061919",
+  "source_sha256": "c0059cc7d371f7d73623d7f65336e29ecdc674675728c4fc0221dac887b2d93b",
+  "sources": [
+    {
+      "trajectory": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL/M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/current/ascent_0.26_1.0.npz",
+      "trajectory_sha256": "3b685b77130d8bffabb72ad99cb5a11076d68e1fe01ab46865f54030cad77110",
+      "manifest": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL/M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/current/manifest.json",
+      "manifest_sha256": "fdee21511982bff369ed741d9192c0654e1d9891c7a9907569b379aec0b74cce"
+    },
+    {
+      "trajectory": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL/M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/current/ascent_0.3_1.0.npz",
+      "trajectory_sha256": "656544f86a1b8f6fdd10c2e199b34848ad5337f04ba4aed12bcd3545035fe2df",
+      "manifest": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL/M20_perception_Lidar_rl/artifacts/flat_posture_repair_20261124/reference50498/production/current/manifest.json",
+      "manifest_sha256": "fdee21511982bff369ed741d9192c0654e1d9891c7a9907569b379aec0b74cce"
+    }
+  ]
+}

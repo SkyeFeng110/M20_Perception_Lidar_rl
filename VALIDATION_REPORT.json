@@ -1,24 +1,54 @@
 {
-  "snapshot_scope": "EntrySequenceRepair training plus complete interview_prep",
-  "checks": {
-    "regression_tests": {
-      "passed": 76,
-      "skipped": 3,
-      "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q scripts/tools/test_m20_entry_sequence.py scripts/tools/test_m20_entry_transfer.py scripts/tools/test_m20_step_retention.py scripts/tools/test_m20_guarded_session.py ../../mujoco_validation/deploy/mujoco_v135/test_contract.py",
-      "note": "Selected tests were run from the repository root with full paths. Skipped tests require historical experiment data excluded from this snapshot."
-    },
-    "cpu_preflight": "passed",
-    "entry_sequence_preflight": "passed",
-    "replay_samples": 6730,
-    "post_b2_samples": 2212,
-    "completed_ascent_reference_cases": 8,
-    "manifest_hashes": "passed",
+  "checked_at": "2026-11-25T11:22:14+08:00",
+  "scope": "Current source update; only model_56998.pt and its FlatPosture run logs are added; previous EntrySequenceRepair logs and complete interview_prep are preserved.",
+  "selected_checkpoint": {
+    "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt",
+    "sha256": "2467b187c1bbffc96e654e5244c0e165d16ac7907c090556ac3c19f34dd45a4a"
+  },
+  "regression_tests": {
+    "passed": 91,
+    "skipped": 3,
+    "suites": [
+      "test_m20_flat_posture.py",
+      "test_m20_joint_limits.py",
+      "test_m20_entry_sequence.py",
+      "test_m20_entry_transfer.py",
+      "test_m20_step_retention.py",
+      "test_m20_guarded_session.py",
+      "mujoco_v135/test_contract.py"
+    ],
+    "skipped_note": "Three guarded-session cases require historical experiment evidence excluded from this publication."
+  },
+  "preflight": {
+    "cpu": "passed",
+    "joint_target_limits": "passed",
+    "flat_posture": "passed",
+    "gait_samples": 6500,
+    "protected_gait_samples": 3047,
+    "compact_flat_samples": 501,
+    "measured_joint_limit_trajectories": 60,
+    "measured_joint_limit_samples": 37742,
+    "baseline_frames_clipped": 0
+  },
+  "mujoco_smoke": {
+    "checkpoint_iteration": 56998,
+    "simulated_seconds": 3.0,
+    "control_steps": 150,
+    "execution_config": "adjacent params",
+    "fell": false,
+    "strict_gait_acceptance": "not_measured"
+  },
+  "publication": {
+    "previous_log_files_preserved": 13,
+    "new_checkpoint_count": 1,
+    "new_tensorboard_files": 62,
     "entire_interview_prep_included": true,
+    "manifest_hashes": "passed",
     "python_syntax": "passed"
   },
   "limits": [
-    "No new Isaac app or PPO training was started.",
-    "Physical behavior improvement is not established by these checks.",
-    "Cross-machine PPO continuation also requires relocating saved best-candidate archive paths."
+    "No new Isaac app or PPO training was started; the running training was not stopped.",
+    "The short MuJoCo smoke check confirms model/config loading and stepping, not full-stair or real-robot behavior acceptance.",
+    "Cross-host exact optimizer continuation still requires relocating saved best-candidate archive paths and evidence."
   ]
 }

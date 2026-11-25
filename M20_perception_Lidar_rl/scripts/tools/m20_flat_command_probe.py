@@ -69,13 +69,13 @@ def run_case(saved, case):
         if speed > .05 and 'feature' in case:
             obs[57:63] = case['feature']
         raw_action = saved(obs)
-        action = raw_action.copy()
+        action = saved.executed_action(raw_action, cmd)
         if case.get('idle_wheel_stop', False) and np.linalg.norm(cmd) < .08:
             action[12:] = 0.
         delay.append(action.copy())
         applied = delay[0]
         if t >= 1.:
-            last = action.copy()
+            last = saved.history_action(action)
         for _ in range(round(saved.period/.001)):
             if t >= 1.:
                 r.control(applied)
@@ -92,7 +92,7 @@ def run_case(saved, case):
         relative = (r.data.xpos[r.wheels]-r.data.xpos[r.base_id])@rotation
         values = dict(time=t, command=cmd, observation=obs, action=raw_action,
             processed_action=action, requested_command=requested,
-            q=r.data.qpos[r.qids].copy(), target=saved.nominal+saved.action_scale*action,
+            q=r.data.qpos[r.qids].copy(), target=saved.position_target(action),
             wheel_y_body=relative[:, 1], position=r.data.xpos[r.base_id].copy(),
             pitch=np.degrees(np.arctan2(gravity[0], np.linalg.norm(gravity[1:]))),
             pitch_rate=np.degrees((rotation.T@velocity[:3])[1]), speed=velocity[3],

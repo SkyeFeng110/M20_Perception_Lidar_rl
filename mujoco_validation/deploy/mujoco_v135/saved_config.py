@@ -24,6 +24,19 @@ def resolve(value,names,label):
     if not all(math.isfinite(v) for v in result):raise ValueError(f'{label}: nonfinite')
     return result
 
+def resolve_ranges(value,names,label):
+    if value is None:return None
+    if not isinstance(value,dict):raise ValueError(f'{label}: unsupported mapping')
+    result=[]
+    for name in names:
+        matches=[v for pattern,v in value.items() if re.fullmatch(pattern,name)]
+        if len(matches)!=1:raise ValueError(f'{label}: {name} must match exactly one rule, got {matches}')
+        bounds=[float(x) for x in matches[0]]
+        if len(bounds)!=2 or not all(math.isfinite(x) for x in bounds) or bounds[0]>=bounds[1]:
+            raise ValueError(f'{label}: invalid range for {name}: {bounds}')
+        result.append(bounds)
+    return result
+
 def from_checkpoint(checkpoint,base,*,config_path=None):
     path=Path(config_path) if config_path is not None else Path(checkpoint).resolve().parent/'params/env.yaml'
     if not path.is_file():raise ValueError(f'M20 export requires saved training config: {path}; refusing guessed joint semantics')
@@ -40,6 +53,7 @@ def from_checkpoint(checkpoint,base,*,config_path=None):
     result=dict(base)
     result['default_joint_pos']=resolve(cfg['scene']['robot']['init_state']['joint_pos'],names,'default_joint_pos')
     result['action_scale']=resolve(pos['scale'],pos['joint_names'],'position scale')+resolve(vel['scale'],vel['joint_names'],'velocity scale')
+    result['leg_target_limits']=resolve_ranges(pos.get('clip'),names[:12],'leg position clip')
     if any(x<=0 for x in result['action_scale']):raise ValueError('Action scales must be positive')
     if any(result['default_joint_pos'][12:]):raise ValueError('Wheel position observation must have zero nominal')
     result['contract_metadata']={'m20_joint_contract':'m20_saved_joint_semantics_v1','m20_training_config_sha256':hashlib.sha256(raw).hexdigest(),'m20_training_config_path':str(path)}

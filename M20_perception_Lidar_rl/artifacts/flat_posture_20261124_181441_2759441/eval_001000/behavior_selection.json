@@ -1,0 +1,47 @@
+{
+  "selection": {
+    "promoted": false,
+    "regressions": [
+      "current_z_c_8/ascent/0.26/1.0: forward_lateral_max_abs",
+      "current_z_c_8/ascent/0.3/1.0: forward_lateral_max_abs",
+      "entry/('current_z_c_8', 'ascent', 0.26, 1.0): lost wheel support B4, lost wheel support B8",
+      "entry/('flat-start_z_c_8', 'ascent', 0.26, 0.7): four-leg order B10, four-leg order B12, four-leg order B4",
+      "entry/('flat-start_z_c_8', 'ascent', 0.26, 1.0): lost wheel support B5",
+      "entry/('standing', 'ascent', 0.26, 0.5): four-leg order B12, four-leg order B4, four-leg order B6",
+      "entry/('standing', 'ascent', 0.3, 0.5): lost wheel support B2",
+      "entry/('z_c_8', 'ascent', 0.26, 0.7): four-leg order B10, four-leg order B12, four-leg order B4, four-leg order B6, four-leg order B8",
+      "entry/('z_c_8_immediate', 'ascent', 0.26, 0.7): four-leg order B4",
+      "flat-start_z_c_8/ascent/0.26/0.7: forward_lateral_max_abs",
+      "flat-start_z_c_8/ascent/0.26/1.0: forward_lateral_max_abs",
+      "flat-start_z_c_8/ascent/0.3/0.7: forward_lateral_max_abs",
+      "flat-start_z_c_8/ascent/0.3/1.0: forward_lateral_max_abs",
+      "flat/filtered_partial_full: yaw_peak_deg",
+      "standing/ascent/0.26/0.7: forward_lateral_max_abs",
+      "standing/ascent/0.3/0.5: forward_lateral_max_abs",
+      "standing/ascent/0.3/1.0: forward_lateral_max_abs",
+      "z_c_8/ascent/0.26/0.7: forward_lateral_max_abs",
+      "z_c_8_immediate/ascent/0.26/0.7: forward_lateral_max_abs"
+    ],
+    "candidate_rank": [
+      0,
+      -33.20948256933791
+    ],
+    "best_rank": [
+      0,
+      -58.34635317197913
+    ],
+    "best_checkpoint": "/home/arcus/deeprobotics_m20_rl/M20_Perception_Lidar_RL/M20_perception_Lidar_rl/artifacts/flat_posture_20261124_181441_2759441/best_candidates/c0059cc7d371f7d7/model_50498.pt",
+    "entry_passed": false,
+    "traction_passed": null,
+    "traction_repair_passed": null,
+    "flat_start_passed": false,
+    "production_passed": false,
+    "flat_start_score": -10.041140958000003
+  },
+  "feedback": {
+    "learning_rate": 1e-05,
+    "success_anchor_multiplier": 1.0,
+    "critical_regressions": [],
+    "action": "record_and_continue"
+  }
+}

@@ -117,7 +117,7 @@ class Robot:
     def control(self, action, mode="policy"):
         s, d = self.saved, self.data
         q, v = d.qpos[self.qids], d.qvel[self.vids]
-        target = s.nominal + s.action_scale * action
+        target = s.position_target(action)
         vtarget = np.r_[np.zeros(12), s.action_scale[12:] * action[12:]]
         torque = s.kp * (target-q) + s.kd * (vtarget-v)
         if mode == "damping":
@@ -328,9 +328,8 @@ def run(args, *, event_source=None):
                     where=np.where, clip=np.clip))
                 command = command.copy(); command[0] = filtered_forward
             obs = robot.observe(command, session.previous)
-            action = session.action(obs)
+            action = saved.executed_action(session.action(obs), command)
             if active and np.linalg.norm(command) < .08:
-                # Deployment stores the executed zero-wheel action as history.
                 action = action.copy()
                 action[12:] = 0.
             acoustic.policy_sample(action, active=active, moving=bool(np.linalg.norm(command) > .1))
@@ -352,7 +351,7 @@ def run(args, *, event_source=None):
                 if not np.isfinite(d.qpos).all() or not np.isfinite(d.qvel).all():
                     raise RuntimeError("MuJoCo produced a nonfinite physical state")
             mujoco.mj_forward(m, d)
-            session.previous = action.copy()
+            session.previous = saved.history_action(action) if active else np.zeros(16)
             steps_done += 1
             pos = d.xpos[robot.base_id]
             max_x, max_height = max(max_x, float(pos[0])), max(max_height, float(pos[2]))

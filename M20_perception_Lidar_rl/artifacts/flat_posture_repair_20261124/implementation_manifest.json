@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-24T16:01:45.211429",
+  "focus": "retain measured current stair gait; correct flat extension and raw full-speed pitching impulse",
+  "initialization": "latest numbered checkpoint in EntrySequenceRepair run selected at launch",
+  "stair_teacher": "reference50498/teacher/model_50498.pt",
+  "compact_reference": "49998 measured compact moving flat frames only",
+  "no_training_started": true,
+  "no_gpu_sim_started": true,
+  "files": {
+    "source/rl_training/rl_training/flat_posture.py": "161966907e133e77c6f48446357c12a559ce93a8b05b8ebb1ccdf87eeb269b21",
+    "source/rl_training/rl_training/v111_flat_posture_runner.py": "2e6b4ed3098a20f7abd50807a7b3e5ef5281fbbd008dda6aa4f9a646e02e63e2",
+    "source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/mdp/v111_flat_posture.py": "77b5673146b6b573645d7e0ebd5f537965ae1773949f2ec2018e66d62f7ed728",
+    "source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/v111_flat_posture_env_cfg.py": "39bc5e2b354846909e4282e32228423f2d49540befda974df86fca6ea2191400",
+    "scripts/reinforcement_learning/rsl_rl/flat_posture_selection.py": "9b8d804ee9fc960af58819fdd2efe794457c1de4df5bcc403a8f21e89995d853",
+    "scripts/reinforcement_learning/rsl_rl/guarded_recovery.py": "be438759cef5b64514dde398ea7f6cc0d29e0327403e64bd06d8bedc54f7c39d",
+    "scripts/reinforcement_learning/rsl_rl/train.py": "bb54b5977685aef729bd6588f965ab0c6e4c08bf20cfb3b64a7ce578b0615a66",
+    "scripts/reinforcement_learning/rsl_rl/repair_workstation_limits.py": "1d6a58f1d5d38a9533ed8f68dc796a4362882d78adcfccb82edbf5bfd42c3910",
+    "scripts/tools/m20_build_flat_posture_replay.py": "dfbacbb43a7e718abca4c284f00d237ec3bf936faa960bd9a1edc07b4caa68c7",
+    "scripts/tools/m20_flat_posture_preflight.py": "6747a1f31e5bbdee5a92b8974ce0b669802cdd42467c9868b434c27dedf95aa4",
+    "scripts/train_m20_v111_flat_posture_latest.sh": "055c57e92581c59ffd7b2c86091f62c7c5a829c169a38cddb44d59a50d199f74",
+    "scripts/tools/test_m20_flat_posture.py": "aca2cef8e703d015dc764d9b4c99c40d8ef5ba46a11021fe55042ea1cf51db12"
+  }
+}

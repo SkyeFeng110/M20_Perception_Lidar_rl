@@ -71,7 +71,7 @@ if args_cli.guarded_total_updates is not None:
         if args_cli.guarded_eval_every < args_cli.max_iterations or args_cli.guarded_eval_every % args_cli.max_iterations:
             raise ValueError('--guarded-eval-every must be a multiple of the guarded segment size')
     if args_cli.guarded_eval_profile == 'entry' and args_cli.task not in (
-            'M20-Stair-V11.1-EntryTransfer-v0', 'M20-Stair-V11.1-EntrySequenceRepair-v0'):
+            'M20-Stair-V11.1-EntryTransfer-v0', 'M20-Stair-V11.1-EntrySequenceRepair-v0', 'M20-Stair-V11.1-FlatPosture-v0', 'M20-Stair-V11.1-RouteHold-v0'):
         raise ValueError("--guarded-eval-profile entry is restricted to EntryTransfer")
 
 # always enable cameras to record video
@@ -170,7 +170,7 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
         if args_cli.task not in (
                 'M20-Stair-V11.1-StepRetention-v0',
                 'M20-Stair-V11.1-TractionTransition-v0',
-                'M20-Stair-V11.1-EntryTransfer-v0', 'M20-Stair-V11.1-EntrySequenceRepair-v0'):
+                'M20-Stair-V11.1-EntryTransfer-v0', 'M20-Stair-V11.1-EntrySequenceRepair-v0', 'M20-Stair-V11.1-FlatPosture-v0', 'M20-Stair-V11.1-RouteHold-v0'):
             raise ValueError('--resume-checkpoint is supported by StepRetention, TractionTransition and EntryTransfer')
         if args_cli.initial_checkpoint is not None or args_cli.resume:
             raise ValueError('Choose one of --initial-checkpoint, --resume-checkpoint or --resume')
@@ -313,6 +313,8 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
             "M20-Stair-V11.1-TractionTransition-v0",
             "M20-Stair-V11.1-EntryTransfer-v0",
             "M20-Stair-V11.1-EntrySequenceRepair-v0",
+            "M20-Stair-V11.1-FlatPosture-v0",
+            "M20-Stair-V11.1-RouteHold-v0",
         ):
             # Resume the training schedule too: restarting it would re-enable
             # early reset/command distributions and soften descent rewards.
@@ -330,7 +332,7 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
             if args_cli.task in ('M20-Stair-V11.1-RecoveryRefine-v0', 'M20-Stair-V11.1-TargetedCorrection-v0',
                                  'M20-Stair-V11.1-TargetedCorrectionV2-v0', 'M20-Stair-V11.1-StepSupport-v0',
                                  'M20-Stair-V11.1-StepRetention-v0', 'M20-Stair-V11.1-TractionTransition-v0', 'M20-Stair-V11.1-EntryTransfer-v0',
-                                 'M20-Stair-V11.1-EntrySequenceRepair-v0'):
+                                 'M20-Stair-V11.1-EntrySequenceRepair-v0', 'M20-Stair-V11.1-FlatPosture-v0', 'M20-Stair-V11.1-RouteHold-v0'):
                 stage_steps = 0 if fresh_entry_flat else int((checkpoint_infos or {}).get('m20_refine_stage_steps', 0))
                 env.unwrapped._m20_refine_start_step = env.unwrapped.common_step_counter-stage_steps
             env.reset()

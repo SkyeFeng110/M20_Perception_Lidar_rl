@@ -1,0 +1,1 @@
+M20 V11 actor observation (63D)\n0:3 base_ang_vel; 3:6 projected_gravity; 6:9 command; 9:25 joint_pos; 25:41 joint_vel; 41:57 previous_action; 57 B1; 58 H1; 59 D1; 60 B2; 61 H2; 62 D2\nActor has no FL/FR-specific action path.\n

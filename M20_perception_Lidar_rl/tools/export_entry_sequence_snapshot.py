@@ -35,14 +35,17 @@ def reason(path, policy):
     if any(part in policy['excluded_directory_names'] or part.endswith('.egg-info')
            or part.startswith('.venv') for part in path.parts):
         return 'cache, environment or local settings'
-    if name == 'M20_perception_Lidar_rl/scripts/train_m20_v111_sequence_from49998.sh':
+    if name in policy.get('allowed_launchers', []):
         return None
     if any(fnmatch.fnmatchcase(name, pattern) for pattern in policy['excluded_paths']):
         return 'historical or unrelated content'
-    selected = path.is_relative_to(policy['training_run_root'])
+    selected = path.is_relative_to(policy.get('selected_run_root', policy['training_run_root']))
     interview = path.is_relative_to('M20_perception_Lidar_rl/interview_prep')
-    if path.suffix.lower() in WEIGHTS and not (selected or interview):
+    allowed = name in policy.get('checkpoint_allowlist', [])
+    if path.suffix.lower() in WEIGHTS and not (allowed or interview):
         return 'checkpoint outside selected training'
+    if name in policy.get('log_report_paths', []):
+        return None
     if not selected and (path.suffix.lower() in policy['excluded_suffixes']
                          or 'tfevents' in path.name):
         return 'generated artifact'
@@ -68,11 +71,15 @@ def copy_snapshot(source, target):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True, help='New directory outside the source repository')
+    parser.add_argument('--published-root', type=Path,
+                        help='Existing publication checkout used to preserve previously uploaded logs unchanged')
     args = parser.parse_args()
     output = args.output.resolve()
     if output.exists() or output.is_relative_to(ROOT):
         raise ValueError('Output must be a new directory outside the source repository')
     policy = json.loads(POLICY_PATH.read_text())
+    if policy.get('preserved_log_roots') and args.published_root is None:
+        parser.error('--published-root is required to preserve previously published logs')
     files, skipped = {}, Counter()
     for scope in policy['include_roots']:
         source = ROOT / scope
@@ -94,6 +101,16 @@ def main():
             if SECRET.search(source.read_bytes()):
                 raise ValueError('Credential pattern detected: '+str(path))
             files[path] = source
+    if args.published_root:
+        published = args.published_root.resolve()
+        entries = subprocess.check_output(['git', '-C', str(published), 'ls-files', '-z']).decode().split('\0')
+        for name in filter(None, entries):
+            path = Path(name)
+            if any(path.is_relative_to(scope) for scope in policy.get('preserved_log_roots', [])):
+                source = published / path
+                if not source.is_file() or source.is_symlink():
+                    raise ValueError('Missing previously published log: '+name)
+                files[path] = source
     output.mkdir(parents=True)
     records = []
     for path, source in sorted(files.items()):
@@ -102,13 +119,13 @@ def main():
         copy_snapshot(source, target)
         records.append(dict(path=path.as_posix(), bytes=target.stat().st_size, sha256=digest(target)))
     weights = [r for r in records if Path(r['path']).suffix.lower() in WEIGHTS]
-    if not any(Path(r['path']).is_relative_to(policy['training_run_root']) for r in weights):
-        raise ValueError('The selected training must contain checkpoints')
-    if any(not (Path(r['path']).is_relative_to(policy['training_run_root'])
-                or Path(r['path']).is_relative_to('M20_perception_Lidar_rl/interview_prep')) for r in weights):
-        raise ValueError('Checkpoint outside selected training or interview_prep')
-    for run in sorted((output / policy['training_run_root']).iterdir()):
-        if run.is_dir() and list(run.glob('model_*.pt')):
+    expected = set(policy['checkpoint_allowlist'])
+    actual = {r['path'] for r in weights if not Path(r['path']).is_relative_to('M20_perception_Lidar_rl/interview_prep')}
+    if actual != expected:
+        raise ValueError('Published training checkpoints differ from the allowlist: '+repr(actual ^ expected))
+    for row in weights:
+        if row['path'] in expected:
+            run = (output / row['path']).parent
             for name in ('env.yaml', 'agent.yaml'):
                 if not (run / 'params' / name).is_file():
                     raise ValueError('Missing saved run configuration: '+str(run / 'params' / name))
@@ -117,7 +134,7 @@ def main():
         source_head=git('rev-parse', 'HEAD'),
         source_has_uncommitted_changes=bool(git('status', '--porcelain')),
         contains_original_git_history=False, local_source_files_deleted=0,
-        training_snapshot_note='Point-in-time copy; ongoing training is not stopped. Later checkpoints require a new export.',
+        training_snapshot_note='Only the explicitly selected FlatPosture checkpoint and its run logs are added; previously published EntrySequenceRepair logs are preserved. Ongoing training is not stopped.',
         robot_submodule_commit=git('-C', str(ROOT / 'M20_perception_Lidar_rl/deep_robotics_model'), 'rev-parse', 'HEAD'),
         policy=policy, checkpoint_files=weights, files=records, filtered=dict(skipped),
         total_bytes=sum(r['bytes'] for r in records))

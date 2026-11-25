@@ -137,6 +137,45 @@ def test_real_relocated_v111_policy_uses_original_semantics(policy, tmp_path):
     np.testing.assert_array_equal(explicit(obs), policy(obs))
 
 
+def test_saved_named_leg_target_limits_match_training_and_mujoCo_execution(policy, tmp_path):
+    import shutil
+    import yaml
+    from saved_config import ConfigLoader
+
+    checkpoint = tmp_path / "limited" / "model.pt"
+    params = checkpoint.parent / "params"
+    params.mkdir(parents=True)
+    shutil.copy2(policy.path, checkpoint)
+    for name in ("env.yaml", "agent.yaml"):
+        shutil.copy2(policy.path.parent / "params" / name, params / name)
+    env_path = params / "env.yaml"
+    config = yaml.load(env_path.read_text(), Loader=ConfigLoader)
+    pos = config["actions"]["joint_pos"]
+    pos["class_type"] = "rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_joint_limits:LimitedLegPositionAction"
+    names = pos["joint_names"]
+    lower = [-.406, -2.236, -2.729, -.581, -2.236, -2.729,
+             -.406, -2.533, -2.712, -.581, -2.533, -2.712]
+    upper = [.581, 2.533, 2.712, .406, 2.533, 2.712,
+             .581, 2.236, 2.729, .406, 2.236, 2.729]
+    pos["clip"] = {name: [lo, hi] for name, lo, hi in zip(names, lower, upper)}
+    config['observations']['policy']['actions']['func'] = (
+        'rl_training.tasks.manager_based.locomotion.velocity.mdp.v111_joint_limits:executed_last_action')
+
+    class Dumper(yaml.SafeDumper):
+        pass
+
+    Dumper.add_representer(tuple, lambda dumper, value: dumper.represent_list(value))
+    env_path.write_text(yaml.dump(config, Dumper=Dumper, sort_keys=False))
+    loaded = SavedPolicy(checkpoint)
+    raw = np.full(16, 20., dtype=np.float64)
+    executed = loaded.executed_action(raw)
+    target = loaded.position_target(executed)
+    np.testing.assert_allclose(target[:12], upper, atol=1e-9)
+    np.testing.assert_array_equal(target[12:], loaded.nominal[12:] + loaded.action_scale[12:] * raw[12:])
+    assert loaded.limited_leg_action
+    assert loaded.metadata["leg_target_limits_rad"] == [[lo, hi] for lo, hi in zip(lower, upper)]
+
+
 def test_incompatible_actor_is_rejected(policy, tmp_path):
     import shutil
     params = tmp_path / "params"

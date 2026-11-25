@@ -24,6 +24,8 @@ STEP_RETENTION_TASK = 'M20-Stair-V11.1-StepRetention-v0'
 TRACTION_TRANSITION_TASK = 'M20-Stair-V11.1-TractionTransition-v0'
 ENTRY_TRANSFER_TASK = 'M20-Stair-V11.1-EntryTransfer-v0'
 ENTRY_SEQUENCE_TASK = 'M20-Stair-V11.1-EntrySequenceRepair-v0'
+FLAT_POSTURE_TASK = 'M20-Stair-V11.1-FlatPosture-v0'
+ROUTE_HOLD_TASK = 'M20-Stair-V11.1-RouteHold-v0'
 
 
 class TrainingInterrupted(KeyboardInterrupt):
@@ -92,7 +94,7 @@ def write_json(path, value):
 def validate_session(task, total_updates, segment_updates, baseline_path, output_path):
     limits = json.loads(LEDGER.read_text())
     if task not in (TASK, REFINE_TASK, TARGETED_TASK, TARGETED_V2_TASK, STEP_SUPPORT_TASK,
-                    STEP_RETENTION_TASK, TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK):
+                    STEP_RETENTION_TASK, TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
         raise ValueError('Guarded training is restricted to recovery tasks')
     if type(total_updates) is not int or not 1 <= total_updates <= limits['max_guarded_total_updates']:
         raise ValueError('Invalid guarded total update count')
@@ -113,6 +115,11 @@ def validate_session(task, total_updates, segment_updates, baseline_path, output
     source = (hashlib.sha256(Path(os.environ.get('M20_RECOVERY_TEACHER', ROOT/'interview_prep/model_49998.pt')).read_bytes()).hexdigest()
               if task == ENTRY_SEQUENCE_TASK else
               json.loads((ROOT/'interview_prep/CHECKPOINT.json').read_text())['sha256'])
+    if task in (FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
+        teacher = Path(os.environ.get('M20_RECOVERY_TEACHER', ''))
+        if not teacher.is_file():
+            raise ValueError('FlatPosture requires its measured stair teacher')
+        source = hashlib.sha256(teacher.read_bytes()).hexdigest()
     for profile in ('standing', 'keyboard'):
         manifest = json.loads((baseline.parent/profile/'manifest.json').read_text())
         if manifest.get('checkpoint_sha256') != source:
@@ -244,7 +251,7 @@ def evaluation_scalars(summary):
         for row in summary['production_cases']:
             name = f'{row["profile"]}/{row["terrain"]}/{row["tread"]}/{row["command_speed"]}'
             for key in ('forward_yaw_max_change_deg', 'forward_lateral_max_abs', 'route_mean_velocity_x',
-                        'later_stairs_route_velocity_x', 'all_treads_supported'):
+                        'later_stairs_route_velocity_x', 'p95_max_abs_reach', 'all_treads_supported'):
                 if isinstance(row.get(key), (float, int)):
                     values[f'Production/{name}/{key}'] = row[key]
             for key, value in row.get('entry_transfer', {}).items():
@@ -301,11 +308,11 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
     if (type(evaluation_every_updates) is not int or evaluation_every_updates < segment_updates
             or evaluation_every_updates % segment_updates):
         raise ValueError('Evaluation interval must be a multiple of the guarded segment size')
-    if task == ENTRY_SEQUENCE_TASK and evaluation_profile != 'entry':
+    if task in (ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK) and evaluation_profile != 'entry':
         raise ValueError('EntrySequence uses the entry profile with full-stick and flat probes')
     if evaluation_profile not in ('full', 'entry'):
         raise ValueError('Unknown guarded evaluation profile')
-    if evaluation_profile == 'entry' and task not in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK):
+    if evaluation_profile == 'entry' and task not in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
         raise ValueError('Entry evaluation profile is restricted to EntryTransfer')
     flat_repair = hasattr(getattr(runner, 'alg', None), 'flat_reference_results')
     output = Path(output_path).resolve()
@@ -313,10 +320,10 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
     log_dir = Path(log_dir).resolve()
     baseline_path = Path(baseline_path).resolve()
     selector = None
-    if task in (STEP_RETENTION_TASK, TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK):
+    if task in (STEP_RETENTION_TASK, TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
         from behavior_selection import BehaviorSelector
         selector_class, selection_kwargs = BehaviorSelector, {}
-        if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK):
+        if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
             from entry_selection import EntryBehaviorSelector
             selector_class = EntryBehaviorSelector
             selection_kwargs['entry_results'] = runner.alg.entry_reference_results
@@ -332,6 +339,12 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
             from traction_selection import TractionBehaviorSelector
             selector_class = TractionBehaviorSelector
             selection_kwargs['traction_results'] = runner.alg.traction_reference_results
+        if task == FLAT_POSTURE_TASK:
+            from flat_posture_selection import FlatPostureBehaviorSelector
+            selector_class = FlatPostureBehaviorSelector
+        if task == ROUTE_HOLD_TASK:
+            from route_hold_selection import RouteHoldBehaviorSelector
+            selector_class = RouteHoldBehaviorSelector
         selector = selector_class(output, runner.alg.behavior_teacher_checkpoint,
                                   runner.alg.behavior_reference_results,
                                   previous_best=runner.alg.behavior_selection_state, **selection_kwargs)
@@ -383,7 +396,7 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                               last_checkpoint=str(checkpoint), updated=timestamp(),
                               elapsed_seconds=time.monotonic() - started)
                 write_json(output / 'status.json', status)
-                if task == ENTRY_SEQUENCE_TASK:
+                if task in (ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
                     # Only this new run's unevaluated intermediate files are
                     # pruned. Evaluated checkpoints and best archives survive.
                     for saved in log_dir.glob('model_*.pt'):
@@ -406,7 +419,7 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                        '--checkpoint', str(checkpoint), '--output', str(evaluation),
                        '--baseline-results', str(baseline_path), '--gate', 'retention']
             # Keep periodic full evidence; every interval retains metrics and sequences.
-            if completed % 250 or task == ENTRY_SEQUENCE_TASK:
+            if completed % 250 or task in (ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
                 command.append('--no-trajectories')
             with (output / f'eval_{completed:06d}.log').open('w') as stream:
                 result = run_evaluation(command, env=cpu_env, stdout=stream)
@@ -424,7 +437,7 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                            retention_passed=report.get('retention_passed'), repair_passed=report.get('repair_passed'))
             if (evaluation_profile == 'full' and task in
                     (REFINE_TASK, TARGETED_TASK, TARGETED_V2_TASK, STEP_SUPPORT_TASK,
-                     STEP_RETENTION_TASK, TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK)):
+                     STEP_RETENTION_TASK, TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK)):
                 supplement = evaluation/'quiet_descent'
                 command = [sys.executable, str(ROOT/'scripts/tools/m20_quiet_supplement.py'),
                            '--checkpoint', str(checkpoint), '--output', str(supplement)]
@@ -435,7 +448,7 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                 summary['supplementary'] = json.loads((supplement/'results.json').read_text())
             if selector is not None:
                 selection_kwargs = {}
-                if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK):
+                if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
                     target = evaluation/'entry'
                     command = [sys.executable, str(ROOT/'scripts/tools/m20_entry_flat_benchmark.py'),
                         '--checkpoint', str(checkpoint), '--startup', 'z', '--keyboard-profile',
@@ -446,7 +459,7 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                     if extra.returncode != 0:
                         raise RuntimeError('Entry evaluator runtime error; inspect entry.log')
                     selection_kwargs['entry_results'] = target/'results.json'
-                if task in (TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK) and evaluation_profile == 'full':
+                if task in (TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK) and evaluation_profile == 'full':
                     traction = evaluation/'traction'
                     command = [sys.executable, str(ROOT/'scripts/tools/m20_traction_benchmark.py'),
                                '--checkpoint', str(checkpoint), '--output', str(traction)]
@@ -478,13 +491,15 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                     selection_kwargs['forward_results'] = target/'results.json'
                     summary['production_cases'] = json.loads((target/'results.json').read_text())
                 selection = selector.consider(checkpoint, report['candidates'][0]['results'], **selection_kwargs)
+                if task == ROUTE_HOLD_TASK:
+                    status['route_hold_passed'] = summary['route_hold_passed'] = selection['route_hold_passed']
                 if 'flat_start_passed' in selection:
                     status['flat_start_passed'] = summary['flat_start_passed'] = selection['flat_start_passed']
                     status['production_passed'] = summary['production_passed'] = selection['production_passed']
-                if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK):
+                if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
                     status['entry_passed'] = selection['entry_passed']
                     summary['entry_passed'] = selection['entry_passed']
-                feedback = runner.alg.behavior_feedback(selection['regressions'])
+                feedback = runner.alg.behavior_feedback(selection.get('feedback_failures', selection['regressions']))
                 runner.alg.behavior_selection_state = selector.export_state()
                 # Feedback follows evaluation, so it is absent from the
                 # evaluated candidate. Save an atomic continuation checkpoint
@@ -494,7 +509,7 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                 runner.save(str(temporary))
                 temporary.replace(continuation)
                 summary.update(behavior_selection=selection, behavior_feedback=feedback)
-                if task in (TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK):
+                if task in (TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
                     status.update(traction_passed=selection['traction_passed'],
                                   traction_repair_passed=selection['traction_repair_passed'])
                     summary.update(traction_passed=selection['traction_passed'],
@@ -513,12 +528,20 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                               behavior_feedback=feedback)
                 write_json(evaluation/'behavior_selection.json', dict(selection=selection, feedback=feedback))
             stage_repaired = bool(report.get('repair_passed')) and (
-                evaluation_profile != 'full' or task not in (TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK)
+                evaluation_profile != 'full' or task not in (TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK)
                 or status.get('traction_repair_passed') is True)
-            if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK):
+            if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
                 stage_repaired &= status.get('entry_passed') is True
             if flat_repair:
                 stage_repaired &= status.get('flat_start_passed') is True and status.get('production_passed') is True
+            if task == FLAT_POSTURE_TASK:
+                # This phase targets flat posture; strict stair sequencing is
+                # still reported separately, not relabeled as repaired.
+                stage_repaired = (status.get('flat_start_passed') is True
+                    and status.get('production_passed') is True
+                    and not selection['regressions'])
+            if task == ROUTE_HOLD_TASK:
+                stage_repaired = status.get('route_hold_passed') is True
             # Persist the complete stage verdict in every output, including
             # TensorBoard; the native suite alone cannot certify deployment.
             summary['repair_passed'] = stage_repaired
