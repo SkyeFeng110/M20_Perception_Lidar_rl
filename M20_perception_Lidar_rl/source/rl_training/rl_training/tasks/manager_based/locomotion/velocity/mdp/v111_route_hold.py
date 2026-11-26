@@ -1,4 +1,5 @@
 """Original-route reward on flat ground and ascent, including first-riser transfer."""
+import math
 import torch
 from rl_training.route_hold import latch_reference, route_terms
 
@@ -10,6 +11,8 @@ def reset(env, env_ids):
         env._m20_route_hold['pending'][env_ids] = True
     if hasattr(env, '_m20_route_early_traction'):
         env._m20_route_early_traction['pending'][env_ids] = True
+    if hasattr(env, '_m20_58098_handoff'):
+        env._m20_58098_handoff['pending'][env_ids] = True
 
 
 def early_traction_state(env):
@@ -31,9 +34,46 @@ def early_traction_state(env):
     eligible = (geometry['ascent'] & entry['height_valid'] & traction['straight']
                 & (traction['command'] > .1))
     early_window &= eligible[:, None]
-    reward, cost, supported, quality = early_tread_traction_terms(
-        traction['slip'], traction['supported'], early_window,
-        traction['speed'], traction['command'])
+    stall = torch.zeros(env.num_envs, device=env.device)
+    if getattr(env.cfg, 'early_traction_repair_58098', False):
+        from rl_training.traction_transition import handoff_patch, early_handoff_terms
+        # While the front wheels engage B1, rear drive is still on the lower
+        # platform. Include that loaded drive in the transfer window; flat
+        # terrain and the far approach remain outside this objective.
+        transfer = (eligible & (wheel_progress[:, :2].amax(1) >= -radius-.02)
+                    & (wheel_progress.amin(1) < 3.*entry['tread']+radius))
+        early_window = transfer[:, None] & (wheel_progress < 3.*entry['tread'][:, None]+radius)
+        if not hasattr(env, '_m20_58098_handoff'):
+            env._m20_58098_handoff = dict(step=-1, pending=torch.ones_like(eligible),
+                length=env.episode_length_buf.clone(),
+                ticks=torch.zeros_like(early_window, dtype=torch.long),
+                slow_seconds=torch.zeros_like(stall), speed=traction['speed'].clone())
+        h = env._m20_58098_handoff
+        if h['step'] != int(env.common_step_counter):
+            reset_mask = h['pending'] | (env.episode_length_buf < h['length']) | (env.episode_length_buf == 0)
+            contact = handoff_patch(traction['wheel_bottom'], traction['patch_hits'],
+                traction['patch_normals'], traction['force_z'], traction['vertical_speed'])
+            h['ticks'] = torch.where(contact & ~reset_mask[:, None], (h['ticks']+1).clamp_max(2), 0)
+            # Smooth speed over .15 seconds, rather than charging normal gait
+            # oscillations as stalls. No stall charge during initial .3s dip.
+            alpha = 1.-math.exp(-float(env.step_dt)/.15)
+            h['speed'] = torch.where(reset_mask, traction['speed'],
+                h['speed']+alpha*(traction['speed']-h['speed']))
+            entered = transfer
+            progress = (h['speed']/traction['command'].clamp_min(.1)).clamp(0, 1)
+            slow = entered & (progress < .35) & ~reset_mask
+            h['slow_seconds'] = torch.where(slow, h['slow_seconds']+float(env.step_dt), 0.)
+            h.update(stall=((.35-progress).clamp_min(0)/.35).square()
+                     *(h['slow_seconds'] >= .3), step=int(env.common_step_counter),
+                     length=env.episode_length_buf.clone())
+            h['pending'][:] = False
+        reward, cost, supported, quality = early_handoff_terms(
+            traction['slip'], h['ticks'] >= 2, early_window, h['speed'], traction['command'])
+        stall = h['stall']
+    else:
+        reward, cost, supported, quality = early_tread_traction_terms(
+            traction['slip'], traction['supported'], early_window,
+            traction['speed'], traction['command'])
     multiplier = min(1.6, max(1., float(getattr(env, '_m20_route_early_traction_multiplier', 1.))))
     reward, cost = reward*multiplier, cost*multiplier
 
@@ -59,7 +99,7 @@ def early_traction_state(env):
     s['opportunities'] += early_window.sum(1)*valid
     s['quality_sum'] += (quality* supported).sum(1)*valid
     s['active_steps'] += eligible*valid
-    s.update(step=step, reward=reward, cost=cost, slip=traction['slip'],
+    s.update(step=step, reward=reward, cost=cost, stall=stall, slip=traction['slip'],
              supported=supported, early_window=early_window,
              eligible=eligible, length=env.episode_length_buf.clone())
     s['pending'][:] = False
@@ -72,6 +112,10 @@ def early_traction_quality(env):
 
 def early_traction_cost(env):
     return -early_traction_state(env)['cost']
+
+
+def early_stall_cost(env):
+    return -early_traction_state(env)['stall']
 
 
 def state(env):
@@ -189,4 +233,6 @@ def early_traction_metric(env, env_ids, key):
     if key == 'quality_mean':
         return (s['quality_sum'][ids].sum()
                 /s['support_samples'][ids].sum().clamp_min(1))
+    if key == 'stall_cost':
+        return s['stall'][ids].mean() if len(ids) else s['stall'].new_zeros(())
     raise KeyError('Unknown early-traction metric: '+key)

@@ -120,7 +120,9 @@ def state(env):
         transition_impulse=impulse, entry_pitch=entry_pitch,
         entry_simultaneous=order['simultaneous'].float(), entry_lead=order['lead'].float(),
         entry_support=support, entry_air=air,
-        slip=slip, supported=supported, command=command[:, 0], straight=straight,
+        slip=slip, supported=supported, patch_hits=hits, patch_normals=normals,
+        wheel_bottom=pos[..., 2]-radius, force_z=force, vertical_speed=linear[..., 2],
+        command=command[:, 0], straight=straight,
         flat=flat['active'], speed=speed)
     return env._v111_traction
 

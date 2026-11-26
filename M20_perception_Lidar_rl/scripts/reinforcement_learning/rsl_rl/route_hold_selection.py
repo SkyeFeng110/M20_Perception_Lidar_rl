@@ -64,7 +64,7 @@ class RouteHoldBehaviorSelector(FlatPostureBehaviorSelector):
                 raise ValueError('Restored route best regresses the measured traction seed')
             self.traction_rows = rows
             self.traction_best_path = str(Path(path).resolve())
-            self.traction_repair_passed = repair_improved(rows, self.traction_seed)
+            self.traction_repair_passed = self._traction_repaired(rows)
         self._archive(self.best_checkpoint, self.best_results,
             seed=hashlib.sha256(Path(self.best_checkpoint).read_bytes()).hexdigest() == self.seed_sha256)
 
@@ -81,6 +81,19 @@ class RouteHoldBehaviorSelector(FlatPostureBehaviorSelector):
         if len(selected) != 2 or any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in selected):
             raise ValueError('Route traction ranking requires B1-B3 slip from both 1 m/s low-friction ascent cases')
         return sum(selected)/len(selected)
+
+    def _traction_repaired(self, rows):
+        return repair_improved(rows, self.traction_seed)
+
+    def _traction_regressions(self, rows):
+        return traction_regressions(rows, self.traction_seed)+traction_regressions(rows, self.traction_rows)
+
+    def _promotion_rank(self, rows, route_value, *, candidate):
+        return (-self._early_slip_score(rows), route_value)
+
+    def _rank_improved(self, candidate, best):
+        return (candidate[0] > best[0]+.005
+                or (abs(candidate[0]-best[0]) <= .005 and candidate[1] > best[1]+.01))
 
     def _regressions(self, native, entry, flat, forward):
         failures = super()._regressions(native, entry, flat, forward)
@@ -114,7 +127,7 @@ class RouteHoldBehaviorSelector(FlatPostureBehaviorSelector):
             path.write_text(json.dumps(record, indent=2)+'\n')
             return
         traction_ok = not traction_regressions(self.traction_rows, self.traction_seed)
-        self.traction_repair_passed = repair_improved(self.traction_rows, self.traction_seed)
+        self.traction_repair_passed = self._traction_repaired(self.traction_rows)
         stage_passed = (not unresolved and retained and traction_ok and self.traction_repair_passed
                         and flat_passed(self.flat_rows)
                         and production_passed(self.forward_rows))
@@ -151,17 +164,17 @@ class RouteHoldBehaviorSelector(FlatPostureBehaviorSelector):
             if manifest.get(key) != self.traction_manifest.get(key):
                 raise ValueError('Route traction evaluation protocol changed: '+key)
         failures = self._regressions(native, entry, flat, forward)
-        traction_failures = (traction_regressions(candidate_traction, self.traction_seed)
-                             +traction_regressions(candidate_traction, self.traction_rows))
+        traction_failures = self._traction_regressions(candidate_traction)
         failures = sorted(set(failures+traction_failures))
         unresolved = route_failures(native, entry, flat, forward)
         candidate = route_score(native, entry, flat, forward)
         best = route_score(self.rows, self.entry_rows, self.flat_rows, self.forward_rows)
         slip_score = self._early_slip_score(candidate_traction)
         best_slip_score = self._early_slip_score(self.traction_rows)
-        traction_repaired = repair_improved(candidate_traction, self.traction_seed)
-        promoted = (not failures and (slip_score < best_slip_score-.005
-                    or (abs(slip_score-best_slip_score) <= .005 and candidate > best+.01)))
+        traction_repaired = self._traction_repaired(candidate_traction)
+        candidate_rank = self._promotion_rank(candidate_traction, candidate, candidate=True)
+        best_rank = self._promotion_rank(self.traction_rows, best, candidate=False)
+        promoted = not failures and self._rank_improved(candidate_rank, best_rank)
         if promoted:
             self.rows, self.entry_rows, self.flat_rows, self.forward_rows = native, entry, flat, forward
             self.entry_path, self.flat_path, self.forward_path = map(str, (entry_results, flat_results, forward_results))
@@ -173,8 +186,8 @@ class RouteHoldBehaviorSelector(FlatPostureBehaviorSelector):
             feedback_failures.append('traction: early-tread slip target unresolved')
         return dict(promoted=promoted, regressions=failures, route_unresolved=unresolved,
             feedback_failures=sorted(set(feedback_failures)),
-            candidate_rank=(-slip_score, candidate), best_rank=(-self._early_slip_score(self.traction_rows),
-                route_score(self.rows, self.entry_rows, self.flat_rows, self.forward_rows)),
+            candidate_rank=candidate_rank, best_rank=self._promotion_rank(self.traction_rows,
+                route_score(self.rows, self.entry_rows, self.flat_rows, self.forward_rows), candidate=False),
             best_checkpoint=self.best_checkpoint,
             route_hold_passed=(not failures and not unresolved and flat_passed(flat)
                 and production_passed(forward) and traction_repaired),

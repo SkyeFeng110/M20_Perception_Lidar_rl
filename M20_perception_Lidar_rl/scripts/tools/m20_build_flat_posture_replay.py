@@ -10,7 +10,7 @@ PROTOCOL = 'flat_posture_current_stairs_compact_flat_v1'
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def build_posture(native, teacher, flat_trajectory, flat_checkpoint, output):
+def build_posture(native, teacher, flat_trajectory, flat_checkpoint, output, preserve_current_flat=False):
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     replay = output/'current_gait.npz'
@@ -69,6 +69,13 @@ def build_posture(native, teacher, flat_trajectory, flat_checkpoint, output):
             & (np.abs(d['reach']).max(1) <= .12) & (np.abs(pitch) <= np.radians(2.))
             & (np.abs(d['angular_velocity'][:, 1]) <= .35)
             & (speed >= .8*d['command'][:, 0]) & (d['command'][:, 0] > .1))
+        if preserve_current_flat:
+            # A retention phase preserves the selected teacher's measured
+            # posture; it must not silently substitute an older compact gait.
+            if sha256(flat_checkpoint) != sha256(teacher):
+                raise ValueError('Current-flat preservation must use the selected stair teacher')
+            keep = (moving & (d['time'] >= start_time+2.)
+                    & (speed >= .8*d['command'][:, 0]) & (d['command'][:, 0] > .1))
         if keep.sum() < 50:
             raise ValueError('Insufficient physically compact moving reference')
         compact = output/'compact_flat.npz'
@@ -78,7 +85,9 @@ def build_posture(native, teacher, flat_trajectory, flat_checkpoint, output):
         sha256=sha256(compact), source_checkpoint=str(flat_checkpoint), source_sha256=sha256(flat_checkpoint),
         trajectory=str(flat_trajectory), trajectory_sha256=sha256(flat_trajectory),
         manifest=str(manifest), manifest_sha256=sha256(manifest), samples=int(keep.sum()),
-        scope='Measured compact sagittal moving posture only; startup impulse and steering are excluded'), indent=2)+'\n')
+        preserve_current_flat=bool(preserve_current_flat),
+        scope=('Measured current moving flat posture' if preserve_current_flat else
+               'Measured compact sagittal moving posture only; startup impulse and steering are excluded')), indent=2)+'\n')
     return dict(current_gait_samples=meta['samples'], stair_keep_samples=meta['stair_keep_samples'],
                 compact_flat_samples=int(keep.sum()), no_training_started=True)
 

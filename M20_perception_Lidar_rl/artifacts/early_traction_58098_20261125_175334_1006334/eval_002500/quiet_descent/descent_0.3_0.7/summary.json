@@ -1,0 +1,67 @@
+{
+  "status": "goal_reached",
+  "goal_reached": true,
+  "fell": false,
+  "observed_bypass": false,
+  "control_steps": 494,
+  "simulated_seconds": 9.88,
+  "final_position": [
+    4.683338483849769,
+    -0.029222481348172114,
+    0.5708688768928815
+  ],
+  "max_x": 4.683338483849769,
+  "max_base_height": 2.488668244641707,
+  "frames_with_active_edge": 357,
+  "reset_count": 0,
+  "final_mode": "policy",
+  "transitions": [
+    {
+      "time": 0.0,
+      "episode": 0,
+      "mode": "ready",
+      "reason": "startup"
+    },
+    {
+      "time": 1.0000000000000007,
+      "episode": 0,
+      "mode": "policy",
+      "reason": "batch settle complete"
+    }
+  ],
+  "goal_events": [
+    {
+      "step": 493,
+      "time": 9.879999999999963,
+      "episode": 0
+    }
+  ],
+  "trajectory_parts": [
+    "trajectory.npz"
+  ],
+  "output": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125_175334_1006334/eval_002500/quiet_descent/descent_0.3_0.7",
+  "strict_gait_acceptance": "not_measured",
+  "acoustic_proxies": {
+    "schema_version": 1,
+    "evidence": "mechanical_proxies_only_no_audio_or_dBA",
+    "physics_sampling": true,
+    "phases": {
+      "moving": {
+        "seconds": 8.880000000000518,
+        "path_distance_m": 5.709918076106224,
+        "touchdowns": 44,
+        "touchdown_approach_rms_m_s": 1.6281327810594122,
+        "touchdown_approach_max_m_s": 1.8675640724076426,
+        "touchdown_load_rate_rms_N_s": 94878.31132152537,
+        "touchdown_load_rate_max_N_s": 1172668.062042855,
+        "contact_point_slip_rms_m_s": 0.09166123244618382,
+        "leg_joint_speed_rms_rad_s": 1.3938209439640474,
+        "wheel_joint_speed_rms_rad_s": 7.454605285151599,
+        "torque_rms_Nm": 5.990727290702444,
+        "torque_rate_rms_Nm_s": 505.4202265381282,
+        "leg_action_reversal_rms": 0.033070428368788936,
+        "wheel_action_reversal_rms": 0.017159772759174158
+      }
+    }
+  }
+}

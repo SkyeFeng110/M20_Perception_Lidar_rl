@@ -42,7 +42,7 @@ def reason(path, policy):
     selected = path.is_relative_to(policy.get('selected_run_root', policy['training_run_root']))
     interview = path.is_relative_to('M20_perception_Lidar_rl/interview_prep')
     allowed = name in policy.get('checkpoint_allowlist', [])
-    if path.suffix.lower() in WEIGHTS and not (allowed or interview):
+    if path.suffix.lower() in WEIGHTS and not (allowed or (interview and not policy.get('strict_checkpoint_allowlist'))):
         return 'checkpoint outside selected training'
     if name in policy.get('log_report_paths', []):
         return None
@@ -120,7 +120,7 @@ def main():
         records.append(dict(path=path.as_posix(), bytes=target.stat().st_size, sha256=digest(target)))
     weights = [r for r in records if Path(r['path']).suffix.lower() in WEIGHTS]
     expected = set(policy['checkpoint_allowlist'])
-    actual = {r['path'] for r in weights if not Path(r['path']).is_relative_to('M20_perception_Lidar_rl/interview_prep')}
+    actual = {r['path'] for r in weights if policy.get('strict_checkpoint_allowlist') or not Path(r['path']).is_relative_to('M20_perception_Lidar_rl/interview_prep')}
     if actual != expected:
         raise ValueError('Published training checkpoints differ from the allowlist: '+repr(actual ^ expected))
     for row in weights:
@@ -134,7 +134,7 @@ def main():
         source_head=git('rev-parse', 'HEAD'),
         source_has_uncommitted_changes=bool(git('status', '--porcelain')),
         contains_original_git_history=False, local_source_files_deleted=0,
-        training_snapshot_note='Only the explicitly selected RouteHold checkpoint and its run logs are added; previously published EntrySequenceRepair and FlatPosture logs are preserved. Ongoing training is not stopped.',
+        training_snapshot_note=policy['notes'],
         robot_submodule_commit=git('-C', str(ROOT / 'M20_perception_Lidar_rl/deep_robotics_model'), 'rev-parse', 'HEAD'),
         policy=policy, checkpoint_files=weights, files=records, filtered=dict(skipped),
         total_bytes=sum(r['bytes'] for r in records))

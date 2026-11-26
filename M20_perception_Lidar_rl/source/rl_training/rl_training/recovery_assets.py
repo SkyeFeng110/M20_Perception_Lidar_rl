@@ -9,13 +9,26 @@ DATA = ROOT/'data/m20_recovery'
 
 
 def resolve_assets():
-    metadata = json.loads((DATA/'reference_observations_v2.json').read_text())
+    teacher = os.environ.get('M20_RECOVERY_TEACHER') or os.environ.get('M20_BASE_CHECKPOINT')
+    replay = os.environ.get('M20_RECOVERY_REPLAY')
+    # Explicit stage assets are self-contained. The historical 35300 replay
+    # is needed only to fill defaults, not to initialize every later stage.
+    if not teacher or not replay:
+        metadata_path = DATA/'reference_observations_v2.json'
+        try:
+            metadata = json.loads(metadata_path.read_text())
+        except FileNotFoundError as error:
+            raise FileNotFoundError(
+                f'Recovery default metadata is missing: {metadata_path}. '
+                'Set both M20_RECOVERY_TEACHER and M20_RECOVERY_REPLAY '
+                'to the selected stage assets, or restore the original default metadata.'
+            ) from error
+        teacher = teacher or metadata['source_checkpoint']
+        replay = replay or metadata['replay_path']
     def path(value):
         p = Path(value).expanduser()
         return p.resolve() if p.is_absolute() else (ROOT/p).resolve()
-    teacher = path(os.environ.get('M20_RECOVERY_TEACHER') or os.environ.get('M20_BASE_CHECKPOINT') or metadata['source_checkpoint'])
-    replay = path(os.environ.get('M20_RECOVERY_REPLAY') or metadata['replay_path'])
-    return teacher, replay
+    return path(teacher), path(replay)
 
 
 if __name__ == '__main__':

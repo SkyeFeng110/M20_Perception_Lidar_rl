@@ -1,0 +1,622 @@
+[
+  {
+    "schema_version": 2,
+    "profile": "z_c_8_immediate",
+    "policy_start": 5.400000000000138,
+    "motion_start": 5.400000000000138,
+    "policy_entered": true,
+    "terrain": "flat",
+    "tread": null,
+    "command_speed": 1.0,
+    "fell": false,
+    "termination": "duration",
+    "observed_bypass": false,
+    "whole_body_top_supported": false,
+    "maximum_top_support_seconds": 0.0,
+    "after_c_idle_yaw_max_change_deg": 0.0,
+    "forward_lateral_max_abs": 0.10999378394079468,
+    "route_mean_velocity_x": 0.9457954307805319,
+    "progress_window_seconds": 0.8,
+    "minimum_route_speed_ratio": 0.9416353390281214,
+    "minimum_rear_route_speed_ratio": 0.9394826923689847,
+    "stall_detected": false,
+    "stall_window_count": 0,
+    "progress_windows": 462,
+    "first_supported_tread": null,
+    "both_front_first_tread": null,
+    "any_front_skipped": null,
+    "simulated_seconds": 19.400000000000727,
+    "final_position": [
+      10.113250521341186,
+      0.10642412090815456,
+      0.5568117690506187
+    ],
+    "mean_velocity_x": 0.9446504573651971,
+    "later_stairs_mean_velocity_x": null,
+    "later_stairs_route_velocity_x": null,
+    "mean_reach_per_leg": [
+      0.07557163052461366,
+      0.07438049582202524,
+      -0.10509104904331835,
+      -0.09990692629486919
+    ],
+    "p95_max_abs_reach": 0.11095967312350696,
+    "command_yaw_max_abs": 0.0,
+    "after_c_idle_yaw_change_deg": 0.0,
+    "forward_yaw_max_change_deg": 0.6553852339803785,
+    "mean_yaw_rate": 0.00016753275197723422,
+    "forward_yaw_min_change_deg": -0.43214086528338225,
+    "forward_yaw_max_signed_change_deg": 0.6553852339803785,
+    "forward_lateral_min_m": -0.022798959504202812,
+    "forward_lateral_max_m": 0.10999378394079468,
+    "acoustic_proxies": {
+      "schema_version": 1,
+      "evidence": "mechanical_proxies_only_no_audio_or_dBA",
+      "physics_sampling": true,
+      "phases": {
+        "moving": {
+          "seconds": 12.019999999998777,
+          "path_distance_m": 10.984829745416762,
+          "touchdowns": 0,
+          "touchdown_approach_rms_m_s": null,
+          "touchdown_approach_max_m_s": null,
+          "touchdown_load_rate_rms_N_s": null,
+          "touchdown_load_rate_max_N_s": null,
+          "contact_point_slip_rms_m_s": 0.010683561380530043,
+          "leg_joint_speed_rms_rad_s": 0.06969928022849602,
+          "wheel_joint_speed_rms_rad_s": 10.295359721044301,
+          "torque_rms_Nm": 7.892484015126873,
+          "torque_rate_rms_Nm_s": 35.36452194299103,
+          "leg_action_reversal_rms": 0.00017905740021787722,
+          "wheel_action_reversal_rms": 7.218289279770815e-05
+        },
+        "idle": {
+          "seconds": 1.9799999999998927,
+          "path_distance_m": 0.14386173854217882,
+          "touchdowns": 0,
+          "touchdown_approach_rms_m_s": null,
+          "touchdown_approach_max_m_s": null,
+          "touchdown_load_rate_rms_N_s": null,
+          "touchdown_load_rate_max_N_s": null,
+          "contact_point_slip_rms_m_s": 0.029597807132308064,
+          "leg_joint_speed_rms_rad_s": 0.2778022638250112,
+          "wheel_joint_speed_rms_rad_s": 1.689757984164367,
+          "torque_rms_Nm": 8.3599955074182,
+          "torque_rate_rms_Nm_s": 170.8788461130264,
+          "leg_action_reversal_rms": 0.004970063649837932,
+          "wheel_action_reversal_rms": 5.2501597739433734e-06
+        }
+      }
+    },
+    "retention_pose": {
+      "scope": "flat",
+      "samples": 601,
+      "pitch_peak_deg": 3.1268169793789777,
+      "roll_peak_deg": 2.092661575247475,
+      "reach_p95_m": 0.12672205828985056
+    }
+  },
+  {
+    "schema_version": 2,
+    "profile": "z_c_8_immediate",
+    "policy_start": 5.400000000000138,
+    "motion_start": 5.400000000000138,
+    "policy_entered": true,
+    "terrain": "ascent",
+    "tread": 0.26,
+    "command_speed": 1.0,
+    "fell": false,
+    "termination": "flight_complete",
+    "observed_bypass": false,
+    "whole_body_top_supported": true,
+    "maximum_top_support_seconds": 0.06,
+    "after_c_idle_yaw_max_change_deg": 0.0,
+    "forward_lateral_max_abs": 0.07391643532256523,
+    "route_mean_velocity_x": 0.8416914646236665,
+    "progress_window_seconds": 0.8,
+    "minimum_route_speed_ratio": 0.7915992816391928,
+    "minimum_rear_route_speed_ratio": 0.7286250938132937,
+    "stall_detected": false,
+    "stall_window_count": 0,
+    "progress_windows": 113,
+    "first_supported_tread": [
+      1,
+      2
+    ],
+    "both_front_first_tread": false,
+    "any_front_skipped": true,
+    "simulated_seconds": 11.619999999999,
+    "final_position": [
+      3.995536252500607,
+      0.07386344687929873,
+      2.466739293863839
+    ],
+    "mean_velocity_x": 0.945875063896235,
+    "later_stairs_mean_velocity_x": 0.9669252221543135,
+    "later_stairs_route_velocity_x": 0.8464390738116434,
+    "mean_reach_per_leg": [
+      0.04953538418330129,
+      -0.06292074319021554,
+      -0.1399012643954382,
+      -0.259275487747779
+    ],
+    "p95_max_abs_reach": 0.30338077407009184,
+    "command_yaw_max_abs": 0.0,
+    "after_c_idle_yaw_change_deg": 0.0,
+    "forward_yaw_max_change_deg": 3.6297319602638516,
+    "mean_yaw_rate": 0.01611569227085564,
+    "forward_yaw_min_change_deg": -1.9184902748560653,
+    "forward_yaw_max_signed_change_deg": 3.6297319602638516,
+    "forward_lateral_min_m": -0.040615763167127956,
+    "forward_lateral_max_m": 0.07391643532256523,
+    "acoustic_proxies": {
+      "schema_version": 1,
+      "evidence": "mechanical_proxies_only_no_audio_or_dBA",
+      "physics_sampling": true,
+      "phases": {
+        "moving": {
+          "seconds": 6.220000000000412,
+          "path_distance_m": 5.007595736510641,
+          "touchdowns": 47,
+          "touchdown_approach_rms_m_s": 1.7067423328978961,
+          "touchdown_approach_max_m_s": 2.9354680825275032,
+          "touchdown_load_rate_rms_N_s": 89757.29238940001,
+          "touchdown_load_rate_max_N_s": 1432149.6234908376,
+          "contact_point_slip_rms_m_s": 0.23235678650920844,
+          "leg_joint_speed_rms_rad_s": 2.8666913008945523,
+          "wheel_joint_speed_rms_rad_s": 15.666712655286895,
+          "torque_rms_Nm": 15.383724918255536,
+          "torque_rate_rms_Nm_s": 1398.7068253320565,
+          "leg_action_reversal_rms": 0.05337947653147872,
+          "wheel_action_reversal_rms": 0.02963035681384901
+        }
+      }
+    },
+    "retention_pose": {
+      "scope": "B4_plus",
+      "samples": 116,
+      "pitch_peak_deg": 28.765241576034448,
+      "roll_peak_deg": 2.926744017197748,
+      "reach_p95_m": 0.3028877933664211
+    },
+    "front_support_sequences": [
+      [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    ],
+    "skipped_treads": [
+      [
+        2
+      ],
+      [
+        1
+      ]
+    ],
+    "no_observed_tread_skip": false,
+    "entry_transfer": {
+      "protocol": "entry_transfer_v3",
+      "scope": "from_lower",
+      "alternating": false,
+      "safe_entry": false,
+      "lead_side": 0,
+      "lead_support_retained": false,
+      "rear_lift_before_riser": false,
+      "lead_matches_following": false,
+      "support_times": {
+        "1": [
+          6.7400000000005855,
+          null,
+          7.440000000000819,
+          7.640000000000886
+        ],
+        "2": [
+          null,
+          6.980000000000666,
+          7.780000000000933,
+          7.960000000000993
+        ],
+        "3": [
+          7.160000000000726,
+          7.420000000000813,
+          8.120000000000939,
+          8.28000000000085
+        ],
+        "4": [
+          7.640000000000886,
+          7.840000000000953,
+          8.440000000000762,
+          8.600000000000673
+        ],
+        "5": [
+          7.960000000000993,
+          8.160000000000917,
+          8.760000000000584,
+          8.920000000000496
+        ],
+        "6": [
+          8.28000000000085,
+          8.48000000000074,
+          9.080000000000407,
+          9.240000000000318
+        ],
+        "7": [
+          8.600000000000673,
+          8.800000000000562,
+          9.40000000000023,
+          9.56000000000014
+        ],
+        "8": [
+          8.920000000000496,
+          9.120000000000385,
+          9.720000000000052,
+          9.899999999999952
+        ],
+        "9": [
+          9.240000000000318,
+          9.440000000000207,
+          10.039999999999875,
+          10.219999999999775
+        ],
+        "10": [
+          9.56000000000014,
+          9.780000000000019,
+          10.359999999999697,
+          10.579999999999576
+        ],
+        "11": [
+          9.879999999999963,
+          10.099999999999842,
+          10.719999999999498,
+          10.85999999999942
+        ],
+        "12": [
+          10.219999999999775,
+          10.419999999999664,
+          11.079999999999298,
+          11.23999999999921
+        ]
+      },
+      "lift_times": [
+        6.560000000000525,
+        6.780000000000599
+      ],
+      "b1_support_onset_times": [
+        6.7400000000005855,
+        null
+      ],
+      "b1_confirmed_times": [
+        6.780000000000599,
+        null
+      ],
+      "twin_air_seconds": 0.8199999999999097,
+      "blocked_body_advance_m": 0.04316588825466334,
+      "nose_down_peak_deg": 0.06468299631496852,
+      "pitch_peak_abs_deg": 32.1359265502738,
+      "pitch_rate_peak_deg_s": 79.2193745560266,
+      "entry_elapsed_seconds": 4.0000000000000915,
+      "entry_body_progress_m": 3.040060870005556,
+      "approach_begin_time": 5.400000000000138,
+      "entry_end_time": 9.40000000000023
+    },
+    "rear_support_sequences": [
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    ],
+    "rear_skipped_treads": [
+      [],
+      []
+    ],
+    "rear_no_observed_tread_skip": true,
+    "all_treads_supported": false
+  },
+  {
+    "schema_version": 2,
+    "profile": "z_c_8_immediate",
+    "policy_start": 5.400000000000138,
+    "motion_start": 5.400000000000138,
+    "policy_entered": true,
+    "terrain": "ascent",
+    "tread": 0.3,
+    "command_speed": 1.0,
+    "fell": false,
+    "termination": "flight_complete",
+    "observed_bypass": false,
+    "whole_body_top_supported": true,
+    "maximum_top_support_seconds": 0.06,
+    "after_c_idle_yaw_max_change_deg": 0.0,
+    "forward_lateral_max_abs": 0.03227505239085227,
+    "route_mean_velocity_x": 0.9086755481405419,
+    "progress_window_seconds": 0.8,
+    "minimum_route_speed_ratio": 0.8840579039221333,
+    "minimum_rear_route_speed_ratio": 0.7469459153527385,
+    "stall_detected": false,
+    "stall_window_count": 0,
+    "progress_windows": 123,
+    "first_supported_tread": [
+      1,
+      3
+    ],
+    "both_front_first_tread": false,
+    "any_front_skipped": true,
+    "simulated_seconds": 11.859999999998866,
+    "final_position": [
+      4.479193157443796,
+      0.019199508885674826,
+      2.467841152544417
+    ],
+    "mean_velocity_x": 0.997029776270868,
+    "later_stairs_mean_velocity_x": 1.02496509899833,
+    "later_stairs_route_velocity_x": 0.9205501671781537,
+    "mean_reach_per_leg": [
+      0.061904439100220573,
+      -0.0588736498360857,
+      -0.15165975196252476,
+      -0.25294403881696614
+    ],
+    "p95_max_abs_reach": 0.32099114610981255,
+    "command_yaw_max_abs": 0.0,
+    "after_c_idle_yaw_change_deg": 0.0,
+    "forward_yaw_max_change_deg": 2.82170998649861,
+    "mean_yaw_rate": -0.004244271803746196,
+    "forward_yaw_min_change_deg": -1.959773563290649,
+    "forward_yaw_max_signed_change_deg": 2.82170998649861,
+    "forward_lateral_min_m": -0.021810990075351696,
+    "forward_lateral_max_m": 0.03227505239085227,
+    "acoustic_proxies": {
+      "schema_version": 1,
+      "evidence": "mechanical_proxies_only_no_audio_or_dBA",
+      "physics_sampling": true,
+      "phases": {
+        "moving": {
+          "seconds": 6.460000000000492,
+          "path_distance_m": 5.491548848775618,
+          "touchdowns": 44,
+          "touchdown_approach_rms_m_s": 1.2847290441825694,
+          "touchdown_approach_max_m_s": 2.8147497035178333,
+          "touchdown_load_rate_rms_N_s": 73333.68668788076,
+          "touchdown_load_rate_max_N_s": 1864744.3346501822,
+          "contact_point_slip_rms_m_s": 0.17759171394657092,
+          "leg_joint_speed_rms_rad_s": 2.7787087702445836,
+          "wheel_joint_speed_rms_rad_s": 15.541682184677992,
+          "torque_rms_Nm": 15.444567916461132,
+          "torque_rate_rms_Nm_s": 1345.2905427893788,
+          "leg_action_reversal_rms": 0.046251520388532655,
+          "wheel_action_reversal_rms": 0.036210938065486975
+        }
+      }
+    },
+    "retention_pose": {
+      "scope": "B4_plus",
+      "samples": 124,
+      "pitch_peak_deg": 26.716100396479074,
+      "roll_peak_deg": 3.549918751083484,
+      "reach_p95_m": 0.3192165453172192
+    },
+    "front_support_sequences": [
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    ],
+    "skipped_treads": [
+      [],
+      [
+        1,
+        2
+      ]
+    ],
+    "no_observed_tread_skip": false,
+    "entry_transfer": {
+      "protocol": "entry_transfer_v3",
+      "scope": "from_lower",
+      "alternating": false,
+      "safe_entry": false,
+      "lead_side": 0,
+      "lead_support_retained": false,
+      "rear_lift_before_riser": false,
+      "lead_matches_following": false,
+      "support_times": {
+        "1": [
+          6.7400000000005855,
+          null,
+          7.520000000000846,
+          7.700000000000906
+        ],
+        "2": [
+          7.080000000000699,
+          null,
+          7.8600000000009596,
+          8.060000000000972
+        ],
+        "3": [
+          7.400000000000806,
+          7.500000000000839,
+          8.200000000000895,
+          8.400000000000784
+        ],
+        "4": [
+          7.760000000000926,
+          7.900000000000973,
+          8.540000000000706,
+          8.740000000000595
+        ],
+        "5": [
+          8.080000000000961,
+          8.220000000000883,
+          8.880000000000518,
+          9.060000000000418
+        ],
+        "6": [
+          8.420000000000773,
+          8.560000000000695,
+          9.20000000000034,
+          9.40000000000023
+        ],
+        "7": [
+          8.740000000000595,
+          8.900000000000507,
+          9.540000000000152,
+          9.740000000000041
+        ],
+        "8": [
+          9.080000000000407,
+          9.22000000000033,
+          9.879999999999963,
+          10.059999999999864
+        ],
+        "9": [
+          9.420000000000218,
+          9.56000000000014,
+          10.219999999999775,
+          10.399999999999675
+        ],
+        "10": [
+          9.76000000000003,
+          9.899999999999952,
+          10.539999999999598,
+          10.759999999999476
+        ],
+        "11": [
+          10.079999999999853,
+          10.219999999999775,
+          10.87999999999941,
+          11.019999999999332
+        ],
+        "12": [
+          10.419999999999664,
+          10.559999999999587,
+          11.259999999999199,
+          11.399999999999121
+        ]
+      },
+      "lift_times": [
+        6.580000000000532,
+        6.780000000000599
+      ],
+      "b1_support_onset_times": [
+        6.7400000000005855,
+        null
+      ],
+      "b1_confirmed_times": [
+        6.780000000000599,
+        null
+      ],
+      "twin_air_seconds": 0.6999999999999229,
+      "blocked_body_advance_m": 0.04316588825466333,
+      "nose_down_peak_deg": 0.3800303789111261,
+      "pitch_peak_abs_deg": 28.355399151430152,
+      "pitch_rate_peak_deg_s": 81.08678594421669,
+      "entry_elapsed_seconds": 4.0000000000000915,
+      "entry_body_progress_m": 3.1982819489807177,
+      "approach_begin_time": 5.400000000000138,
+      "entry_end_time": 9.40000000000023
+    },
+    "rear_support_sequences": [
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    ],
+    "rear_skipped_treads": [
+      [],
+      []
+    ],
+    "rear_no_observed_tread_skip": true,
+    "all_treads_supported": false
+  }
+]

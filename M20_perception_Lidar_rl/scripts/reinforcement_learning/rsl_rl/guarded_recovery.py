@@ -279,6 +279,16 @@ def evaluation_scalars(summary):
             values['RouteHold/early_traction_repair_passed'] = int(selection['traction_repair_passed'])
             values['RouteHold/early_traction_slip_score'] = selection['early_traction_score']
             values['RouteHold/best_early_traction_slip_score'] = selection['best_early_traction_score']
+            for key in ('descent_error_ratio', 'low_mu_error_ratio', 'combined_error', 'descent_repair_passed',
+                        'turn_error_ratio', 'turn_repair_passed'):
+                if key in selection:
+                    values['DescentTractionV2/'+key] = selection[key]
+            feedback = summary['behavior_feedback']
+            for key, value in feedback.get('v2_keep_multipliers', {}).items():
+                values['DescentTractionV2/'+key+'_keep_multiplier'] = value
+            for key in ('v2_descent_reward_multiplier', 'v2_slip_reward_multiplier', 'v2_turn_reward_multiplier'):
+                if key in feedback:
+                    values['DescentTractionV2/'+key] = feedback[key]
         else:
             values['MuJoCo/best_candidate_all_treads_cases'] = selection['best_rank'][0]
         values['Retention/success_anchor_multiplier'] = summary['behavior_feedback']['success_anchor_multiplier']
@@ -294,6 +304,11 @@ def evaluation_scalars(summary):
             values[f'AcousticComparison/{row["case"]}/actual_speed_matched'] = int(comparison['actual_speed_matched'])
             for key, value in comparison['moving_proxy_ratios'].items():
                 values[f'AcousticComparison/{row["case"]}/ratio_to_baseline/{key}'] = value
+    for row in summary.get('front_turn_cases', []):
+        name = str((row['forward'], row['yaw'], row['friction']))
+        for key, value in row.items():
+            if isinstance(value, (int, float)) and math.isfinite(value):
+                values[f'FrontTurn/{name}/{key}'] = value
     rows = summary['cases']+summary.get('supplementary', [])
     for row in rows:
         for phase, metrics in (row.get('acoustic_proxies') or {}).get('phases', {}).items():
@@ -303,6 +318,10 @@ def evaluation_scalars(summary):
     for row in summary.get('supplementary', []):
         for key in ('goal_reached', 'fell', 'observed_bypass'):
             values[f'MuJoCoSupplement/{row["case"]}/{key}'] = int(row[key])
+        for key, value in row.get('retention_pose', {}).items():
+            values[f'DescentRetention/{row["case"]}/{key}'] = value
+    if 'descent_retained' in summary:
+        values['DescentRetention/passed'] = int(summary['descent_retained'])
     return values
 
 
@@ -334,6 +353,7 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
     if evaluation_profile == 'entry' and task not in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
         raise ValueError('Entry evaluation profile is restricted to EntryTransfer')
     flat_repair = hasattr(getattr(runner, 'alg', None), 'flat_reference_results')
+    early_58098 = hasattr(getattr(runner, 'alg', None), 'descent_reference_results')
     output = Path(output_path).resolve()
     output.mkdir(parents=True, exist_ok=True)
     log_dir = Path(log_dir).resolve()
@@ -365,6 +385,14 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
             from route_hold_selection import RouteHoldBehaviorSelector
             selector_class = RouteHoldBehaviorSelector
             selection_kwargs['traction_results'] = runner.alg.traction_reference_results
+            if early_58098:
+                from early_traction_selection import EarlyTractionBehaviorSelector
+                selector_class = EarlyTractionBehaviorSelector
+                selection_kwargs['descent_results'] = runner.alg.descent_reference_results
+                if getattr(runner.alg, 'repair_protocol', '') == 'm20_descent_low_mu_58098_v2':
+                    from descent_traction_selection import DescentTractionBehaviorSelector
+                    selector_class = DescentTractionBehaviorSelector
+                    selection_kwargs['turn_reference_results'] = os.environ['M20_FRONT_TURN_RESULTS']
         selector = selector_class(output, runner.alg.behavior_teacher_checkpoint,
                                   runner.alg.behavior_reference_results,
                                   previous_best=runner.alg.behavior_selection_state, **selection_kwargs)
@@ -455,12 +483,16 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
             summary = evaluation_summary(report, baseline_path)
             summary.update(completed_updates=completed, checkpoint=str(checkpoint), report=str(report_path),
                            retention_passed=report.get('retention_passed'), repair_passed=report.get('repair_passed'))
-            if (evaluation_profile == 'full' and task in
+            if ((evaluation_profile == 'full' or early_58098) and task in
                     (REFINE_TASK, TARGETED_TASK, TARGETED_V2_TASK, STEP_SUPPORT_TASK,
                      STEP_RETENTION_TASK, TRACTION_TRANSITION_TASK, ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK)):
                 supplement = evaluation/'quiet_descent'
                 command = [sys.executable, str(ROOT/'scripts/tools/m20_quiet_supplement.py'),
                            '--checkpoint', str(checkpoint), '--output', str(supplement)]
+                if early_58098:
+                    command.append('--retention-metrics')
+                    if getattr(runner.alg, 'repair_protocol', '') == 'm20_descent_low_mu_58098_v2':
+                        command.append('--retention-v2')
                 with (evaluation/'quiet_descent.log').open('w') as stream:
                     extra = run_evaluation(command, env=cpu_env, stdout=stream)
                 if extra.returncode != 0:
@@ -468,6 +500,18 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                 summary['supplementary'] = json.loads((supplement/'results.json').read_text())
             if selector is not None:
                 selection_kwargs = {}
+                if early_58098:
+                    selection_kwargs['descent_results'] = supplement/'results.json'
+                    if getattr(runner.alg, 'repair_protocol', '') == 'm20_descent_low_mu_58098_v2':
+                        target = evaluation/'front_turn'
+                        command = [sys.executable, str(ROOT/'scripts/tools/m20_front_turn_benchmark.py'),
+                                   '--checkpoint', str(checkpoint), '--output', str(target)]
+                        with (evaluation/'front_turn.log').open('w') as stream:
+                            extra = run_evaluation(command, env=cpu_env, stdout=stream)
+                        if extra.returncode != 0:
+                            raise RuntimeError('Turn evaluator runtime error; inspect front_turn.log')
+                        selection_kwargs['turn_results'] = target/'results.json'
+                        summary['front_turn_cases'] = json.loads((target/'results.json').read_text())
                 if task in (ENTRY_TRANSFER_TASK, ENTRY_SEQUENCE_TASK, FLAT_POSTURE_TASK, ROUTE_HOLD_TASK):
                     target = evaluation/'entry'
                     command = [sys.executable, str(ROOT/'scripts/tools/m20_entry_flat_benchmark.py'),
@@ -513,6 +557,8 @@ def learn_guarded(runner, *, total_updates, segment_updates, baseline_path, outp
                     selection_kwargs['forward_results'] = target/'results.json'
                     summary['production_cases'] = json.loads((target/'results.json').read_text())
                 selection = selector.consider(checkpoint, report['candidates'][0]['results'], **selection_kwargs)
+                if early_58098:
+                    summary['descent_retained'] = selection['descent_retained']
                 if task == ROUTE_HOLD_TASK:
                     status['route_hold_passed'] = summary['route_hold_passed'] = selection['route_hold_passed']
                 if 'flat_start_passed' in selection:

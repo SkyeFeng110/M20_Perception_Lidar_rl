@@ -1,0 +1,13 @@
+{
+  "protocol": "flat_posture_current_stairs_compact_flat_v1",
+  "sha256": "4a25c7ee19213ee25439091119de63a497e8608e9f17f64630a86d932ab9fdc1",
+  "source_checkpoint": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/teacher/model_58098.pt",
+  "source_sha256": "c21b28919e97e17c99a48776c9189b0fb57e1427318b0d94dfb7ec2cd8cfa0db",
+  "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/production/current/flat_None_1.0.npz",
+  "trajectory_sha256": "4f6646ff58a1c1978600c37a1d1c365b4acdfcaa3932efa929d38d3e89efaef7",
+  "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/production/current/manifest.json",
+  "manifest_sha256": "fa75d0156103ba515218c3b449a89a3be604bbb810983dd32dea6eb8e9e5923f",
+  "samples": 501,
+  "preserve_current_flat": true,
+  "scope": "Measured current moving flat posture"
+}

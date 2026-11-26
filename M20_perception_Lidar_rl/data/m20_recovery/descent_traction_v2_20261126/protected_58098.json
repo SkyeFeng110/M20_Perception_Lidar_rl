@@ -1,0 +1,19 @@
+{
+  "protocol": "m20_descent_low_mu_58098_v2",
+  "teacher_sha256": "c21b28919e97e17c99a48776c9189b0fb57e1427318b0d94dfb7ec2cd8cfa0db",
+  "source_replay_sha256": "27d655a415652e65322716dc2591dd24868893b06a4e1f809a008f0d32ea2b03",
+  "source_metadata_sha256": "1d2e3a7db067425f85509ee47d43c55a6fa9a7d6f81ce5a46ff948bb54796e23",
+  "sha256": "beb3413d54d9b49be497172e4345bf0c8a4f780657f50f2b3322a6e22d372036",
+  "source_replay": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/data/m20_recovery/early_traction_58098_20261125/protected_58098.npz",
+  "samples": 13388,
+  "scope_samples": {
+    "flat": 5753,
+    "ascent": 5679,
+    "descent": 1956
+  },
+  "scope_cases": {
+    "flat": 10,
+    "ascent": 14,
+    "descent": 4
+  }
+}

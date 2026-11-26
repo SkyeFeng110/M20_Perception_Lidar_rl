@@ -1,0 +1,18 @@
+[MODE] ready (startup)
+[MODEL] /media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/model_62098.pt
+[CONFIG] /media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/params (adjacent)
+[CONTRACT] 63 -> 16, iteration=62098, control=0.02s, physics=0.001s
+[OUTPUT] /media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125_175334_1006334/eval_004000/quiet_descent/descent_0.26_0.7
+mode=ready t=  0.02 x=-1.000 z=2.487 BHD=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0] fall=False
+[MODE] policy (batch settle complete)
+mode=policy t=  1.02 x=-0.999 z=2.479 BHD=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0] fall=False
+mode=policy t=  2.02 x=-0.442 z=2.470 BHD=[1.0, -0.1599999964237213, 0.699999988079071, 1.0, -0.1599999964237213, 1.0] fall=False
+mode=policy t=  3.02 x= 0.189 z=2.383 BHD=[1.0, -0.1599999964237213, 0.10000000149011612, 1.0, -0.1599999964237213, 0.4000000059604645] fall=False
+mode=policy t=  4.02 x= 0.827 z=2.130 BHD=[1.0, -0.1599999964237213, 0.20000000298023224, 0.0, -0.0, 0.0] fall=False
+mode=policy t=  5.02 x= 1.546 z=1.637 BHD=[1.0, -0.1599999964237213, 0.30000001192092896, 1.0, -0.1599999964237213, 0.30000001192092896] fall=False
+mode=policy t=  6.02 x= 2.278 z=1.175 BHD=[1.0, -0.1599999964237213, 0.10000000149011612, 1.0, -0.1599999964237213, 0.4000000059604645] fall=False
+mode=policy t=  7.02 x= 3.011 z=0.733 BHD=[1.0, -0.1599999964237213, 0.10000000149011612, 0.0, -0.0, 0.0] fall=False
+mode=policy t=  8.02 x= 3.697 z=0.571 BHD=[0.0, -0.0, 0.0, 0.0, -0.0, 0.0] fall=False
+[GOAL] Finish recorded; session continues unless --stop-at-goal is set
+mode=policy t=  8.78 x= 4.211 z=0.570 BHD=[0.0, -0.0, 0.0, 0.0, -0.0, 0.0] fall=False
+[RESULT] {"status": "goal_reached", "goal_reached": true, "fell": false, "observed_bypass": false, "control_steps": 439, "simulated_seconds": 8.78, "final_position": [4.211424954292991, -0.16743630435255685, 0.570152745971322], "max_x": 4.211424954292991, "max_base_height": 2.488668244641707, "frames_with_active_edge": 304, "reset_count": 0, "final_mode": "policy", "transitions": [{"time": 0.0, "episode": 0, "mode": "ready", "reason": "startup"}, {"time": 1.0000000000000007, "episode": 0, "mode": "policy", "reason": "batch settle complete"}], "goal_events": [{"step": 438, "time": 8.780000000000573, "episode": 0}], "trajectory_parts": ["trajectory.npz"], "output": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125_175334_1006334/eval_004000/quiet_descent/descent_0.26_0.7", "strict_gait_acceptance": "not_measured", "acoustic_proxies": {"schema_version": 1, "evidence": "mechanical_proxies_only_no_audio_or_dBA", "physics_sampling": true, "phases": {"moving": {"seconds": 7.780000000000933, "path_distance_m": 5.23155194018103, "touchdowns": 43, "touchdown_approach_rms_m_s": 1.6848577548422643, "touchdown_approach_max_m_s": 2.456824535293492, "touchdown_load_rate_rms_N_s": 94080.07635239455, "touchdown_load_rate_max_N_s": 1386814.4518571866, "contact_point_slip_rms_m_s": 0.08923725068577196, "leg_joint_speed_rms_rad_s": 1.478833749857086, "wheel_joint_speed_rms_rad_s": 7.644576473477891, "torque_rms_Nm": 6.215852938002157, "torque_rate_rms_Nm_s": 517.6858337799122, "leg_action_reversal_rms": 0.03525919106730207, "wheel_action_reversal_rms": 0.021878365478158125}}}}

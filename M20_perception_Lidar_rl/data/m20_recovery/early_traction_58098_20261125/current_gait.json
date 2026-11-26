@@ -1,0 +1,174 @@
+{
+  "schema_version": 2,
+  "source_checkpoint": "artifacts/early_traction_58098_20261125/reference58098/teacher/model_58098.pt",
+  "source_sha256": "c21b28919e97e17c99a48776c9189b0fb57e1427318b0d94dfb7ec2cd8cfa0db",
+  "replay_path": "data/m20_recovery/early_traction_58098_20261125/current_gait.npz",
+  "replay_sha256": "1fdeaa4fbb0523da4d5a8adf7102cafeec051bddbc63bdca36c40f8a8340f582",
+  "samples": 6454,
+  "shape": [
+    6454,
+    63
+  ],
+  "dtype": "float32",
+  "scene_names": {
+    "0": "flat_route",
+    "1": "ascent_route"
+  },
+  "phase_names": {
+    "1": "policy_idle",
+    "2": "moving",
+    "3": "after_motion"
+  },
+  "source": "Recorded teacher MuJoCo physics, physical case labels and production policy phases; no optimization",
+  "scene_scope": "Terrain-case identity, not an inference from actor B flags. Ascent approach/exit retain the ascent case label.",
+  "policy_abi": "v11_signed_edges_v2; 63 observations / 16 actions",
+  "cases": [
+    {
+      "case_id": 0,
+      "terrain": "flat",
+      "profile": "z_c_8",
+      "tread": null,
+      "command_speed": 0.7,
+      "samples": 800,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/keyboard/flat_None_0.7.npz",
+      "trajectory_sha256": "c22dd9eab35c276b33634148da4a4f4a1e99b6ca4536e4af1bd3311ceabcd52b",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/keyboard/manifest.json",
+      "manifest_sha256": "2d4ae72ac7e8858923fa6fda3b910d6ed3b8bf0f1ca8e7d0df03e555669d8bad"
+    },
+    {
+      "case_id": 1,
+      "terrain": "ascent",
+      "profile": "z_c_8",
+      "tread": 0.26,
+      "command_speed": 0.7,
+      "samples": 531,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/keyboard/ascent_0.26_0.7.npz",
+      "trajectory_sha256": "ac4f72b4ccd1c5515bb6a9218b3e98b4c1c713b4c7afe1df32f07a5d0786e4da",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/keyboard/manifest.json",
+      "manifest_sha256": "2d4ae72ac7e8858923fa6fda3b910d6ed3b8bf0f1ca8e7d0df03e555669d8bad"
+    },
+    {
+      "case_id": 2,
+      "terrain": "ascent",
+      "profile": "z_c_8",
+      "tread": 0.3,
+      "command_speed": 0.7,
+      "samples": 532,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/keyboard/ascent_0.3_0.7.npz",
+      "trajectory_sha256": "482287f5360c2a001d10934d64de05cfbf616314716b3174649bbf1790b0db43",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/keyboard/manifest.json",
+      "manifest_sha256": "2d4ae72ac7e8858923fa6fda3b910d6ed3b8bf0f1ca8e7d0df03e555669d8bad"
+    },
+    {
+      "case_id": 3,
+      "terrain": "flat",
+      "profile": "standing",
+      "tread": null,
+      "command_speed": 0.5,
+      "samples": 701,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/flat_None_0.5.npz",
+      "trajectory_sha256": "152fa41b7ff5dd0a28652c2b16f1f339f5f10193c5d20013d30df5cd1b53bd03",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/manifest.json",
+      "manifest_sha256": "e102e24b7126939e9539c1af035f19360a0572e5e5cd4cf761f11d05e6cc6817"
+    },
+    {
+      "case_id": 4,
+      "terrain": "flat",
+      "profile": "standing",
+      "tread": null,
+      "command_speed": 0.7,
+      "samples": 701,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/flat_None_0.7.npz",
+      "trajectory_sha256": "95218200581c69f3713fc944018c029dfa33430ab6f593007036b26025b485e4",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/manifest.json",
+      "manifest_sha256": "e102e24b7126939e9539c1af035f19360a0572e5e5cd4cf761f11d05e6cc6817"
+    },
+    {
+      "case_id": 5,
+      "terrain": "flat",
+      "profile": "standing",
+      "tread": null,
+      "command_speed": 1.0,
+      "samples": 701,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/flat_None_1.0.npz",
+      "trajectory_sha256": "f0c21236bfeed8c08e79dca862f351a5428e9d33eb4c84c0d9918b562962826e",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/manifest.json",
+      "manifest_sha256": "e102e24b7126939e9539c1af035f19360a0572e5e5cd4cf761f11d05e6cc6817"
+    },
+    {
+      "case_id": 6,
+      "terrain": "ascent",
+      "profile": "standing",
+      "tread": 0.26,
+      "command_speed": 0.5,
+      "samples": 524,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/ascent_0.26_0.5.npz",
+      "trajectory_sha256": "489552d0268975c7e1cb16a0f03da83445c4275c14dc59814a807c0ce5d92ffa",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/manifest.json",
+      "manifest_sha256": "e102e24b7126939e9539c1af035f19360a0572e5e5cd4cf761f11d05e6cc6817"
+    },
+    {
+      "case_id": 7,
+      "terrain": "ascent",
+      "profile": "standing",
+      "tread": 0.26,
+      "command_speed": 0.7,
+      "samples": 402,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/ascent_0.26_0.7.npz",
+      "trajectory_sha256": "3d410551113057017599ceab20306245b82c742a5dd803def1186643a69cf9b6",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/manifest.json",
+      "manifest_sha256": "e102e24b7126939e9539c1af035f19360a0572e5e5cd4cf761f11d05e6cc6817"
+    },
+    {
+      "case_id": 8,
+      "terrain": "ascent",
+      "profile": "standing",
+      "tread": 0.26,
+      "command_speed": 1.0,
+      "samples": 298,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/ascent_0.26_1.0.npz",
+      "trajectory_sha256": "2772eace7ad2ff6c2bf2ff5481b6a60c2705f3a6d4aad791a419bdec9522a67b",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/manifest.json",
+      "manifest_sha256": "e102e24b7126939e9539c1af035f19360a0572e5e5cd4cf761f11d05e6cc6817"
+    },
+    {
+      "case_id": 9,
+      "terrain": "ascent",
+      "profile": "standing",
+      "tread": 0.3,
+      "command_speed": 0.5,
+      "samples": 549,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/ascent_0.3_0.5.npz",
+      "trajectory_sha256": "a360c28e67c7f5b23564a00960b8ee1f0f128157d6e3b3f3aea547967bc3ae6d",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/manifest.json",
+      "manifest_sha256": "e102e24b7126939e9539c1af035f19360a0572e5e5cd4cf761f11d05e6cc6817"
+    },
+    {
+      "case_id": 10,
+      "terrain": "ascent",
+      "profile": "standing",
+      "tread": 0.3,
+      "command_speed": 0.7,
+      "samples": 406,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/ascent_0.3_0.7.npz",
+      "trajectory_sha256": "cf153bc7d75364072fae6f751d830073aa0a6d81e83c267523e8a4b6a9bb5db4",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/manifest.json",
+      "manifest_sha256": "e102e24b7126939e9539c1af035f19360a0572e5e5cd4cf761f11d05e6cc6817"
+    },
+    {
+      "case_id": 11,
+      "terrain": "ascent",
+      "profile": "standing",
+      "tread": 0.3,
+      "command_speed": 1.0,
+      "samples": 309,
+      "trajectory": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/ascent_0.3_1.0.npz",
+      "trajectory_sha256": "f3e06f73b33f2576b2e7d4cdc7f86e1ca49e2b9cf81cc1ecd3cf663aff85d334",
+      "manifest": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/native/standing/manifest.json",
+      "manifest_sha256": "e102e24b7126939e9539c1af035f19360a0572e5e5cd4cf761f11d05e6cc6817"
+    }
+  ],
+  "posture_protocol": "flat_posture_current_stairs_compact_flat_v1",
+  "stair_start": 0.25,
+  "stair_keep_samples": 2946
+}

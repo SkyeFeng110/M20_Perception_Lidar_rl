@@ -35,7 +35,7 @@ def paths():
         native=r/'native/results.json', entry=r/'entry/results.json', flat=r/'flat_start/results.json',
         production=r/'production/results.json',
         traction_results=ROOT/'artifacts/route_traction_20261125/reference58098/traction_b1_b3/results.json',
-        traction_teacher=ROOT/'logs/rsl_rl/M20-V11.1-RouteHold/2026-11-25_11-30-18_303338_route_hold_latest/model_58098.pt')
+        traction_teacher=ROOT/'artifacts/early_traction_58098_20261125/reference58098/teacher/model_58098.pt')
 
 
 def test_constant_wrong_heading_and_world_side_speed_are_not_stable_straight_motion():
@@ -190,7 +190,7 @@ def test_environment_replaces_old_route_terms_and_keeps_speed_posture_and_limits
     class Parent:
         def __post_init__(self): pass
     scope = dict(DeeproboticsM20V111FlatPostureEnvCfg=Parent, configclass=lambda c:c,
-                 RewTerm=NS, CurrTerm=NS, route=route)
+                 RewTerm=NS, CurrTerm=NS, route=route, os=__import__('os'))
     exec(compile(ast.fix_missing_locations(ast.Module(body=[cls], type_ignores=[])), str(path), 'exec'), scope)
     cfg = scope[cls.name]()
     cfg.rewards = NS(**{name:(NS(**value) if value else None) for name,value in saved['rewards'].items()})

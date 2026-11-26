@@ -32,6 +32,9 @@ from interaction import Interaction, PRONE_JOINT_POS
 from acoustic import AcousticRecorder
 
 def default_checkpoint():
+    published = REPO.parent / "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/model_65298.pt"
+    if published.is_file():
+        return published
     selected = REPO.parent / "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair"
     checkpoints = list(selected.glob("*/model_*.pt"))
     if checkpoints:
@@ -65,6 +68,7 @@ class Robot:
             raise ValueError("Nonunit actuator gears are unsupported")
         model.dof_armature[self.vids] = saved.armature
         self.wheels = np.asarray([model.body(f"{leg}_wheel").id for leg in ("fl", "fr", "hl", "hr")])
+        self.hips = np.asarray([model.body(f"{leg}_hipy").id for leg in ("fl", "fr", "hl", "hr")])
         self.terrain_geoms = frozenset(g for g in range(model.ngeom) if is_terrain_geom(model, g))
         self.flex = static_terrain_flex_ids(model)
         self.groups = np.asarray([1, 0, 0, 0, 0, 0], dtype=np.uint8)
@@ -261,7 +265,7 @@ def run(args, *, event_source=None):
     acoustic = AcousticRecorder()
     records = {k: [] for k in ("time", "episode", "root_pos", "root_quat", "qpos", "qvel",
                                "observation", "action", "command", "wheel_support", "nonwheel_contacts",
-                               "mode", "pose_target")}
+                               "mode", "pose_target", "wheel_reach")}
     fell, bypass, finished, status, support_steps = False, False, False, "timeout", 0
     episode_fell, episode_bypass, episode_finished, current_episode = False, False, False, 0
     steps_done, chunks, goal_events = 0, [], []
@@ -339,7 +343,9 @@ def run(args, *, event_source=None):
                                    root_quat=d.xquat[robot.base_id], qpos=d.qpos, qvel=d.qvel,
                                    observation=obs, action=action, command=command,
                                    wheel_support=support, nonwheel_contacts=other_contact,
-                                   mode=session.mode, pose_target=target).items():
+                                   mode=session.mode, pose_target=target,
+                                   wheel_reach=(d.xpos[robot.wheels]-d.xpos[robot.hips])
+                                       @ d.xmat[robot.base_id].reshape(3, 3)[:, 0]).items():
                 records[key].append(np.copy(value))
             for _ in range(substeps):
                 if active:

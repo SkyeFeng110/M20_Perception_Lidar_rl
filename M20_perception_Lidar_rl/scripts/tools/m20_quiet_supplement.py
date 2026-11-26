@@ -30,6 +30,8 @@ def main():
     p.add_argument('--checkpoint', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--validation-root', type=Path, default=ROOT.parent/'mujoco_validation')
+    p.add_argument('--retention-metrics', action='store_true', help='Record pose and checkpoint identity for guarded descent retention')
+    p.add_argument('--retention-v2', action='store_true', help='Keep measured sparse early-fall data as a behavior rejection')
     a = p.parse_args()
     a.output.mkdir(parents=True, exist_ok=False)
     base = a.validation_root.resolve()/'deploy/mujoco_v135'
@@ -47,9 +49,24 @@ def main():
                 subprocess.run(command, env=cpu_env, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=180)
             result = json.loads((target/'summary.json').read_text())
             validate_result(result)
+            if a.retention_metrics:
+                sys.path.insert(0, str(ROOT/'source/rl_training/rl_training'))
+                from early_traction import descent_pose
+                result['retention_pose'] = descent_pose(target/'trajectory.npz',
+                    min_samples=1 if a.retention_v2 and result['fell'] else 10)
             rows.append(dict(case=f'descent/{tread}/{speed}', terrain='descent', tread=tread,
                              command_speed=speed, **result))
             (a.output/'results.json').write_text(json.dumps(rows, indent=2, allow_nan=False)+'\n')
+    if a.retention_metrics:
+        from early_traction import PROTOCOL, sha
+        manifests = [json.loads((a.output/f'descent_{t}_{v}'/'manifest.json').read_text())
+                     for t in (.26, .30) for v in (.5, .7)]
+        if any(m.get('checkpoint_sha256') != sha(a.checkpoint) or not m.get('physics_enabled') for m in manifests):
+            raise ValueError('Descent trajectory checkpoint/physics mismatch')
+        (a.output/'manifest.json').write_text(json.dumps(dict(protocol=PROTOCOL,
+            checkpoint_sha256=sha(a.checkpoint), physics_enabled=True,
+            results_sha256=sha(a.output/'results.json'), height=.16, duration=25.,
+            actor_dimensions=[63, 16], sources=manifests), indent=2)+'\n')
     print(json.dumps(dict(supplementary=True, cases=len(rows),
                          completed=sum(row['goal_reached'] for row in rows),
                          falls=sum(row['fell'] for row in rows), output=str(a.output))), flush=True)

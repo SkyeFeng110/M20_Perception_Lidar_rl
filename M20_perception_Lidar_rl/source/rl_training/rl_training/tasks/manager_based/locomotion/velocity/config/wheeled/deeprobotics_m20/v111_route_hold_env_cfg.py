@@ -10,8 +10,12 @@ from rl_training.tasks.manager_based.locomotion.velocity.mdp import v111_route_h
 
 @configclass
 class DeeproboticsM20V111RouteHoldEnvCfg(DeeproboticsM20V111FlatPostureEnvCfg):
+    early_traction_repair_58098: bool = False
+    descent_traction_v2: bool = False
+
     def __post_init__(self):
         super().__post_init__()
+        self.early_traction_repair_58098 = os.environ.get('M20_EARLY_TRACTION_58098') == '1'
         # Replace duplicate route terms on flat/ascent only. Other terrains
         # keep their native terms, and speed/stance/support rewards stay live.
         for name in ('path_lateral_deviation', 'path_heading_error', 'stair_straightness',
@@ -26,6 +30,8 @@ class DeeproboticsM20V111RouteHoldEnvCfg(DeeproboticsM20V111FlatPostureEnvCfg):
             func=route.early_traction_quality, weight=.60)
         self.rewards.v111_route_early_traction_cost = RewTerm(
             func=route.early_traction_cost, weight=.13)
+        if self.early_traction_repair_58098:
+            self.rewards.v111_early_handoff_stall = RewTerm(func=route.early_stall_cost, weight=.35)
         self.rewards.v111_flat_posture_cost.func = route.flat_posture_cost
         self.rewards.v111_flat_posture_quality.func = route.flat_posture_quality
         self.events.v111_refine_reset.func = route.reset
@@ -37,9 +43,15 @@ class DeeproboticsM20V111RouteHoldEnvCfg(DeeproboticsM20V111FlatPostureEnvCfg):
                 setattr(self.curriculum, 'v111_route_hold_'+name,
                     CurrTerm(func=route.metric, params={'key': name}))
         for key in ('slip_mean', 'slip_samples', 'support_fraction',
-                    'quality_mean', 'eligible_steps'):
+                    'quality_mean', 'eligible_steps', 'stall_cost'):
             setattr(self.curriculum, 'v111_route_early_traction_'+key,
                 CurrTerm(func=route.early_traction_metric, params={'key': key}))
+        self.descent_traction_v2 = os.environ.get('M20_DESCENT_TRACTION_V2') == '1'
+        if self.descent_traction_v2:
+            if not self.early_traction_repair_58098:
+                raise ValueError('DescentTractionV2 requires the 58098 early-traction base')
+            from .v111_descent_traction_cfg import configure
+            configure(self)
 
 
 @configclass
@@ -66,3 +78,20 @@ class DeeproboticsM20V111RouteHoldPPORunnerCfg(DeeproboticsM20V111FlatPosturePPO
             raise ValueError('RouteHold requires measured M20_ROUTE_TRACTION_RESULTS')
         self.algorithm.traction_reference_results = str(traction_path.resolve())
         self.algorithm.learning_rate = 3.e-6
+        if os.environ.get('M20_EARLY_TRACTION_58098') == '1':
+            self.experiment_name = 'M20-V11.1-EarlyTraction58098'
+            self.algorithm.class_name = 'rl_training.v111_early_traction_runner:EarlyTractionPPO'
+            for key, variable in (('protection_replay', 'M20_EARLY_PROTECTION_REPLAY'),
+                                  ('descent_reference_results', 'M20_DESCENT_RESULTS')):
+                value = Path(os.environ.get(variable, ''))
+                if not value.is_file():
+                    raise ValueError('EarlyTraction58098 requires '+variable)
+                setattr(self.algorithm, key, str(value.resolve()))
+            if os.environ.get('M20_DESCENT_TRACTION_V2') == '1':
+                self.experiment_name = 'M20-V11.1-DescentTractionV2'
+                self.algorithm.class_name = 'rl_training.v111_descent_traction_runner:DescentTractionPPO'
+                self.algorithm.learning_rate = 1.5e-6
+                value = Path(os.environ.get('M20_V2_REPLAY', ''))
+                if not value.is_file():
+                    raise ValueError('DescentTractionV2 requires M20_V2_REPLAY')
+                self.algorithm.repair_replay = str(value.resolve())

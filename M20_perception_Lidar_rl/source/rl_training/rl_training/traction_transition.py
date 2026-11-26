@@ -73,6 +73,39 @@ def early_tread_traction_terms(slip, supported, early_window, speed, command):
     return reward, cost, selected, quality
 
 
+def handoff_patch(bottom, hits, normals, force_z, vertical_speed):
+    """Loaded horizontal center plus one agreeing ray permits a tread edge.
+
+    Keep the center-plane/normal/force checks: a side ray on a lower tread
+    must never turn a riser contact or an airborne wheel into rolling support.
+    Landing contacts are confirmed over two policy ticks by the caller.
+    """
+    finite = torch.isfinite(hits).all(-1) & torch.isfinite(normals).all(-1)
+    level = (hits[..., 2]-hits[..., :1, 2]).abs() < .008
+    horizontal = normals[..., 2].abs() >= .98
+    plane = finite & horizontal & level
+    return (plane[..., 0] & (plane.sum(-1) >= 2)
+            & ((bottom-hits[..., 0, 2]).abs() <= .025)
+            & (force_z >= 15.) & (vertical_speed.abs() <= .6))
+
+
+def early_handoff_terms(slip, supported, early_window, speed, command):
+    """Bounded B1-B3 objective with no zero-speed escape from slip cost.
+
+    With reward/cost weights .60/.13 the .25 load credit contributes .15,
+    exceeding the worst .13 slip cost. Unloading cannot improve their sum
+    at fixed progress; airborne swings have neither load credit nor cost.
+    The extra credit for good rolling still requires actual forward progress.
+    """
+    selected = supported & early_window & (command > .1)[:, None]
+    weights = slip.new_tensor([.5, .5, 1., 1.])
+    quality = 1./(1.+(slip/.25).square())
+    progress = (speed/command.clamp_min(.1)).clamp(0, 1)
+    reward = ((.25+.75*progress[:, None]*quality)*selected*weights).sum(1)/3.
+    cost = ((1-quality)*selected*weights).sum(1)/3.
+    return reward, cost, selected, quality
+
+
 def flat_pitch_cost(gravity, pitch_rate):
     pitch = torch.atan2(gravity[:, 0], torch.linalg.vector_norm(gravity[:, 1:], dim=1))
     tilt = ((pitch.abs()-math.radians(8)).clamp_min(0)/math.radians(12)).square()

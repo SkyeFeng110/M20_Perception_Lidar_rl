@@ -1,45 +1,254 @@
 {
-  "checked_at": "2026-11-25T16:21:16+08:00",
-  "scope": "RouteHold source update; only model_58098.pt and this run's training logs are added. Previously published EntrySequenceRepair and FlatPosture logs are preserved.",
+  "checked_at": "2026-11-26T13:51:49+08:00",
+  "scope": "Current source publication; replace all previously published logs with one selected EarlyTraction run.",
   "selected_checkpoint": {
-    "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-RouteHold/2026-11-25_11-30-18_303338_route_hold_latest/model_58098.pt",
-    "sha256": "c21b28919e97e17c99a48776c9189b0fb57e1427318b0d94dfb7ec2d8cfa0db"
+    "path": "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/model_65298.pt",
+    "sha256": "059768c807e0d4d67aa3643496d8791a786f24e2d423ce5de3faf19c68317d3f",
+    "bytes": 7881727
   },
-  "regression_tests": {
-    "passed": 11,
-    "skipped": 0,
-    "suites": [
-      "M20_perception_Lidar_rl/scripts/tools/test_m20_route_hold.py"
-    ],
-    "note": "One NumPy deprecation warning; all RouteHold tests passed."
-  },
-  "preflight": {
-    "status": "route_hold_preflight_passed",
-    "gait_samples": 2920,
-    "compact_flat_samples": 108,
-    "route_flat_samples": 750,
-    "completed_ascent_reference_cases": 8,
-    "traction_cases": 22,
-    "actor_dimensions": [
-      63,
-      16
-    ],
-    "critic_dimensions": 568,
-    "no_training_started": true
+  "source_checks": {
+    "python_syntax_files": 377,
+    "shell_syntax_files": 8,
+    "regression_tests": {
+      "passed": 37,
+      "skipped": 1,
+      "suites": [
+        "test_m20_descent_traction.py",
+        "test_m20_front_turn.py",
+        "test_m20_recovery_assets.py",
+        "test_m20_route_hold.py"
+      ],
+      "skipped_reason": "Historical model_64098.pt is deliberately excluded. The fixture now skips when the required historical checkpoint is absent.",
+      "pytest_environment": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1; isolated CPU tests; avoids unrelated installed typeguard plugin import incompatibility."
+    },
+    "saved_policy": {
+      "strict_actor_load": true,
+      "actor_input": 63,
+      "actor_output": 16,
+      "finite_output": true,
+      "default_checkpoint": "model_65298.pt",
+      "metadata": {
+        "checkpoint": "/media/mark/2T_SSD/M20_publish_20261126_65298/snapshot/M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/model_65298.pt",
+        "checkpoint_sha256": "059768c807e0d4d67aa3643496d8791a786f24e2d423ce5de3faf19c68317d3f",
+        "config_path": "/media/mark/2T_SSD/M20_publish_20261126_65298/snapshot/M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/params/env.yaml",
+        "agent_path": "/media/mark/2T_SSD/M20_publish_20261126_65298/snapshot/M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/params/agent.yaml",
+        "config_resolution": "adjacent",
+        "config_source_checkpoint": null,
+        "config_sha256": "96261ec3c1811860c3def1697e55564e918cfb03f0fd222a60457caf20278537",
+        "agent_sha256": "5e1cfe81ed6be0b745bf8cd400f031447f87706711eae12d216cc4a58a7866fe",
+        "iteration": 65298,
+        "actor_dimensions": [
+          63,
+          512,
+          256,
+          128,
+          16
+        ],
+        "feature_contract": "v11_signed_edges_v2",
+        "joint_names": [
+          "fl_hipx_joint",
+          "fl_hipy_joint",
+          "fl_knee_joint",
+          "fr_hipx_joint",
+          "fr_hipy_joint",
+          "fr_knee_joint",
+          "hl_hipx_joint",
+          "hl_hipy_joint",
+          "hl_knee_joint",
+          "hr_hipx_joint",
+          "hr_hipy_joint",
+          "hr_knee_joint",
+          "fl_wheel_joint",
+          "fr_wheel_joint",
+          "hl_wheel_joint",
+          "hr_wheel_joint"
+        ],
+        "default_joint_pos": [
+          0.0,
+          -0.3,
+          0.6,
+          0.0,
+          -0.3,
+          0.6,
+          0.0,
+          0.3,
+          -0.6,
+          0.0,
+          0.3,
+          -0.6,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "action_scale": [
+          0.125,
+          0.25,
+          0.25,
+          0.125,
+          0.25,
+          0.25,
+          0.125,
+          0.25,
+          0.25,
+          0.125,
+          0.25,
+          0.25,
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "policy_period": 0.02,
+        "leg_target_limits_rad": [
+          [
+            -0.406,
+            0.581
+          ],
+          [
+            -2.236,
+            2.533
+          ],
+          [
+            -2.729,
+            2.712
+          ],
+          [
+            -0.581,
+            0.406
+          ],
+          [
+            -2.236,
+            2.533
+          ],
+          [
+            -2.729,
+            2.712
+          ],
+          [
+            -0.406,
+            0.581
+          ],
+          [
+            -2.533,
+            2.236
+          ],
+          [
+            -2.712,
+            2.729
+          ],
+          [
+            -0.581,
+            0.406
+          ],
+          [
+            -2.533,
+            2.236
+          ],
+          [
+            -2.712,
+            2.729
+          ]
+        ],
+        "action_history_function": "executed_last_action",
+        "kp": [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "kd": [
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          2.0,
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ],
+        "effort_limit": [
+          76.4,
+          76.4,
+          76.4,
+          76.4,
+          76.4,
+          76.4,
+          76.4,
+          76.4,
+          76.4,
+          76.4,
+          76.4,
+          76.4,
+          21.6,
+          21.6,
+          21.6,
+          21.6
+        ],
+        "armature": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.00243216,
+          0.00243216,
+          0.00243216,
+          0.00243216
+        ],
+        "critic_used": false
+      }
+    }
   },
   "publication": {
-    "previous_log_roots_preserved_byte_for_byte": [
-      "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair",
-      "M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture"
-    ],
-    "new_routehold_run_checkpoints": 1,
-    "routehold_tensorboard_files": 12,
-    "manifest_hashes": "passed",
-    "python_syntax": "passed",
-    "shell_syntax": "passed"
+    "log_files": 92,
+    "training_tensorboard_files": 73,
+    "evaluation_tensorboard_files": 14,
+    "logs_checkpoints": 1,
+    "logs_match_local_source_byte_for_byte": true,
+    "previous_log_roots_preserved": [],
+    "all_checkpoints": 5,
+    "local_source_files_deleted": 0,
+    "source_git_status_unchanged": true,
+    "history_rewritten": false,
+    "credentials_in_snapshot": false
+  },
+  "behavior_status": {
+    "training_status": "stopped_by_user",
+    "completed_additional_updates": 7200,
+    "repair_passed": false,
+    "note": "65298 is the user-selected last checkpoint, not a claim of passed behavior acceptance. Newer V2 source is distinct from the original run source."
   },
   "limits": [
-    "The preflight validates saved configurations and measured reference evidence; it does not certify RouteHold 58098 stair performance or real-robot behavior.",
-    "The full Isaac Lab check-only launcher was not run because another training process is active on this host; no training process was stopped."
+    "No PPO, Isaac simulation, MuJoCo locomotion or real robot motion was started for publication.",
+    "Original training configs, source evidence and evaluation manifests retain originating absolute paths. Cross-host training requires path migration and fresh asset validation.",
+    "Old logs are removed from the latest tree. Existing Git history is retained."
   ]
 }

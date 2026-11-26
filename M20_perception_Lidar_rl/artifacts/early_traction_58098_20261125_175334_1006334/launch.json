@@ -1,0 +1,22 @@
+{
+  "protocol": "m20_early_handoff_58098_v1",
+  "task": "M20-Stair-V11.1-RouteHold-v0",
+  "additional_updates": 30000,
+  "eval_every": 500,
+  "num_envs": 2048,
+  "initial_checkpoint": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-RouteHold/2026-11-25_11-30-18_303338_route_hold_latest/model_58098.pt",
+  "initial_sha256": "c21b28919e97e17c99a48776c9189b0fb57e1427318b0d94dfb7ec2cd8cfa0db",
+  "teacher": "/media/mark/2T_SSD/M20_Perception_Lidar_rl/M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/teacher/model_58098.pt",
+  "teacher_sha256": "c21b28919e97e17c99a48776c9189b0fb57e1427318b0d94dfb7ec2cd8cfa0db",
+  "protection_sha256": "27d655a415652e65322716dc2591dd24868893b06a4e1f809a008f0d32ea2b03",
+  "git_head": "90a5256c2d5f7e2bf4e5556025dce1db831eb911",
+  "source_files": {
+    "source/rl_training/rl_training/early_traction.py": "cd5f6a53fa29d2fb5e70ca52f0346f28349f27a965a355c62b0f28d616a2b490",
+    "source/rl_training/rl_training/v111_early_traction_runner.py": "d4706fc75b541f8faa977f15fbf09fdf5fa1749a0b9e8fc552aaf9fb7134207a",
+    "scripts/tools/m20_prepare_early_traction.py": "755e67204458c6b05093889039ca857b127c913c4537f17902340c49a745947c",
+    "scripts/reinforcement_learning/rsl_rl/early_traction_selection.py": "09af24b68ed81a8cb0ece4878681492898c6d368eee7978d7b789aae14575e46",
+    "scripts/train_m20_v111_early_traction_from58098.sh": "1c8ba22538d496cb828243466400f9cb88763856ba1cd95a56dfb1ed66b4a559"
+  },
+  "learning_rate": 3e-06,
+  "optimizer": "fresh"
+}

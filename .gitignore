@@ -22,25 +22,27 @@
 *.mp4
 *.webm
 
-# Publish only the requested training run and its reproducibility evidence.
+
+# Only the selected EarlyTraction run may enter logs.
+!M20_perception_Lidar_rl/logs/
+M20_perception_Lidar_rl/logs/*
 !M20_perception_Lidar_rl/logs/rsl_rl/
 M20_perception_Lidar_rl/logs/rsl_rl/*
-!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair/
-!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EntrySequenceRepair/**
-!M20_perception_Lidar_rl/artifacts/entry_49998_repair_20261124/
+!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/
+M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/*
+!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/
+M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/*
+!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/**
+M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/*.pt
+!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-EarlyTraction58098/2026-11-25_17-53-45_450637_early_traction_from58098/model_65298.pt
 *.tar
 *.tar.gz
-*.tar.gz.sha256
 *.zip
 mujoco_validation/M20_NX*/
+M20_perception_Lidar_rl (2)/
 
-# Explicitly requested baseline and teacher assets.
-!M20_perception_Lidar_rl/interview_prep/**
-
-# FlatPosture publication: one requested checkpoint plus logs and params.
-!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/
-M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/*
-!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/
-!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/**
-M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/*.pt
-!M20_perception_Lidar_rl/logs/rsl_rl/M20-V11.1-FlatPosture/2026-11-24_18-14-57_863354_flat_posture_latest/model_56998.pt
+# Frozen teachers retained for training dependencies, outside logs.
+!M20_perception_Lidar_rl/artifacts/early_traction_58098_20261125/reference58098/teacher/model_58098.pt
+!M20_perception_Lidar_rl/artifacts/route_hold_20261125/reference56898/teacher/model_56898.pt
+!M20_perception_Lidar_rl/interview_prep/model_35300.pt
+!M20_perception_Lidar_rl/interview_prep/model_49998.pt

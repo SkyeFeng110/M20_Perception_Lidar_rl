@@ -48,6 +48,9 @@ def validate(checkpoint, teacher, replay, compact, native, entry, flat, producti
                 count += int(expected[keep].sum())
                 offset += int(keep.sum())
     cm = json.loads(Path(compact).with_suffix('.json').read_text())
+    current_flat = cm.get('preserve_current_flat', False)
+    if current_flat and cm.get('source_sha256') != sha(teacher):
+        raise ValueError('Current-flat preservation must use the selected stair teacher')
     if (cm.get('protocol') != PROTOCOL or cm['sha256'] != sha(compact)
             or cm['source_sha256'] != sha(cm['source_checkpoint'])
             or cm['trajectory_sha256'] != sha(cm['trajectory'])
@@ -60,7 +63,8 @@ def validate(checkpoint, teacher, replay, compact, native, entry, flat, producti
                 or not np.array_equal(d['observation'], source['observation'][index])
                 or not np.array_equal(d['action'], source['action'][index])
                 or not (source['phase'][index] == 2).all()
-                or np.abs(d['reach']).max() > .12 or (d['speed'] < .8*source['command'][index, 0]).any()):
+                or (not current_flat and np.abs(d['reach']).max() > .12)
+                or (d['speed'] < .8*source['command'][index, 0]).any()):
             raise ValueError('Compact replay must use actual compact moving actions')
     if not count or offset != meta['samples']:
         raise ValueError('Missing current entry and later gait protection')

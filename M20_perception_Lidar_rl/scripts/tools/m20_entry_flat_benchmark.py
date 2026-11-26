@@ -339,6 +339,19 @@ def run(a):
                 forward_lateral_min_m=float(lateral[moving].min()) if moving.any() else None,
                 forward_lateral_max_m=float(lateral[moving].max()) if moving.any() else None)
             result['acoustic_proxies'] = acoustic.report()
+            # Extra retention metrics do not change the historical criteria.
+            # B4+ begins only after both rear wheels leave the first 3 treads.
+            pose_mask = moving.copy()
+            if tread:
+                pose_mask &= ((arrays['wheel_position'][:, 2:, 0].min(1)
+                              >= r.terrain.parameters['start_x'][0]+3*tread)
+                              & (arrays['position'][:, 0] < r.terrain.goal_x))
+            pitch = np.degrees(np.arcsin(np.clip(2*(q[:, 0]*q[:, 2]-q[:, 3]*q[:, 1]), -1, 1)))
+            roll = np.degrees(np.arctan2(2*(q[:, 0]*q[:, 1]+q[:, 2]*q[:, 3]), 1-2*(q[:, 1]**2+q[:, 2]**2)))
+            result['retention_pose'] = dict(scope='B4_plus' if tread else 'flat', samples=int(pose_mask.sum()),
+                pitch_peak_deg=float(np.abs(pitch[pose_mask]).max()) if pose_mask.any() else None,
+                roll_peak_deg=float(np.abs(roll[pose_mask]).max()) if pose_mask.any() else None,
+                reach_p95_m=float(np.percentile(np.abs(arrays['reach'][pose_mask]).max(1), 95)) if pose_mask.any() else None)
             if tread:
                 result.update(support_sequence_report(arrays['supported_tread'][:, :2]))
                 from m20_entry_diagnostics import entry_report
